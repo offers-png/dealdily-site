@@ -1,26 +1,47 @@
 ---
-layout: base.njk
+layout: null
 title: Amazon Deals
-permalink: /amazon/
 ---
 
-<section class="container">
-  <h1>🔥 Amazon Tech Deals</h1>
-  <p>Curated tools & accessories I actually recommend.</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Amazon Picks</title>
+  <style>
+    body { font-family: Arial; padding: 40px; background:#f8f8f8; }
+    h1 { margin-bottom: 30px; }
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #6f5af0;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
 
-  <div class="grid">
-    {% for item in amazon %}
-    <div class="card">
-      <img src="{{ item.image }}" alt="{{ item.title }}" />
+<h1>My Amazon Picks</h1>
 
-      <h3>{{ item.title }}</h3>
-      <p class="price">${{ item.price }}</p>
-      <p>{{ item.hook }}</p>
-
-      <a href="{{ item.link }}" target="_blank" class="btn">
-        View on Amazon →
-      </a>
-    </div>
-    {% endfor %}
+{% for item in amazon %}
+  <div class="card">
+    <h2>{{ item.name }}</h2>
+    <p>{{ item.description }}</p>
+    <a class="button" href="{{ item.link }}" target="_blank">
+      View on Amazon →
+    </a>
   </div>
-</section>
+{% endfor %}
+
+</body>
+</html>
