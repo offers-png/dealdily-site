@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealDily — AI Tools, Automations & Affiliate Deals</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sidebar-bg: #0d0c18;
+    --sidebar-border: #1e1c30;
+    --sidebar-hover: #1a1829;
+    --sidebar-active: #4f46e5;
+    --sidebar-text: #7c7a9e;
+    --sidebar-text-active: #fff;
+    --content-bg: #f6f5ff;
+    --card-bg: #ffffff;
+    --ink: #0f0e17;
+    --primary: #4f46e5;
+    --primary-light: #818cf8;
+    --accent: #f59e0b;
+    --green: #10b981;
+    --red: #ef4444;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --radius: 14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--content-bg); color: var(--ink); overflow-x: hidden; }
+
+  /* ══════════════════════════════════════
+     LAYOUT
+  ══════════════════════════════════════ */
+  .app {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ══════════════════════════════════════
+     SIDEBAR
+  ══════════════════════════════════════ */
+  .sidebar {
+    width: 260px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 200;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-logo {
+    padding: 1.5rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+
+  .logo-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+  }
+
+  .logo-text span {
+    background: var(--primary);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .logo-tagline {
+    font-size: 0.7rem;
+    color: var(--sidebar-text);
+    margin-top: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 1rem 0.75rem;
+    overflow-y: auto;
+  }
+
+  .nav-section-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3d3b5a;
+    padding: 0.75rem 0.5rem 0.4rem;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--sidebar-text);
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    position: relative;
+  }
+
+  .nav-btn:hover {
+    background: var(--sidebar-hover);
+    color: #c4c2e8;
+  }
+
+  .nav-btn.active {
+    background: rgba(79,70,229,0.18);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .nav-btn.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 3px;
+    background: var(--primary);
+    border-radius: 0 3px 3px 0;
+  }
+
+  .nav-icon { font-size: 1.05rem; flex-shrink: 0; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-badge.hot { background: var(--red); }
+  .nav-badge.new { background: var(--green); }
+
+  .sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--sidebar-border);
+  }
+
+  .sidebar-footer a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--sidebar-text);
+    font-size: 0.8rem;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: color 0.15s;
+  }
+
+  .sidebar-footer a:hover { color: #fff; }
+
+  /* MOBILE TOGGLE */
+  .mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem; left: 1rem;
+    z-index: 300;
+    background: var(--sidebar-bg);
+    border: 1px solid var(--sidebar-border);
+    color: #fff;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+  }
+
+  /* ══════════════════════════════════════
+     MAIN CONTENT
+  ══════════════════════════════════════ */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── PAGE HEADER ── */
+  .page-hero {
+    padding: 3rem 2.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+  }
+
+  .page-hero .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #ede9fe;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    border: 1px solid #c4b5fd;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  .page-hero h1 .hl { color: var(--primary); }
+
+  .page-hero p {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  .page-body { padding: 2.5rem; }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-color, var(--primary));
+  }
+
+  .card:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(79,70,229,0.1);
+  }
+
+  .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+    margin-bottom: 0.6rem;
+  }
+
+  .tag-purple { background: #ede9fe; color: #6d28d9; }
+  .tag-green  { background: #d1fae5; color: #065f46; }
+  .tag-yellow { background: #fef3c7; color: #92400e; }
+  .tag-red    { background: #fee2e2; color: #991b1b; }
+  .tag-blue   { background: #dbeafe; color: #1e40af; }
+  .tag-pink   { background: #fce7f3; color: #9d174d; }
+  .tag-cyan   { background: #cffafe; color: #0e7490; }
+  .tag-orange { background: #ffedd5; color: #9a3412; }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    gap: 0.75rem;
+  }
+
+  .card-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .card-price small {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: #4338ca; transform: translateY(-1px); }
+  .btn-green { background: var(--green); color: #fff; }
+  .btn-green:hover { background: #059669; }
+  .btn-yellow { background: var(--accent); color: #000; }
+  .btn-yellow:hover { background: #d97706; color: #fff; }
+  .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary); color: #fff; }
+
+  /* ── AFFILIATE LINK CARD ── */
+  .aff-card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 0.85rem;
+  }
+
+  .aff-card:hover {
+    border-color: var(--primary);
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(79,70,229,0.08);
+  }
+
+  .aff-icon {
+    font-size: 2rem;
+    width: 52px;
+    height: 52px;
+    background: #f8f7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .aff-info { flex: 1; }
+
+  .aff-info h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .aff-info p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .aff-arrow {
+    color: var(--primary);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .aff-commission {
+    background: #d1fae5;
+    color: #065f46;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 2rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── ABOUT PAGE ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .about-stat {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .about-stat .num {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .about-stat .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .story-card {
+    background: var(--sidebar-bg);
+    border-radius: var(--radius);
+    padding: 2rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .story-card h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .story-card h2 span { color: var(--accent); }
+
+  .story-card p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── CONTACT PAGE ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-card {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .contact-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+  }
+
+  .contact-card .icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+  .contact-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .contact-card p { font-size: 0.8rem; color: var(--muted); }
+
+  /* ── SMS PAGE ── */
+  .sms-number-display {
+    background: var(--sidebar-bg);
+    color: var(--green);
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+  }
+
+  .compliance-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .compliance-links a {
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1.5px solid #c4b5fd;
+    border-radius: 8px;
+    background: #ede9fe;
+    transition: all 0.15s;
+  }
+
+  .compliance-links a:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; }
+    .mobile-toggle { display: flex; }
+    .overlay.show { display: block; }
+    .page-hero { padding: 4rem 1.25rem 1.5rem; }
+    .page-body { padding: 1.5rem 1.25rem; }
+    .about-grid { grid-template-columns: 1fr 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MOBILE TOGGLE -->
+<button class="mobile-toggle" id="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="app">
+
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">Deal<span>Dily</span></div>
+      <div class="logo-tagline">AI Tools · Automations · Deals</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <button class="nav-btn active" onclick="showPage('saas')">
+        <span class="nav-icon">🛠️</span> SaaS Tools
+        <span class="nav-badge hot">7</span>
+      </button>
+      <button class="nav-btn" onclick="showPage('workflows')">
+        <span class="nav-icon">🔄</span> AI Workflows
+      </button>
+      <button class="nav-btn" onclick="showPage('automations')">
+        <span class="nav-icon">⚡</span> Automations
+      </button>
+      <button class="nav-btn" onclick="showPage('affiliates')">
+        <span class="nav-icon">💰</span> Affiliate Deals
+        <span class="nav-badge new">New</span>
+      </button>
+
+      <div class="nav-section-label">Services</div>
+      <button class="nav-btn" onclick="showPage('sms')">
+        <span class="nav-icon">📲</span> SMS Service
+      </button>
+      <button class="nav-btn" onclick="showPage('about')">
+        <span class="nav-icon">👤</span> About / Story
+      </button>
+      <button class="nav-btn" onclick="showPage('contact')">
+        <span class="nav-icon">✉️</span> Contact
+      </button>
+
+      <div class="nav-section-label">Legal</div>
+      <button class="nav-btn" onclick="showPage('legal')">
+        <span class="nav-icon">📋</span> Legal & Compliance
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="mailto:contact@dealdily.com">✉️ contact@dealdily.com</a>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <main class="main">
+
+    <!-- ── SAAS TOOLS PAGE ── -->
+    <div class="page active" id="page-saas">
+      <div class="page-hero">
+        <div class="badge">🛠️ SaaS Tools</div>
+        <h1>Tools that work<br><span class="hl">while you don't.</span></h1>
+        <p>Real automation tools built by a real business owner. No fluff. No filler. Buy once, use forever.</p>
+      </div>
+      <div class="page-body">
+        <div class="card-grid">
+
+          <div class="card" style="--card-color: #6d28d9;">
+            <div class="card-icon">🗺️</div>
+            <span class="card-tag tag-purple">⭐ Most Popular</span>
+            <h3>Competitor Intel Engine</h3>
+            <p>See who's outranking you on Google Maps, their review strength, and exactly where you can beat them — in 60 seconds. Built for painters, contractors & local businesses.</p>
+            <div class="card-footer">
+              <div class="card-price">$19 <small>Lifetime access</small></div>
+              <a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" class="btn btn-primary">Get Access →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #f59e0b;">
+            <div class="card-icon">🧾</div>
+            <span class="card-tag tag-yellow">Mobile App</span>
+            <h3>ReceiptVault</h3>
+            <p>Snap a photo of any receipt. It automatically organizes it and emails it to your accountant. No more panic at tax time.</p>
+            <div class="card-footer">
+              <div class="card-price">Free <small>Then $9.99/mo</small></div>
+              <a href="https://receipt-manager-offers8.replit.app" class="btn btn-green">Try Free →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #10b981;">
+            <div class="card-icon">📲</div>
+            <span class="card-tag tag-green">Automation</span>
+            <h3>SMS Reminder Bot</h3>
+            <p>Text it like a human. "Remind me to call the doctor Friday at 3pm" — done. No app. No setup. Just smart reminders.</p>
+            <div class="card-footer">
+              <div class="card-price">$9<small>/mo · Plans available</small></div>
+              <a href="https://sms-consent--offers8.replit.app" class="btn btn-primary">Get Started →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #8b5cf6;">
+            <div class="card-icon">🤖</div>
+            <span class="card-tag tag-purple">API</span>
+            <h3>AI Content Repurposer</h3>
+            <p>Paste a YouTube link. Get captions for TikTok, Instagram, LinkedIn, Twitter, Facebook & Pinterest. Clean JSON. One API call.</p>
+            <div class="card-footer">
+              <div class="card-price">$27<small>/mo · API access</small></div>
+              <a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" class="btn btn-primary">Get API →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #ef4444;">
+            <div class="card-icon">💳</div>
+            <span class="card-tag tag-red">SaaS</span>
+            <h3>Payment Link Generator</h3>
+            <p>Generate Stripe payment links with time-based access, coupon logic, and auto-checkout. Sell access, get paid, move on.</p>
+            <div class="card-footer">
+              <div class="card-price">$47<small>/mo · Unlimited links</small></div>
+              <a href="mailto:contact@dealdily.com?subject=Payment Link Generator" class="btn btn-primary">Get Access →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #f97316;">
+            <div class="card-icon">📘</div>
+            <span class="card-tag tag-orange">eBook</span>
+            <h3>Beginners' Workflow AI</h3>
+            <p>Build & sell AI automations with n8n, Google Sheets, and ChatGPT. Zero coding. Step-by-step. Build once, earn forever.</p>
+            <div class="card-footer">
+              <div class="card-price">$10<small>One-time · PDF download</small></div>
+              <a href="https://toolsmith721.gumroad.com/l/ipdpbc" class="btn btn-primary">Buy Now →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #06b6d4;">
+            <div class="card-icon">😂</div>
+            <span class="card-tag tag-cyan">Telegram Bot</span>
+            <h3>Joke Factory Bot</h3>
+            <p>Fresh AI-generated jokes straight to your Telegram. Clean, dark humor, one-liners. Buy → press start → laugh instantly.</p>
+            <div class="card-footer">
+              <div class="card-price">$5<small>One-time · Lifetime</small></div>
+              <a href="https://toolsmith721.gumroad.com/l/xkhbgh" class="btn btn-primary">Get Bot →</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AI WORKFLOWS PAGE ── -->
+    <div class="page" id="page-workflows">
+      <div class="page-hero">
+        <div class="badge">🔄 AI Workflows</div>
+        <h1>Workflows that<br><span class="hl">print results.</span></h1>
+        <p>Pre-built n8n workflows you can deploy in minutes. Connect your tools. Let AI handle the rest.</p>
+      </div>
+      <div class="page-body">
+        <div class="section-title">Ready-to-Deploy Workflows</div>
+        <div class="card-grid">
+          <div class="card" style="--card-color: #6d28d9;">
+            <div class="card-icon">🎬</div>
+            <span class="card-tag tag-purple">Content</span>
+            <h3>YouTube → TikTok Repurposer</h3>
+            <p>Automatically takes any YouTube video, extracts the transcript, rewrites it for TikTok, and outputs a ready-to-post script. Runs on autopilot.</p>
+            <div class="card-footer">
+              <div class="card-price">$27<small>/mo · API included</small></div>
+              <a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" class="btn btn-primary">Get Workflow →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #10b981;">
+            <div class="card-icon">📞</div>
+            <span class="card-tag tag-green">Reminder</span>
+            <h3>AI Reminder Bot (Voice + SMS)</h3>
+            <p>Text a reminder in plain English. AI parses it, schedules it, and sends a voice call or SMS at the right time. Recurring support included.</p>
+            <div class="card-footer">
+              <div class="card-price">$9<small>/mo · Unlimited reminders</small></div>
+              <a href="https://sms-consent--offers8.replit.app" class="btn btn-primary">Deploy Now →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #f59e0b;">
+            <div class="card-icon">🗺️</div>
+            <span class="card-tag tag-yellow">Lead Gen</span>
+            <h3>Google Maps Lead Scraper</h3>
+            <p>Scrape local businesses from Google Maps by niche and location. Extract names, ratings, review counts, and contact info automatically.</p>
+            <div class="card-footer">
+              <div class="card-price">$19<small>One-time · Lifetime</small></div>
+              <a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" class="btn btn-primary">Get It →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">Coming Soon</div>
+        <div class="card-grid">
+          <div class="card" style="--card-color: #6b7280; opacity: 0.6;">
+            <div class="card-icon">📧</div>
+            <span class="card-tag tag-blue">Email</span>
+            <h3>Cold Outreach Automation</h3>
+            <p>Scrape leads → enrich with data → send personalized cold emails automatically. Full n8n workflow.</p>
+            <div class="card-footer">
+              <div class="card-price">Coming Soon</div>
+              <a href="mailto:contact@dealdily.com?subject=Notify me" class="btn btn-outline">Notify Me</a>
+            </div>
+          </div>
+          <div class="card" style="--card-color: #6b7280; opacity: 0.6;">
+            <div class="card-icon">📱</div>
+            <span class="card-tag tag-pink">Social</span>
+            <h3>Auto Social Poster</h3>
+            <p>Generate and schedule 10–15 posts per day across TikTok, Instagram, Twitter from one content source.</p>
+            <div class="card-footer">
+              <div class="card-price">Coming Soon</div>
+              <a href="mailto:contact@dealdily.com?subject=Notify me" class="btn btn-outline">Notify Me</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AUTOMATIONS PAGE ── -->
+    <div class="page" id="page-automations">
+      <div class="page-hero">
+        <div class="badge">⚡ Automations</div>
+        <h1>Set it once.<br><span class="hl">Run it forever.</span></h1>
+        <p>Custom automation systems built with n8n, Stripe, Twilio, and AI. Your business on autopilot.</p>
+      </div>
+      <div class="page-body">
+        <div class="section-title">What We Automate</div>
+        <div class="card-grid">
+          <div class="card" style="--card-color: #4f46e5;">
+            <div class="card-icon">💳</div>
+            <span class="card-tag tag-purple">Payments</span>
+            <h3>Stripe Payment Automation</h3>
+            <p>Auto-generate payment links, handle time-based access, manage coupons, and trigger actions on successful payments — all automated.</p>
+            <div class="card-footer">
+              <div class="card-price">$47<small>/mo</small></div>
+              <a href="mailto:contact@dealdily.com?subject=Payment Automation" class="btn btn-primary">Get Access →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #10b981;">
+            <div class="card-icon">📲</div>
+            <span class="card-tag tag-green">SMS</span>
+            <h3>SMS Marketing System</h3>
+            <p>Full SMS infrastructure — opt-in pages, consent flows, compliance, auto-recharge, and Twilio/Telnyx integration. Done for you.</p>
+            <div class="card-footer">
+              <div class="card-price">$9<small>/mo · Fully compliant</small></div>
+              <a href="https://sms-consent--offers8.replit.app" class="btn btn-primary">Start →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #f59e0b;">
+            <div class="card-icon">🧾</div>
+            <span class="card-tag tag-yellow">Accounting</span>
+            <h3>Receipt Management Automation</h3>
+            <p>Snap receipts → AI organizes → auto-emails your accountant on schedule. Tax time goes from panic to a single tap.</p>
+            <div class="card-footer">
+              <div class="card-price">Free<small>Trial then $9.99/mo</small></div>
+              <a href="https://receipt-manager-offers8.replit.app" class="btn btn-green">Try Free →</a>
+            </div>
+          </div>
+
+          <div class="card" style="--card-color: #8b5cf6;">
+            <div class="card-icon">🤖</div>
+            <span class="card-tag tag-purple">Content</span>
+            <h3>Content Repurposing Engine</h3>
+            <p>One YouTube video becomes 7 platform-ready posts automatically. Feed the content machine once. Post everywhere.</p>
+            <div class="card-footer">
+              <div class="card-price">$20<small>/mo · API</small></div>
+              <a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" class="btn btn-primary">Get It →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">The Stack We Use</div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.6rem;">
+          {['n8n','Stripe','Twilio','Telnyx','Supabase','Google Sheets','OpenAI','Express','React Native','Replit','Netlify','Mailjet'].map(t => `<span style="background:#fff;border:1.5px solid var(--border);padding:6px 14px;border-radius:8px;font-size:0.8rem;font-weight:600;color:var(--ink);">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AFFILIATE DEALS PAGE ── -->
+    <div class="page" id="page-affiliates">
+      <div class="page-hero">
+        <div class="badge">💰 Affiliate Deals</div>
+        <h1>Deals I actually<br><span class="hl">recommend.</span></h1>
+        <p>Handpicked tools, products, and courses. Every link here is something I use or have vetted personally. You buy — I earn a small commission at no extra cost to you.</p>
+      </div>
+      <div class="page-body">
+
+        <div class="section-title">🛒 Amazon — Tech & Tools</div>
+
+        <a href="#" class="aff-card" target="_blank" rel="noopener noreferrer">
+          <div class="aff-icon">💻</div>
+          <div class="aff-info">
+            <h3>Best Budget Laptops for Automation</h3>
+            <p>The exact setup I recommend for running n8n and workflows on a budget</p>
+          </div>
+          <span class="aff-commission">Up to 4%</span>
+          <span class="aff-arrow">→</span>
+        </a>
+
+        <a href="#" class="aff-card" target="_blank" rel="noopener noreferrer">
+          <div class="aff-icon">📱</div>
+          <div class="aff-info">
+            <h3>Best Phones for Business Owners</h3>
+            <p>Run your automations, check Stripe, manage SMS — from anywhere</p>
+          </div>
+          <span class="aff-commission">Up to 4%</span>
+          <span class="aff-arrow">→</span>
+        </a>
+
+        <a href="#" class="aff-card" target="_blank" rel="noopener noreferrer">
+          <div class="aff-icon">🖥️</div>
+          <div class="aff-info">
+            <h3>PC Components — Best Deals This Week</h3>
+            <p>Curated from r/buildapcsales — updated regularly</p>
+          </div>
+          <span class="aff-commission">Up to 4%</span>
+          <span class="aff-arrow">→</span>
+        </a>
+
+        <div class="section-title">📚 Digistore24 — Courses & Digital Products</div>
+
+        <a href="#" class="aff-card" target="_blank" rel="noopener noreferrer">
+          <div class="aff-icon">🤖</div>
+          <div class="aff-info">
+            <h3>AI Automation Mastery Course</h3>
+            <p>Learn to build and sell automations — the same skills I use every day</p>
+          </div>
+          <span class="aff-commission">50-70%</span>
+          <span class="aff-arrow">→</span>
+        </a>
+
+        <a href="#" class="aff-card" target="_blank" rel="noopener noreferrer">
+          <div class="aff-icon">💰</div>
+          <div class="aff-info">
+            <h3>Make Money with n8n Workflows</h3>
+            <p>Step-by-step guide to selling automation services to local businesses</p>
+          </div>
+          <span class="aff-commission">50-70%</span>
+          <span class="aff-arrow">→</span>
+        </a>
+
+        <a href="#" class="aff-card" target="_blank" rel="noopener noreferrer">
+          <div class="aff-icon">📈</div>
+          <div class="aff-info">
+            <h3>Affiliate Marketing Blueprint</h3>
+            <p>The system behind building passive affiliate income streams</p>
+          </div>
+          <span class="aff-commission">50-70%</span>
+          <span class="aff-arrow">→</span>
+        </a>
+
+        <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:1rem 1.25rem;margin-top:1.5rem;font-size:0.8rem;color:#92400e;">
+          <strong>Disclosure:</strong> Some links on this page are affiliate links. If you click and purchase, I may earn a small commission at no extra cost to you. I only recommend things I genuinely believe in.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SMS SERVICE PAGE ── -->
+    <div class="page" id="page-sms">
+      <div class="page-hero">
+        <div class="badge">📲 SMS Service</div>
+        <h1>Never miss what<br><span class="hl">matters most.</span></h1>
+        <p>Text your reminders in plain English. We send them back at the right time — automatically. No app. No setup.</p>
+      </div>
+      <div class="page-body">
+        <div class="sms-number-display">+1-855-923-0032</div>
+        <div class="card-grid">
+          <div class="card" style="--card-color:#10b981;">
+            <div class="card-icon">1️⃣</div>
+            <h3>Text START</h3>
+            <p>Send START to +1-855-923-0032. You'll get a confirmation immediately. That's it — you're subscribed.</p>
+          </div>
+          <div class="card" style="--card-color:#4f46e5;">
+            <div class="card-icon">2️⃣</div>
+            <h3>Send Your Reminder</h3>
+            <p>Text anything naturally — "Remind me to take my meds tomorrow at 8am" or "Remind me every Monday to pay rent."</p>
+          </div>
+          <div class="card" style="--card-color:#f59e0b;">
+            <div class="card-icon">3️⃣</div>
+            <h3>We Remind You</h3>
+            <p>At the right time, you get a text or voice call. Automatic. Reliable. No fuss.</p>
+          </div>
+        </div>
+
+        <div class="section-title">Compliance & Legal</div>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for help. Consent is not a condition of purchase.</p>
+        <div class="compliance-links">
+          <a href="terms-conditions.html">Terms & Conditions</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="sms-opt-in.html">SMS Opt-In</a>
+          <a href="sms-consent.html">SMS Consent</a>
+          <a href="sms-home.html">SMS Home Page</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ABOUT PAGE ── -->
+    <div class="page" id="page-about">
+      <div class="page-hero">
+        <div class="badge">👤 The Story</div>
+        <h1>Built by a store owner.<br><span class="hl">Not a tech bro.</span></h1>
+        <p>6 months. 7 products. $0 in venture capital. Just a convenience store in Syracuse and a burning desire to build assets instead of wages.</p>
+      </div>
+      <div class="page-body">
+        <div class="story-card">
+          <h2>I'm Sal. I work <span>9AM to 10PM.</span><br>7 days a week. 365 days a year.</h2>
+          <p>I got tired of watching small businesses lose to bigger competitors who had better systems. I got tired of trading hours for money. I got tired of building someone else's dream.</p>
+          <p>So I started building my own. Every tool on this site was built out of a real need — mine or someone else's. No team. No investors. Just late nights, stubborn persistence, and AI.</p>
+          <p>I don't care about being a coder. I care about finishing. Revenue first. Perfection later.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-stat"><span class="num">7</span><span class="label">Products Built</span></div>
+          <div class="about-stat"><span class="num">6</span><span class="label">Months Building</span></div>
+          <div class="about-stat"><span class="num">$0</span><span class="label">Outside Funding</span></div>
+          <div class="about-stat"><span class="num">24/7</span><span class="label">Systems Running</span></div>
+        </div>
+
+        <div class="section-title">The Philosophy</div>
+        <div class="card-grid">
+          <div class="card" style="--card-color:#4f46e5;"><div class="card-icon">🏗️</div><h3>Assets Over Wages</h3><p>Don't trade time for money. Build systems that generate money while you sleep.</p></div>
+          <div class="card" style="--card-color:#10b981;"><div class="card-icon">🚀</div><h3>Speed Over Perfection</h3><p>Deploy first. Optimize later. Broken code breaks momentum. Ship it.</p></div>
+          <div class="card" style="--card-color:#f59e0b;"><div class="card-icon">🔒</div><h3>Privacy First</h3><p>Your data is yours. No selling, no tracking beyond what's absolutely needed.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONTACT PAGE ── -->
+    <div class="page" id="page-contact">
+      <div class="page-hero">
+        <div class="badge">✉️ Contact</div>
+        <h1>Let's talk.<br><span class="hl">Real answers only.</span></h1>
+        <p>No bots. No ticket system. Real responses from a real person — usually within a few hours.</p>
+      </div>
+      <div class="page-body">
+        <div class="contact-grid">
+          <a href="mailto:contact@dealdily.com" class="contact-card">
+            <span class="icon">📧</span>
+            <h3>General Inquiries</h3>
+            <p>contact@dealdily.com</p>
+          </a>
+          <a href="mailto:support@dealdily.com" class="contact-card">
+            <span class="icon">🛟</span>
+            <h3>Support</h3>
+            <p>support@dealdily.com</p>
+          </a>
+          <a href="sms-opt-in.html" class="contact-card">
+            <span class="icon">📲</span>
+            <h3>SMS Service</h3>
+            <p>Text START to +1-855-923-0032</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LEGAL PAGE ── -->
+    <div class="page" id="page-legal">
+      <div class="page-hero">
+        <div class="badge">📋 Legal & Compliance</div>
+        <h1>Transparent.<br><span class="hl">Always.</span></h1>
+        <p>All legal documents for DealDily SMS Notifications and our products. Required for Twilio SMS compliance.</p>
+      </div>
+      <div class="page-body">
+        <div class="card-grid">
+          <div class="card" style="--card-color:#4f46e5;">
+            <div class="card-icon">📋</div>
+            <h3>Terms & Conditions</h3>
+            <p>Full terms of service for DealDily SMS Notifications. Covers opt-in, opt-out, liability, and usage.</p>
+            <div class="card-footer">
+              <div></div>
+              <a href="terms-conditions.html" class="btn btn-primary">View →</a>
+            </div>
+          </div>
+          <div class="card" style="--card-color:#10b981;">
+            <div class="card-icon">🔒</div>
+            <h3>Privacy Policy</h3>
+            <p>How we collect, use, and protect your data. We never sell your information. Ever.</p>
+            <div class="card-footer">
+              <div></div>
+              <a href="privacy-policy.html" class="btn btn-primary">View →</a>
+            </div>
+          </div>
+          <div class="card" style="--card-color:#f59e0b;">
+            <div class="card-icon">✅</div>
+            <h3>SMS Opt-In</h3>
+            <p>How to subscribe to DealDily SMS reminders. Text START to +1-855-923-0032.</p>
+            <div class="card-footer">
+              <div></div>
+              <a href="sms-opt-in.html" class="btn btn-primary">View →</a>
+            </div>
+          </div>
+          <div class="card" style="--card-color:#8b5cf6;">
+            <div class="card-icon">📝</div>
+            <h3>SMS Consent</h3>
+            <p>Explicit consent language required by Twilio and TCPA compliance. What you're agreeing to when you subscribe.</p>
+            <div class="card-footer">
+              <div></div>
+              <a href="sms-consent.html" class="btn btn-primary">View →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo(0, 0);
+    if (window.innerWidth <= 768) closeSidebar();
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // Fix automations stack rendering
+  document.addEventListener('DOMContentLoaded', () => {
+    const stack = document.querySelector('#page-automations .page-body > div:last-child');
+    if (stack) {
+      const tags = ['n8n','Stripe','Twilio','Telnyx','Supabase','Google Sheets','OpenAI','Express','React Native','Replit','Netlify','Mailjet'];
+      stack.innerHTML = tags.map(t => `<span style="background:#fff;border:1.5px solid #e5e7eb;padding:6px 14px;border-radius:8px;font-size:0.8rem;font-weight:600;color:#0f0e17;">${t}</span>`).join('');
+    }
+  });
+</script>
+</body>
+</html>
