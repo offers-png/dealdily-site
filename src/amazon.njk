@@ -1,0 +1,26 @@
+---
+layout: base.njk
+title: Amazon Deals
+permalink: /amazon/
+---
+
+<section class="container">
+  <h1>🔥 Amazon Tech Deals</h1>
+  <p>Curated tools & accessories I actually recommend.</p>
+
+  <div class="grid">
+    {% for item in amazon %}
+    <div class="card">
+      <img src="{{ item.image }}" alt="{{ item.title }}" />
+
+      <h3>{{ item.title }}</h3>
+      <p class="price">${{ item.price }}</p>
+      <p>{{ item.hook }}</p>
+
+      <a href="{{ item.link }}" target="_blank" class="btn">
+        View on Amazon →
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
