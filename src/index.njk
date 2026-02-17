@@ -57,7 +57,12 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
 
 /* ─── LAYOUT ─────────────────────────────────────────────────────────── */
 .app { display:flex; min-height:100vh; }
-.main { margin-left: var(--sidebar); flex:1; min-height:100vh; }
+.main {
+  margin-left: var(--sidebar);
+  flex:1; min-height:100vh;
+  min-width:0; overflow-x:hidden;
+  max-width: calc(100vw - var(--sidebar));
+}
 .page { display:none; }
 .page.active { display:block; }
 
@@ -164,7 +169,7 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
 
 /* ─── PAGE HERO ──────────────────────────────────────────────────────── */
 .page-top {
-  padding: 3.5rem 3rem 2.5rem;
+  padding: 3rem 2rem 2.5rem;
   border-bottom:1px solid var(--border);
   position:relative; overflow:hidden;
 }
@@ -204,7 +209,7 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
 }
 
 /* ─── PAGE BODY ──────────────────────────────────────────────────────── */
-.page-body { padding:2.5rem 3rem; }
+.page-body { padding:2rem; }
 
 /* ─── SECTION LABEL ──────────────────────────────────────────────────── */
 .sec-label {
@@ -541,11 +546,11 @@ button { font-family:inherit; cursor:pointer; border:none; background:none; }
   :root { --sidebar:0px; }
   .sidebar { transform:translateX(-268px); width:268px; }
   .sidebar.open { transform:translateX(0); }
-  .main { margin-left:0; }
+  .main { margin-left:0; max-width:100vw; }
   .mob-toggle { display:flex; }
   .overlay.show { display:block; }
-  .page-top { padding:4.5rem 1.5rem 2rem; }
-  .page-body { padding:1.5rem; }
+  .page-top { padding:4.5rem 1.25rem 2rem; }
+  .page-body { padding:1.25rem; }
 }
 @media(max-width:600px) {
   .card-grid,
