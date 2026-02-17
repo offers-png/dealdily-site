@@ -1,0 +1,230 @@
+---
+permalink: /index.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DealDily — AI Tools, Automations & Affiliate Deals</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+:root{--sidebar-bg:#0d0c18;--sidebar-border:#1e1c30;--sidebar-hover:#1a1829;--sidebar-active:#4f46e5;--sidebar-text:#7c7a9e;--sidebar-text-active:#fff;--content-bg:#f6f5ff;--card-bg:#fff;--ink:#0f0e17;--primary:#4f46e5;--primary-light:#818cf8;--accent:#f59e0b;--green:#10b981;--red:#ef4444;--muted:#6b7280;--border:#e5e7eb;--radius:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--content-bg);color:var(--ink);overflow-x:hidden}
+.app{display:flex;min-height:100vh}
+.sidebar{width:260px;background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s ease}
+.sidebar-logo{padding:1.5rem 1.25rem 1rem;border-bottom:1px solid var(--sidebar-border)}
+.logo-text{font-size:1.4rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:.4rem;text-decoration:none}
+.logo-text span{background:var(--primary);padding:2px 8px;border-radius:6px;font-size:1rem}
+.logo-tagline{font-size:.7rem;color:var(--sidebar-text);margin-top:.3rem;letter-spacing:.05em}
+.sidebar-nav{flex:1;padding:1rem .75rem;overflow-y:auto}
+.nav-section-label{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#3d3b5a;padding:.75rem .5rem .4rem}
+.nav-btn{display:flex;align-items:center;gap:.7rem;width:100%;padding:.65rem .75rem;border-radius:10px;border:none;background:transparent;color:var(--sidebar-text);font-family:inherit;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s;text-align:left;position:relative}
+.nav-btn:hover{background:var(--sidebar-hover);color:#c4c2e8}
+.nav-btn.active{background:rgba(79,70,229,.18);color:#fff;font-weight:600}
+.nav-btn.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;background:var(--primary);border-radius:0 3px 3px 0}
+.nav-icon{font-size:1.05rem;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--primary);color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:100px;letter-spacing:.05em}
+.nav-badge.hot{background:var(--red)}.nav-badge.new{background:var(--green)}
+.sidebar-footer{padding:1rem;border-top:1px solid var(--sidebar-border)}
+.sidebar-footer a{display:flex;align-items:center;gap:.6rem;color:var(--sidebar-text);font-size:.8rem;text-decoration:none;padding:.5rem;border-radius:8px;transition:color .15s}
+.sidebar-footer a:hover{color:#fff}
+.mobile-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:300;background:var(--sidebar-bg);border:1px solid var(--sidebar-border);color:#fff;width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.2rem;align-items:center;justify-content:center}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150}
+.main{margin-left:260px;flex:1;min-height:100vh}
+.page{display:none}.page.active{display:block}
+.page-hero{padding:3rem 2.5rem 2rem;border-bottom:1px solid var(--border);background:#fff}
+.page-hero .badge{display:inline-flex;align-items:center;gap:.4rem;background:#ede9fe;color:var(--primary);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:1rem;border:1px solid #c4b5fd}
+.page-hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:.6rem}
+.page-hero h1 .hl{color:var(--primary)}
+.page-hero p{color:var(--muted);font-size:1rem;max-width:560px;line-height:1.65}
+.page-body{padding:2.5rem}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:2rem}
+.card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;flex-direction:column;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-color,var(--primary))}
+.card:hover{border-color:var(--primary-light);transform:translateY(-3px);box-shadow:0 8px 30px rgba(79,70,229,.1)}
+.card-icon{font-size:2rem;margin-bottom:.75rem}
+.card-tag{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:100px;margin-bottom:.6rem}
+.tag-purple{background:#ede9fe;color:#6d28d9}.tag-green{background:#d1fae5;color:#065f46}.tag-yellow{background:#fef3c7;color:#92400e}.tag-red{background:#fee2e2;color:#991b1b}.tag-blue{background:#dbeafe;color:#1e40af}.tag-pink{background:#fce7f3;color:#9d174d}.tag-cyan{background:#cffafe;color:#0e7490}.tag-orange{background:#ffedd5;color:#9a3412}
+.card h3{font-size:1.1rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.01em}
+.card p{font-size:.875rem;color:var(--muted);line-height:1.65;flex:1;margin-bottom:1.25rem}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px solid var(--border);gap:.75rem}
+.card-price{font-size:1.4rem;font-weight:800;line-height:1}
+.card-price small{display:block;font-size:.7rem;color:var(--muted);font-weight:500;margin-top:2px}
+.btn{display:inline-block;font-family:inherit;font-weight:700;font-size:.85rem;padding:10px 18px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:#4338ca;transform:translateY(-1px)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#059669}
+.btn-yellow{background:var(--accent);color:#000}.btn-yellow:hover{background:#d97706;color:#fff}
+.btn-outline{background:transparent;color:var(--primary);border:2px solid var(--primary)}.btn-outline:hover{background:var(--primary);color:#fff}
+.aff-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1.25rem;transition:all .2s;text-decoration:none;color:inherit;margin-bottom:.85rem}
+.aff-card:hover{border-color:var(--primary);transform:translateX(4px);box-shadow:0 4px 20px rgba(79,70,229,.08)}
+.aff-icon{font-size:2rem;width:52px;height:52px;background:#f8f7ff;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.aff-info{flex:1}.aff-info h3{font-size:.95rem;font-weight:700;margin-bottom:.2rem}.aff-info p{font-size:.8rem;color:var(--muted);margin:0}
+.aff-arrow{color:var(--primary);font-size:1.2rem;flex-shrink:0}
+.aff-commission{background:#d1fae5;color:#065f46;font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.section-title{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:2rem 0 1rem;display:flex;align-items:center;gap:.75rem}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.about-stat{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
+.about-stat .num{font-size:2.5rem;font-weight:800;color:var(--primary);display:block;line-height:1;margin-bottom:.3rem}
+.about-stat .label{font-size:.8rem;color:var(--muted);font-weight:500}
+.story-card{background:var(--sidebar-bg);border-radius:var(--radius);padding:2rem;color:#fff;margin-bottom:1.5rem}
+.story-card h2{font-size:1.6rem;font-weight:800;line-height:1.2;margin-bottom:1rem}
+.story-card h2 span{color:var(--accent)}
+.story-card p{color:rgba(255,255,255,.65);font-size:.95rem;line-height:1.75;margin-bottom:.75rem}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem}
+.contact-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:all .2s;text-decoration:none;color:inherit}
+.contact-card:hover{border-color:var(--primary);transform:translateY(-3px)}
+.contact-card .icon{font-size:2rem;margin-bottom:.75rem;display:block}
+.contact-card h3{font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+.contact-card p{font-size:.8rem;color:var(--muted)}
+.sms-number-display{background:var(--sidebar-bg);color:var(--green);font-size:2.2rem;font-weight:800;text-align:center;padding:1.5rem;border-radius:var(--radius);letter-spacing:.05em;margin-bottom:1.5rem}
+.compliance-links{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}
+.compliance-links a{color:var(--primary);font-size:.85rem;font-weight:600;text-decoration:none;padding:6px 14px;border:1.5px solid #c4b5fd;border-radius:8px;background:#ede9fe;transition:all .15s}
+.compliance-links a:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.stack-tag{background:#fff;border:1.5px solid var(--border);padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;color:var(--ink);display:inline-block}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.mobile-toggle{display:flex}.overlay.show{display:block}.page-hero{padding:4rem 1.25rem 1.5rem}.page-body{padding:1.5rem 1.25rem}.about-grid{grid-template-columns:1fr 1fr}.card-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-logo"><div class="logo-text">Deal<span>Dily</span></div><div class="logo-tagline">AI Tools · Automations · Deals</div></div>
+<nav class="sidebar-nav">
+<div class="nav-section-label">Main</div>
+<button class="nav-btn active" onclick="showPage('saas')"><span class="nav-icon">🛠️</span> SaaS Tools <span class="nav-badge hot">{{ site.saas_tools.length }}</span></button>
+<button class="nav-btn" onclick="showPage('workflows')"><span class="nav-icon">🔄</span> AI Workflows</button>
+<button class="nav-btn" onclick="showPage('automations')"><span class="nav-icon">⚡</span> Automations</button>
+<button class="nav-btn" onclick="showPage('affiliates')"><span class="nav-icon">💰</span> Affiliate Deals <span class="nav-badge new">New</span></button>
+<div class="nav-section-label">Services</div>
+<button class="nav-btn" onclick="showPage('sms')"><span class="nav-icon">📲</span> SMS Service</button>
+<button class="nav-btn" onclick="showPage('about')"><span class="nav-icon">👤</span> About / Story</button>
+<button class="nav-btn" onclick="showPage('contact')"><span class="nav-icon">✉️</span> Contact</button>
+<div class="nav-section-label">Legal</div>
+<button class="nav-btn" onclick="showPage('legal')"><span class="nav-icon">📋</span> Legal & Compliance</button>
+</nav>
+<div class="sidebar-footer"><a href="mailto:contact@dealdily.com">✉️ contact@dealdily.com</a></div>
+</aside>
+<main class="main">
+
+<!-- SAAS TOOLS -->
+<div class="page active" id="page-saas">
+<div class="page-hero"><div class="badge">🛠️ SaaS Tools</div><h1>{{ site.hero_title }}<br><span class="hl">{{ site.hero_subtitle }}</span></h1><p>{{ site.hero_description }}</p></div>
+<div class="page-body"><div class="card-grid">
+{% for tool in site.saas_tools %}
+<div class="card" style="--card-color:{{ tool.card_color }}"><div class="card-icon">{{ tool.icon }}</div><span class="card-tag tag-{{ tool.tag_color }}">{% if tool.tag == "Most Popular" %}⭐ {% endif %}{{ tool.tag }}</span><h3>{{ tool.name }}</h3><p>{{ tool.description }}</p><div class="card-footer"><div class="card-price">{{ tool.price }}<small>{{ tool.price_note }}</small></div><a href="{{ tool.button_link }}" class="btn btn-{{ tool.button_style }}">{{ tool.button_text }}</a></div></div>
+{% endfor %}
+</div></div></div>
+
+<!-- WORKFLOWS -->
+<div class="page" id="page-workflows">
+<div class="page-hero"><div class="badge">🔄 AI Workflows</div><h1>Workflows that<br><span class="hl">print results.</span></h1><p>Pre-built n8n workflows you can deploy in minutes. Connect your tools. Let AI handle the rest.</p></div>
+<div class="page-body">
+<div class="section-title">Ready-to-Deploy Workflows</div>
+<div class="card-grid">
+{% for wf in site.workflows %}
+<div class="card" style="--card-color:{{ wf.card_color }}"><div class="card-icon">{{ wf.icon }}</div><span class="card-tag tag-{{ wf.tag_color }}">{{ wf.tag }}</span><h3>{{ wf.name }}</h3><p>{{ wf.description }}</p><div class="card-footer"><div class="card-price">{{ wf.price }}<small>{{ wf.price_note }}</small></div><a href="{{ wf.button_link }}" class="btn btn-{{ wf.button_style }}">{{ wf.button_text }}</a></div></div>
+{% endfor %}
+</div>
+<div class="section-title">Coming Soon</div>
+<div class="card-grid">
+{% for cs in site.coming_soon %}
+<div class="card" style="--card-color:#6b7280;opacity:.6"><div class="card-icon">{{ cs.icon }}</div><span class="card-tag tag-{{ cs.tag_color }}">{{ cs.tag }}</span><h3>{{ cs.name }}</h3><p>{{ cs.description }}</p><div class="card-footer"><div class="card-price">Coming Soon</div><a href="mailto:contact@dealdily.com?subject=Notify me" class="btn btn-outline">Notify Me</a></div></div>
+{% endfor %}
+</div></div></div>
+
+<!-- AUTOMATIONS -->
+<div class="page" id="page-automations">
+<div class="page-hero"><div class="badge">⚡ Automations</div><h1>Set it once.<br><span class="hl">Run it forever.</span></h1><p>Custom automation systems built with n8n, Stripe, Twilio, and AI. Your business on autopilot.</p></div>
+<div class="page-body">
+<div class="section-title">What We Automate</div>
+<div class="card-grid">
+{% for a in site.automations %}
+<div class="card" style="--card-color:{{ a.card_color }}"><div class="card-icon">{{ a.icon }}</div><span class="card-tag tag-{{ a.tag_color }}">{{ a.tag }}</span><h3>{{ a.name }}</h3><p>{{ a.description }}</p><div class="card-footer"><div class="card-price">{{ a.price }}<small>{{ a.price_note }}</small></div><a href="{{ a.button_link }}" class="btn btn-{{ a.button_style }}">{{ a.button_text }}</a></div></div>
+{% endfor %}
+</div>
+<div class="section-title">The Stack We Use</div>
+<div style="display:flex;flex-wrap:wrap;gap:.6rem">
+<span class="stack-tag">n8n</span><span class="stack-tag">Stripe</span><span class="stack-tag">Twilio</span><span class="stack-tag">Telnyx</span><span class="stack-tag">Supabase</span><span class="stack-tag">Google Sheets</span><span class="stack-tag">OpenAI</span><span class="stack-tag">Express</span><span class="stack-tag">React Native</span><span class="stack-tag">Replit</span><span class="stack-tag">Netlify</span><span class="stack-tag">Mailjet</span>
+</div></div></div>
+
+<!-- AFFILIATES -->
+<div class="page" id="page-affiliates">
+<div class="page-hero"><div class="badge">💰 Affiliate Deals</div><h1>Deals I actually<br><span class="hl">recommend.</span></h1><p>Handpicked tools, products, and courses. Every link here is something I use or have vetted personally.</p></div>
+<div class="page-body">
+<div class="section-title">🛒 Amazon — Tech & Tools</div>
+{% for aff in site.affiliate_amazon %}
+<a href="{{ aff.link }}" class="aff-card" target="_blank" rel="noopener noreferrer"><div class="aff-icon">{{ aff.icon }}</div><div class="aff-info"><h3>{{ aff.name }}</h3><p>{{ aff.description }}</p></div><span class="aff-commission">{{ aff.commission }}</span><span class="aff-arrow">→</span></a>
+{% endfor %}
+<div class="section-title">📚 Digistore24 — Courses & Digital Products</div>
+{% for aff in site.affiliate_digital %}
+<a href="{{ aff.link }}" class="aff-card" target="_blank" rel="noopener noreferrer"><div class="aff-icon">{{ aff.icon }}</div><div class="aff-info"><h3>{{ aff.name }}</h3><p>{{ aff.description }}</p></div><span class="aff-commission">{{ aff.commission }}</span><span class="aff-arrow">→</span></a>
+{% endfor %}
+<div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:12px;padding:1rem 1.25rem;margin-top:1.5rem;font-size:.8rem;color:#92400e"><strong>Disclosure:</strong> Some links on this page are affiliate links. If you click and purchase, I may earn a small commission at no extra cost to you.</div>
+</div></div>
+
+<!-- SMS -->
+<div class="page" id="page-sms">
+<div class="page-hero"><div class="badge">📲 SMS Service</div><h1>Never miss what<br><span class="hl">matters most.</span></h1><p>Text your reminders in plain English. We send them back at the right time — automatically.</p></div>
+<div class="page-body">
+<div class="sms-number-display">{{ site.sms_number }}</div>
+<div class="card-grid">
+<div class="card" style="--card-color:#10b981"><div class="card-icon">1️⃣</div><h3>Text START</h3><p>Send START to {{ site.sms_number }}. You'll get a confirmation immediately.</p></div>
+<div class="card" style="--card-color:#4f46e5"><div class="card-icon">2️⃣</div><h3>Send Your Reminder</h3><p>Text anything naturally — "Remind me to take my meds tomorrow at 8am"</p></div>
+<div class="card" style="--card-color:#f59e0b"><div class="card-icon">3️⃣</div><h3>We Remind You</h3><p>At the right time, you get a text or voice call. Automatic. Reliable.</p></div>
+</div>
+<div class="section-title">Compliance & Legal</div>
+<p style="color:var(--muted);font-size:.9rem;margin-bottom:1rem">Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for help.</p>
+<div class="compliance-links"><a href="terms-conditions.html">Terms & Conditions</a><a href="privacy-policy.html">Privacy Policy</a><a href="sms-opt-in.html">SMS Opt-In</a><a href="sms-consent.html">SMS Consent</a><a href="sms-home.html">SMS Home Page</a></div>
+</div></div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+<div class="page-hero"><div class="badge">👤 The Story</div><h1>Built by a store owner.<br><span class="hl">Not a tech bro.</span></h1><p>6 months. 7 products. $0 in venture capital. Just a convenience store in Syracuse and a burning desire to build assets instead of wages.</p></div>
+<div class="page-body">
+<div class="story-card"><h2>I'm Sal. I work <span>9AM to 10PM.</span><br>7 days a week. 365 days a year.</h2><p>I got tired of watching small businesses lose to bigger competitors who had better systems. I got tired of trading hours for money. I got tired of building someone else's dream.</p><p>So I started building my own. Every tool on this site was built out of a real need — mine or someone else's. No team. No investors. Just late nights, stubborn persistence, and AI.</p><p>I don't care about being a coder. I care about finishing. Revenue first. Perfection later.</p></div>
+<div class="about-grid">
+<div class="about-stat"><span class="num">{{ site.about.stats_products }}</span><span class="label">Products Built</span></div>
+<div class="about-stat"><span class="num">{{ site.about.stats_months }}</span><span class="label">Months Building</span></div>
+<div class="about-stat"><span class="num">{{ site.about.stats_funding }}</span><span class="label">Outside Funding</span></div>
+<div class="about-stat"><span class="num">{{ site.about.stats_uptime }}</span><span class="label">Systems Running</span></div>
+</div>
+<div class="section-title">The Philosophy</div>
+<div class="card-grid">
+<div class="card" style="--card-color:#4f46e5"><div class="card-icon">🏗️</div><h3>Assets Over Wages</h3><p>Don't trade time for money. Build systems that generate money while you sleep.</p></div>
+<div class="card" style="--card-color:#10b981"><div class="card-icon">🚀</div><h3>Speed Over Perfection</h3><p>Deploy first. Optimize later. Broken code breaks momentum. Ship it.</p></div>
+<div class="card" style="--card-color:#f59e0b"><div class="card-icon">🔒</div><h3>Privacy First</h3><p>Your data is yours. No selling, no tracking beyond what's absolutely needed.</p></div>
+</div></div></div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+<div class="page-hero"><div class="badge">✉️ Contact</div><h1>Let's talk.<br><span class="hl">Real answers only.</span></h1><p>No bots. No ticket system. Real responses from a real person.</p></div>
+<div class="page-body"><div class="contact-grid">
+<a href="mailto:contact@dealdily.com" class="contact-card"><span class="icon">📧</span><h3>General Inquiries</h3><p>contact@dealdily.com</p></a>
+<a href="mailto:support@dealdily.com" class="contact-card"><span class="icon">🛟</span><h3>Support</h3><p>support@dealdily.com</p></a>
+<a href="sms-opt-in.html" class="contact-card"><span class="icon">📲</span><h3>SMS Service</h3><p>Text START to {{ site.sms_number }}</p></a>
+</div></div></div>
+
+<!-- LEGAL -->
+<div class="page" id="page-legal">
+<div class="page-hero"><div class="badge">📋 Legal & Compliance</div><h1>Transparent.<br><span class="hl">Always.</span></h1><p>All legal documents for DealDily SMS Notifications and our products.</p></div>
+<div class="page-body"><div class="card-grid">
+<div class="card" style="--card-color:#4f46e5"><div class="card-icon">📋</div><h3>Terms & Conditions</h3><p>Full terms of service for DealDily SMS Notifications.</p><div class="card-footer"><div></div><a href="terms-conditions.html" class="btn btn-primary">View →</a></div></div>
+<div class="card" style="--card-color:#10b981"><div class="card-icon">🔒</div><h3>Privacy Policy</h3><p>How we collect, use, and protect your data.</p><div class="card-footer"><div></div><a href="privacy-policy.html" class="btn btn-primary">View →</a></div></div>
+<div class="card" style="--card-color:#f59e0b"><div class="card-icon">✅</div><h3>SMS Opt-In</h3><p>How to subscribe to DealDily SMS reminders.</p><div class="card-footer"><div></div><a href="sms-opt-in.html" class="btn btn-primary">View →</a></div></div>
+<div class="card" style="--card-color:#8b5cf6"><div class="card-icon">📝</div><h3>SMS Consent</h3><p>Explicit consent language required by Twilio and TCPA compliance.</p><div class="card-footer"><div></div><a href="sms-consent.html" class="btn btn-primary">View →</a></div></div>
+</div></div></div>
+
+</main></div>
+<script>
+function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');event.currentTarget.classList.add('active');window.scrollTo(0,0);if(window.innerWidth<=768)closeSidebar()}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
+if(window.netlifyIdentity){window.netlifyIdentity.on("init",user=>{if(!user){window.netlifyIdentity.on("login",()=>{document.location.href="/admin/"})}})}
+</script>
+</body></html>

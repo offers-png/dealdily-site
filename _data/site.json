@@ -1,0 +1,262 @@
+{
+  "hero_title": "Tools that work",
+  "hero_subtitle": "while you don't.",
+  "hero_description": "Real automation tools built by a real business owner. No fluff. No filler. Buy once, use forever.",
+  "saas_tools": [
+    {
+      "icon": "🗺️",
+      "tag": "Most Popular",
+      "tag_color": "purple",
+      "name": "Competitor Intel Engine",
+      "description": "See who's outranking you on Google Maps, their review strength, and exactly where you can beat them — in 60 seconds. Built for painters, contractors & local businesses.",
+      "price": "$19",
+      "price_note": "Lifetime access",
+      "button_text": "Get Access →",
+      "button_link": "https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00",
+      "button_style": "primary",
+      "card_color": "#6d28d9"
+    },
+    {
+      "icon": "🧾",
+      "tag": "Mobile App",
+      "tag_color": "yellow",
+      "name": "ReceiptVault",
+      "description": "Snap a photo of any receipt. It automatically organizes it and emails it to your accountant. No more panic at tax time.",
+      "price": "Free",
+      "price_note": "Then $9.99/mo",
+      "button_text": "Try Free →",
+      "button_link": "https://receipt-manager-offers8.replit.app",
+      "button_style": "green",
+      "card_color": "#f59e0b"
+    },
+    {
+      "icon": "📲",
+      "tag": "Automation",
+      "tag_color": "green",
+      "name": "SMS Reminder Bot",
+      "description": "Text it like a human. \"Remind me to call the doctor Friday at 3pm\" — done. No app. No setup. Just smart reminders.",
+      "price": "$9",
+      "price_note": "/mo · Plans available",
+      "button_text": "Get Started →",
+      "button_link": "https://sms-consent--offers8.replit.app",
+      "button_style": "primary",
+      "card_color": "#10b981"
+    },
+    {
+      "icon": "🤖",
+      "tag": "API",
+      "tag_color": "purple",
+      "name": "AI Content Repurposer",
+      "description": "Paste a YouTube link. Get captions for TikTok, Instagram, LinkedIn, Twitter, Facebook & Pinterest. Clean JSON. One API call.",
+      "price": "$27",
+      "price_note": "/mo · API access",
+      "button_text": "Get API →",
+      "button_link": "https://toolsmith721.gumroad.com/l/ai-content-repurposer",
+      "button_style": "primary",
+      "card_color": "#8b5cf6"
+    },
+    {
+      "icon": "💳",
+      "tag": "SaaS",
+      "tag_color": "red",
+      "name": "Payment Link Generator",
+      "description": "Generate Stripe payment links with time-based access, coupon logic, and auto-checkout. Sell access, get paid, move on.",
+      "price": "$47",
+      "price_note": "/mo · Unlimited links",
+      "button_text": "Get Access →",
+      "button_link": "mailto:contact@dealdily.com?subject=Payment Link Generator",
+      "button_style": "primary",
+      "card_color": "#ef4444"
+    },
+    {
+      "icon": "📘",
+      "tag": "eBook",
+      "tag_color": "orange",
+      "name": "Beginners' Workflow AI",
+      "description": "Build & sell AI automations with n8n, Google Sheets, and ChatGPT. Zero coding. Step-by-step. Build once, earn forever.",
+      "price": "$10",
+      "price_note": "One-time · PDF download",
+      "button_text": "Buy Now →",
+      "button_link": "https://toolsmith721.gumroad.com/l/ipdpbc",
+      "button_style": "primary",
+      "card_color": "#f97316"
+    },
+    {
+      "icon": "😂",
+      "tag": "Telegram Bot",
+      "tag_color": "cyan",
+      "name": "Joke Factory Bot",
+      "description": "Fresh AI-generated jokes straight to your Telegram. Clean, dark humor, one-liners. Buy → press start → laugh instantly.",
+      "price": "$5",
+      "price_note": "One-time · Lifetime",
+      "button_text": "Get Bot →",
+      "button_link": "https://toolsmith721.gumroad.com/l/xkhbgh",
+      "button_style": "primary",
+      "card_color": "#06b6d4"
+    }
+  ],
+  "workflows": [
+    {
+      "icon": "🎬",
+      "tag": "Content",
+      "tag_color": "purple",
+      "name": "YouTube → TikTok Repurposer",
+      "description": "Automatically takes any YouTube video, extracts the transcript, rewrites it for TikTok, and outputs a ready-to-post script.",
+      "price": "$27",
+      "price_note": "/mo · API included",
+      "button_text": "Get Workflow →",
+      "button_link": "https://toolsmith721.gumroad.com/l/ai-content-repurposer",
+      "button_style": "primary",
+      "card_color": "#6d28d9"
+    },
+    {
+      "icon": "📞",
+      "tag": "Reminder",
+      "tag_color": "green",
+      "name": "AI Reminder Bot (Voice + SMS)",
+      "description": "Text a reminder in plain English. AI parses it, schedules it, and sends a voice call or SMS at the right time.",
+      "price": "$9",
+      "price_note": "/mo · Unlimited reminders",
+      "button_text": "Deploy Now →",
+      "button_link": "https://sms-consent--offers8.replit.app",
+      "button_style": "primary",
+      "card_color": "#10b981"
+    },
+    {
+      "icon": "🗺️",
+      "tag": "Lead Gen",
+      "tag_color": "yellow",
+      "name": "Google Maps Lead Scraper",
+      "description": "Scrape local businesses from Google Maps by niche and location. Extract names, ratings, review counts, and contact info.",
+      "price": "$19",
+      "price_note": "One-time · Lifetime",
+      "button_text": "Get It →",
+      "button_link": "https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00",
+      "button_style": "primary",
+      "card_color": "#f59e0b"
+    }
+  ],
+  "coming_soon": [
+    {
+      "icon": "📧",
+      "tag": "Email",
+      "tag_color": "blue",
+      "name": "Cold Outreach Automation",
+      "description": "Scrape leads → enrich with data → send personalized cold emails automatically. Full n8n workflow."
+    },
+    {
+      "icon": "📱",
+      "tag": "Social",
+      "tag_color": "pink",
+      "name": "Auto Social Poster",
+      "description": "Generate and schedule 10–15 posts per day across TikTok, Instagram, Twitter from one content source."
+    }
+  ],
+  "automations": [
+    {
+      "icon": "💳",
+      "tag": "Payments",
+      "tag_color": "purple",
+      "name": "Stripe Payment Automation",
+      "description": "Auto-generate payment links, handle time-based access, manage coupons, and trigger actions on successful payments — all automated.",
+      "price": "$47",
+      "price_note": "/mo",
+      "button_text": "Get Access →",
+      "button_link": "mailto:contact@dealdily.com?subject=Payment Automation",
+      "button_style": "primary",
+      "card_color": "#4f46e5"
+    },
+    {
+      "icon": "📲",
+      "tag": "SMS",
+      "tag_color": "green",
+      "name": "SMS Marketing System",
+      "description": "Full SMS infrastructure — opt-in pages, consent flows, compliance, auto-recharge, and Twilio/Telnyx integration.",
+      "price": "$9",
+      "price_note": "/mo · Fully compliant",
+      "button_text": "Start →",
+      "button_link": "https://sms-consent--offers8.replit.app",
+      "button_style": "primary",
+      "card_color": "#10b981"
+    },
+    {
+      "icon": "🧾",
+      "tag": "Accounting",
+      "tag_color": "yellow",
+      "name": "Receipt Management Automation",
+      "description": "Snap receipts → AI organizes → auto-emails your accountant on schedule. Tax time goes from panic to a single tap.",
+      "price": "Free",
+      "price_note": "Trial then $9.99/mo",
+      "button_text": "Try Free →",
+      "button_link": "https://receipt-manager-offers8.replit.app",
+      "button_style": "green",
+      "card_color": "#f59e0b"
+    },
+    {
+      "icon": "🤖",
+      "tag": "Content",
+      "tag_color": "purple",
+      "name": "Content Repurposing Engine",
+      "description": "One YouTube video becomes 7 platform-ready posts automatically. Feed the content machine once. Post everywhere.",
+      "price": "$20",
+      "price_note": "/mo · API",
+      "button_text": "Get It →",
+      "button_link": "https://toolsmith721.gumroad.com/l/ai-content-repurposer",
+      "button_style": "primary",
+      "card_color": "#8b5cf6"
+    }
+  ],
+  "affiliate_amazon": [
+    {
+      "icon": "💻",
+      "name": "Best Budget Laptops for Automation",
+      "description": "The exact setup I recommend for running n8n and workflows on a budget",
+      "commission": "Up to 4%",
+      "link": "#"
+    },
+    {
+      "icon": "📱",
+      "name": "Best Phones for Business Owners",
+      "description": "Run your automations, check Stripe, manage SMS — from anywhere",
+      "commission": "Up to 4%",
+      "link": "#"
+    },
+    {
+      "icon": "🖥️",
+      "name": "PC Components — Best Deals This Week",
+      "description": "Curated from r/buildapcsales — updated regularly",
+      "commission": "Up to 4%",
+      "link": "#"
+    }
+  ],
+  "affiliate_digital": [
+    {
+      "icon": "🤖",
+      "name": "AI Automation Mastery Course",
+      "description": "Learn to build and sell automations — the same skills I use every day",
+      "commission": "50-70%",
+      "link": "#"
+    },
+    {
+      "icon": "💰",
+      "name": "Make Money with n8n Workflows",
+      "description": "Step-by-step guide to selling automation services to local businesses",
+      "commission": "50-70%",
+      "link": "#"
+    },
+    {
+      "icon": "📈",
+      "name": "Affiliate Marketing Blueprint",
+      "description": "The system behind building passive affiliate income streams",
+      "commission": "50-70%",
+      "link": "#"
+    }
+  ],
+  "about": {
+    "stats_products": "7",
+    "stats_months": "6",
+    "stats_funding": "$0",
+    "stats_uptime": "24/7"
+  },
+  "sms_number": "+1-855-923-0032"
+}

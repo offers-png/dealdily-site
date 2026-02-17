@@ -1,0 +1,107 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images"
+public_folder: "/images"
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "site"
+        label: "Homepage & Products"
+        file: "_data/site.json"
+        fields:
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Hero Description", name: "hero_description", widget: "text" }
+
+          - label: "SaaS Tools"
+            name: "saas_tools"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Tag Label", name: "tag", widget: "string" }
+              - { label: "Tag Color", name: "tag_color", widget: "select", options: ["purple","green","yellow","red","blue","pink","cyan","orange"] }
+              - { label: "Product Name", name: "name", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Price Note", name: "price_note", widget: "string" }
+              - { label: "Button Text", name: "button_text", widget: "string" }
+              - { label: "Button Link", name: "button_link", widget: "string" }
+              - { label: "Button Style", name: "button_style", widget: "select", options: ["primary","green","yellow","outline"] }
+              - { label: "Card Color (hex)", name: "card_color", widget: "string" }
+
+          - label: "AI Workflows"
+            name: "workflows"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Tag Label", name: "tag", widget: "string" }
+              - { label: "Tag Color", name: "tag_color", widget: "select", options: ["purple","green","yellow","red","blue","pink","cyan","orange"] }
+              - { label: "Product Name", name: "name", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Price Note", name: "price_note", widget: "string" }
+              - { label: "Button Text", name: "button_text", widget: "string" }
+              - { label: "Button Link", name: "button_link", widget: "string" }
+              - { label: "Button Style", name: "button_style", widget: "select", options: ["primary","green","yellow","outline"] }
+              - { label: "Card Color (hex)", name: "card_color", widget: "string" }
+
+          - label: "Coming Soon"
+            name: "coming_soon"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Tag Label", name: "tag", widget: "string" }
+              - { label: "Tag Color", name: "tag_color", widget: "select", options: ["purple","green","yellow","red","blue","pink","cyan","orange"] }
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+          - label: "Automations"
+            name: "automations"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Tag Label", name: "tag", widget: "string" }
+              - { label: "Tag Color", name: "tag_color", widget: "select", options: ["purple","green","yellow","red","blue","pink","cyan","orange"] }
+              - { label: "Product Name", name: "name", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Price", name: "price", widget: "string" }
+              - { label: "Price Note", name: "price_note", widget: "string" }
+              - { label: "Button Text", name: "button_text", widget: "string" }
+              - { label: "Button Link", name: "button_link", widget: "string" }
+              - { label: "Button Style", name: "button_style", widget: "select", options: ["primary","green","yellow","outline"] }
+              - { label: "Card Color (hex)", name: "card_color", widget: "string" }
+
+          - label: "Amazon Affiliate Links"
+            name: "affiliate_amazon"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "name", widget: "string" }
+              - { label: "Description", name: "description", widget: "string" }
+              - { label: "Commission", name: "commission", widget: "string" }
+              - { label: "Affiliate Link", name: "link", widget: "string" }
+
+          - label: "Digital Affiliate Links"
+            name: "affiliate_digital"
+            widget: "list"
+            fields:
+              - { label: "Icon (emoji)", name: "icon", widget: "string" }
+              - { label: "Title", name: "name", widget: "string" }
+              - { label: "Description", name: "description", widget: "string" }
+              - { label: "Commission", name: "commission", widget: "string" }
+              - { label: "Affiliate Link", name: "link", widget: "string" }
+
+          - label: "About Stats"
+            name: "about"
+            widget: "object"
+            fields:
+              - { label: "Products Built", name: "stats_products", widget: "string" }
+              - { label: "Months Building", name: "stats_months", widget: "string" }
+              - { label: "Outside Funding", name: "stats_funding", widget: "string" }
+              - { label: "Uptime", name: "stats_uptime", widget: "string" }
+
+          - { label: "SMS Number", name: "sms_number", widget: "string" }
