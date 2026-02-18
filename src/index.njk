@@ -1,976 +1,435 @@
----
-permalink: /index.html
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DealDily — AI Tools That Work While You Don't</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ─── TOKENS ─────────────────────────────────────────────────────────── */
-:root {
-  --black:   #080810;
-  --off:     #0e0e1a;
-  --panel:   #13131f;
-  --border:  rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --text:    #e8e8f0;
-  --muted:   #7070a0;
-  --dim:     rgba(255,255,255,0.35);
+:root{--bg:#06060f;--panel:#0d0d1a;--card:#111120;--card2:#141428;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--text:#e2e2ef;--muted:#64648a;--dim:rgba(255,255,255,0.28);--indigo:#5b4fff;--indigo2:#4338e0;--teal:#0fd4a4;--amber:#f5a623;--rose:#f43f5e;--sky:#38bdf8;--orange:#ff6b35;--sw:260px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
-  --indigo:  #5b4fff;
-  --violet:  #8b5cf6;
-  --teal:    #0fd4a4;
-  --amber:   #f5a623;
-  --rose:    #f43f5e;
-  --sky:     #38bdf8;
+/* LAYOUT */
+.layout{display:flex;min-height:100vh}
+.main{margin-left:var(--sw);flex:1;min-width:0;max-width:calc(100vw - var(--sw))}
+.page{display:none}.page.active{display:block}
 
-  --glow-i:  rgba(91,79,255,0.22);
-  --glow-t:  rgba(15,212,164,0.18);
+/* SIDEBAR */
+.sidebar{width:var(--sw);position:fixed;top:0;left:0;bottom:0;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:200;transition:transform .3s ease}
+.sb-logo{padding:1.75rem 1.25rem 1.25rem;border-bottom:1px solid var(--border)}
+.sb-brand{display:flex;align-items:center;gap:.5rem;font-family:var(--fh);font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-.02em}
+.sb-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);flex-shrink:0}
+.sb-sub{font-size:.62rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:.35rem}
+.sb-nav{flex:1;padding:1rem .625rem;overflow-y:auto}
+.sb-nav::-webkit-scrollbar{width:2px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.sb-grp{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:.75rem .625rem .35rem;opacity:.5}
+.sb-btn{display:flex;align-items:center;gap:.65rem;width:100%;padding:.575rem .75rem;border-radius:9px;color:var(--muted);font-size:.85rem;font-weight:500;transition:all .15s;position:relative;text-align:left}
+.sb-btn:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.sb-btn.on{color:#fff;background:rgba(91,79,255,.14);font-weight:600}
+.sb-btn.on::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:2px;border-radius:0 2px 2px 0;background:linear-gradient(180deg,var(--indigo),#8b5cf6)}
+.sb-ico{font-size:.95rem;width:17px;text-align:center;flex-shrink:0}
+.sb-badge{margin-left:auto;font-size:.57rem;font-weight:700;padding:2px 6px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase}
+.sb-badge.hot{background:rgba(244,63,94,.18);color:var(--rose)}
+.sb-badge.new{background:rgba(15,212,164,.13);color:var(--teal)}
+.sb-foot{padding:.875rem 1.25rem;border-top:1px solid var(--border);font-size:.72rem;color:var(--muted)}
+.sb-foot a{color:var(--muted);transition:color .15s}
+.sb-foot a:hover{color:var(--text)}
 
-  --r-sm:    10px;
-  --r-md:    16px;
-  --r-lg:    24px;
-  --r-xl:    32px;
+/* MOB */
+.mob-btn{display:none;position:fixed;top:.875rem;left:.875rem;z-index:300;width:38px;height:38px;border-radius:9px;background:var(--panel);border:1px solid var(--border2);color:#fff;font-size:1rem;align-items:center;justify-content:center}
+.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:150;backdrop-filter:blur(3px)}
 
-  --sidebar: 268px;
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-}
+/* PAGE TOP */
+.pt{padding:2.75rem 2.5rem 2.25rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.pt::after{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,255,.16) 0%,transparent 70%);pointer-events:none}
+.chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo);background:rgba(91,79,255,.1);border:1px solid rgba(91,79,255,.22);padding:3px 11px;border-radius:100px;margin-bottom:.875rem}
+.pt h1{font-family:var(--fh);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;color:#fff;margin-bottom:.6rem}
+.pt h1 em{font-style:normal;background:linear-gradient(90deg,var(--indigo),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pt p{color:var(--muted);font-size:.9rem;max-width:500px;line-height:1.7}
+.pb{padding:2rem 2.5rem}
 
-/* ─── RESET ──────────────────────────────────────────────────────────── */
-*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; font-size:16px; }
-body {
-  font-family: var(--font-body);
-  background: var(--black);
-  color: var(--text);
-  overflow-x: hidden;
-  line-height:1.6;
-}
-a { color:inherit; text-decoration:none; }
-button { font-family:inherit; cursor:pointer; border:none; background:none; }
+/* SECTION LABEL */
+.sl{display:flex;align-items:center;gap:.6rem;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:1.75rem 0 1.1rem}
+.sl::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* ─── LAYOUT ─────────────────────────────────────────────────────────── */
-.app { display:flex; min-height:100vh; }
-.main {
-  margin-left: var(--sidebar);
-  flex:1; min-height:100vh;
-  min-width:0; overflow-x:hidden;
-  max-width: calc(100vw - var(--sidebar));
-}
-.page { display:none; }
-.page.active { display:block; }
+/* CARD GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:2rem}
 
-/* ─── SIDEBAR ────────────────────────────────────────────────────────── */
-.sidebar {
-  width: var(--sidebar);
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  position: fixed; top:0; left:0; bottom:0;
-  z-index:200;
-  display:flex; flex-direction:column;
-  transition: transform .3s cubic-bezier(.4,0,.2,1);
-}
+/* PRODUCT CARD */
+.pc{background:var(--card);padding:1.6rem;display:flex;flex-direction:column;gap:.6rem;position:relative;transition:background .18s}
+.pc:hover{background:var(--card2)}
+.pcb{position:absolute;top:0;left:0;right:0;height:2px}
+.pci{font-size:1.75rem;line-height:1;margin-bottom:.15rem}
+.pct{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
+.t-purple{background:rgba(91,79,255,.14);color:#a78bfa}
+.t-green{background:rgba(15,212,164,.1);color:var(--teal)}
+.t-yellow{background:rgba(245,166,35,.1);color:var(--amber)}
+.t-red{background:rgba(244,63,94,.1);color:var(--rose)}
+.t-blue{background:rgba(56,189,248,.1);color:var(--sky)}
+.t-pink{background:rgba(236,72,153,.1);color:#f472b6}
+.t-cyan{background:rgba(34,211,238,.1);color:#22d3ee}
+.t-orange{background:rgba(255,107,53,.1);color:var(--orange)}
+.pc h3{font-family:var(--fh);font-size:1rem;font-weight:700;color:#fff;letter-spacing:-.01em}
+.pcd{font-size:.82rem;color:var(--muted);line-height:1.65;flex:1}
+.pcf{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding-top:.875rem;border-top:1px solid var(--border);margin-top:auto}
+.pcp{font-family:var(--fh);font-size:1.4rem;font-weight:800;color:#fff;line-height:1}
+.pcp small{display:block;font-size:.67rem;color:var(--muted);font-weight:400;font-family:var(--fb);margin-top:2px}
 
-.sidebar-logo {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-.logo-mark {
-  display:flex; align-items:center; gap:.5rem;
-  font-family: var(--font-head);
-  font-size:1.5rem; font-weight:800;
-  color: #fff; letter-spacing:-.02em;
-}
-.logo-mark .dot {
-  width:8px; height:8px;
-  background: var(--teal);
-  border-radius:50%;
-  box-shadow: 0 0 12px var(--teal);
-  flex-shrink:0;
-}
-.logo-sub {
-  margin-top:.4rem;
-  font-size:.68rem; font-weight:400;
-  color: var(--muted);
-  letter-spacing:.12em; text-transform:uppercase;
-}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fb);font-size:.78rem;font-weight:600;padding:8px 16px;border-radius:8px;white-space:nowrap;transition:all .18s;text-decoration:none;cursor:pointer;border:none}
+.btn-p{background:var(--indigo);color:#fff;box-shadow:0 3px 16px rgba(91,79,255,.28)}
+.btn-p:hover{background:var(--indigo2);box-shadow:0 5px 22px rgba(91,79,255,.45);transform:translateY(-1px)}
+.btn-g{background:rgba(15,212,164,.13);color:var(--teal);border:1px solid rgba(15,212,164,.28)}
+.btn-g:hover{background:rgba(15,212,164,.22);transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--border2)}
+.btn-ghost:hover{background:rgba(255,255,255,.09);color:var(--text)}
 
-.sidebar-nav { flex:1; padding:1.25rem .75rem; overflow-y:auto; }
-.sidebar-nav::-webkit-scrollbar { width:2px; }
-.sidebar-nav::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+/* AMAZON */
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:2rem}
+.ac{background:var(--card);display:flex;flex-direction:column;transition:background .18s}
+.ac:hover{background:var(--card2)}
+.ac:hover .ai img{transform:scale(1.04)}
+.ai{aspect-ratio:1;background:var(--panel);overflow:hidden;position:relative}
+.ai img{width:100%;height:100%;object-fit:contain;padding:1.25rem;transition:transform .3s ease}
+.apb{position:absolute;top:.6rem;right:.6rem;font-family:var(--fh);font-size:.82rem;font-weight:800;color:#fff;background:rgba(255,107,53,.92);backdrop-filter:blur(6px);padding:3px 9px;border-radius:7px}
+.ab{padding:1rem 1rem .75rem;flex:1;display:flex;flex-direction:column;gap:.4rem}
+.at{font-family:var(--fh);font-size:.82rem;font-weight:700;color:#fff;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ah{font-size:.75rem;color:var(--muted);line-height:1.55;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.af{padding:.6rem 1rem 1rem;display:flex;align-items:center;gap:.6rem;border-top:1px solid var(--border)}
+.apr{font-family:var(--fh);font-size:1.15rem;font-weight:800;color:#fff;flex:1}
+.abtn{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:600;padding:7px 13px;border-radius:7px;background:var(--indigo);color:#fff;white-space:nowrap;transition:all .18s;box-shadow:0 2px 12px rgba(91,79,255,.25)}
+.abtn:hover{background:var(--indigo2);transform:translateY(-1px)}
 
-.nav-group-label {
-  font-size:.6rem; font-weight:700;
-  letter-spacing:.2em; text-transform:uppercase;
-  color: var(--muted);
-  padding:.75rem .75rem .4rem;
-  opacity:.5;
-}
+/* FILTER */
+.fb-wrap{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+.fl{font-size:.7rem;color:var(--muted);margin-right:.2rem}
+.fb{font-size:.72rem;font-weight:500;padding:5px 13px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.fb:hover,.fb.on{background:rgba(91,79,255,.14);border-color:rgba(91,79,255,.38);color:#fff}
 
-.nav-item {
-  display:flex; align-items:center; gap:.7rem;
-  width:100%; padding:.6rem .75rem;
-  border-radius: var(--r-sm);
-  color: var(--muted);
-  font-size:.875rem; font-weight:500;
-  transition: all .15s;
-  position:relative;
-  cursor:pointer;
-}
-.nav-item:hover { color:var(--text); background:rgba(255,255,255,.04); }
-.nav-item.active {
-  color:#fff; background:rgba(91,79,255,.15);
-  font-weight:600;
-}
-.nav-item.active::before {
-  content:'';
-  position:absolute; left:0; top:15%; bottom:15%;
-  width:2.5px; border-radius:0 2px 2px 0;
-  background: linear-gradient(180deg, var(--indigo), var(--violet));
-}
-.nav-icon { font-size:1rem; flex-shrink:0; width:18px; text-align:center; }
-.nav-badge {
-  margin-left:auto;
-  font-size:.58rem; font-weight:700;
-  padding:2px 7px; border-radius:100px;
-  letter-spacing:.05em; text-transform:uppercase;
-}
-.badge-hot { background:rgba(244,63,94,.2); color:var(--rose); }
-.badge-new { background:rgba(15,212,164,.15); color:var(--teal); }
+/* AFF */
+.aff-list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem}
+.aff-row{display:flex;align-items:center;gap:1rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.875rem 1.1rem;transition:all .18s}
+.aff-row:hover{border-color:var(--border2);background:var(--card2);transform:translateX(3px)}
+.aff-ico{width:40px;height:40px;border-radius:9px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.aff-info{flex:1}
+.aff-info h4{font-size:.87rem;font-weight:600;color:#fff;margin-bottom:.12rem}
+.aff-info p{font-size:.75rem;color:var(--muted)}
+.aff-comm{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:100px;background:rgba(15,212,164,.1);color:var(--teal);white-space:nowrap;flex-shrink:0}
+.aff-arr{color:var(--muted);flex-shrink:0}
 
-.sidebar-foot {
-  padding:1rem 1.5rem;
-  border-top:1px solid var(--border);
-  font-size:.75rem; color:var(--muted);
-}
-.sidebar-foot a { color:var(--muted); transition:color .15s; }
-.sidebar-foot a:hover { color:var(--text); }
+/* STATS */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.sc{background:var(--card);padding:1.75rem 1.5rem;text-align:center}
+.sn{font-family:var(--fh);font-size:2.6rem;font-weight:800;color:#fff;line-height:1;display:block;background:linear-gradient(135deg,#fff 30%,var(--muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl2{font-size:.72rem;color:var(--muted);margin-top:.35rem;display:block}
 
-/* ─── MOBILE TOGGLE ──────────────────────────────────────────────────── */
-.mob-toggle {
-  display:none;
-  position:fixed; top:1rem; left:1rem; z-index:300;
-  width:40px; height:40px; border-radius:10px;
-  background:var(--panel); border:1px solid var(--border2);
-  color:#fff; font-size:1.1rem;
-  align-items:center; justify-content:center;
-}
-.overlay {
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,.6); z-index:150;
-  backdrop-filter:blur(4px);
-}
+/* STORY */
+.story{background:linear-gradient(135deg,var(--card) 0%,rgba(91,79,255,.07) 100%);border:1px solid var(--border);border-radius:18px;padding:2.25rem;margin-bottom:1.75rem;position:relative;overflow:hidden}
+.story::after{content:'';position:absolute;bottom:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(15,212,164,.12) 0%,transparent 70%);pointer-events:none}
+.story h2{font-family:var(--fh);font-size:1.5rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:1.1rem;letter-spacing:-.02em}
+.story h2 span{color:var(--teal)}
+.story p{font-size:.87rem;color:var(--muted);line-height:1.8;margin-bottom:.7rem}
 
-/* ─── PAGE HERO ──────────────────────────────────────────────────────── */
-.page-top {
-  padding: 3rem 2rem 2.5rem;
-  border-bottom:1px solid var(--border);
-  position:relative; overflow:hidden;
-}
-.page-top::before {
-  content:'';
-  position:absolute; top:-60px; right:-60px;
-  width:320px; height:320px; border-radius:50%;
-  background: radial-gradient(circle, var(--glow-i) 0%, transparent 70%);
-  pointer-events:none;
-}
-.chip {
-  display:inline-flex; align-items:center; gap:.4rem;
-  font-size:.68rem; font-weight:700;
-  letter-spacing:.1em; text-transform:uppercase;
-  color:var(--indigo);
-  background:rgba(91,79,255,.12);
-  border:1px solid rgba(91,79,255,.25);
-  padding:4px 12px; border-radius:100px;
-  margin-bottom:1rem;
-}
-.page-top h1 {
-  font-family: var(--font-head);
-  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-  font-weight:800; line-height:1.1;
-  letter-spacing:-.03em;
-  color:#fff; margin-bottom:.75rem;
-}
-.page-top h1 em {
-  font-style:normal;
-  background: linear-gradient(90deg, var(--indigo), var(--teal));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.page-top p {
-  color:var(--muted); font-size:.95rem;
-  max-width:520px; line-height:1.7;
-}
+/* SMS */
+.sms-num{font-family:var(--fh);font-size:2.1rem;font-weight:800;color:var(--teal);text-align:center;background:rgba(15,212,164,.05);border:1px solid rgba(15,212,164,.18);border-radius:14px;padding:1.35rem;margin-bottom:1.5rem;letter-spacing:.03em}
+.stg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.stc{background:var(--card);padding:1.6rem;display:flex;flex-direction:column;gap:.5rem}
+.stn{font-family:var(--fh);font-size:2.8rem;font-weight:800;line-height:1;color:rgba(91,79,255,.13)}
+.stc h3{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff}
+.stc p{font-size:.8rem;color:var(--muted);line-height:1.65}
 
-/* ─── PAGE BODY ──────────────────────────────────────────────────────── */
-.page-body { padding:2rem; }
+/* CONTACT */
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.cc{background:var(--card);padding:1.75rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.6rem;transition:background .18s}
+.cc:hover{background:var(--card2)}
+.cc .ico{font-size:1.8rem}
+.cc h3{font-family:var(--fh);font-size:.9rem;font-weight:700;color:#fff}
+.cc p{font-size:.75rem;color:var(--muted)}
 
-/* ─── SECTION LABEL ──────────────────────────────────────────────────── */
-.sec-label {
-  display:flex; align-items:center; gap:.75rem;
-  font-size:.65rem; font-weight:700;
-  letter-spacing:.18em; text-transform:uppercase;
-  color:var(--muted); margin: 2rem 0 1.25rem;
-}
-.sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+/* LEGAL */
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.lc{background:var(--card);padding:1.6rem;display:flex;flex-direction:column;gap:.875rem}
+.lc h3{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff}
+.lc p{font-size:.78rem;color:var(--muted);flex:1}
 
-/* ─── CARD GRID ──────────────────────────────────────────────────────── */
-.card-grid {
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px,1fr));
-  gap:1px;
-  background:var(--border);
-  border-radius:var(--r-lg);
-  overflow:hidden;
-  border:1px solid var(--border);
-  margin-bottom:2.5rem;
-}
+/* STACK / SOON */
+.stack{display:flex;flex-wrap:wrap;gap:.4rem}
+.sp{font-size:.72rem;font-weight:500;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:4px 11px;border-radius:100px;transition:all .18s}
+.sp:hover{color:var(--text);border-color:var(--border2)}
+.soon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;opacity:.5;margin-bottom:2rem}
+.snc{background:var(--card);padding:1.6rem}
+.snc h3{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.snc p{font-size:.78rem;color:var(--muted)}
 
-/* ─── PRODUCT CARD ───────────────────────────────────────────────────── */
-.pcard {
-  background:var(--panel);
-  padding:1.75rem;
-  display:flex; flex-direction:column;
-  gap:.75rem;
-  transition:background .2s;
-  position:relative;
-}
-.pcard:hover { background:rgba(255,255,255,.03); }
-.pcard-accent {
-  position:absolute; top:0; left:0; right:0;
-  height:2px;
-  background:var(--accent-color, var(--indigo));
-}
-.pcard-icon {
-  font-size:1.8rem; line-height:1;
-  margin-bottom:.25rem;
-}
-.pcard-tag {
-  display:inline-block;
-  font-size:.6rem; font-weight:700;
-  letter-spacing:.1em; text-transform:uppercase;
-  padding:3px 9px; border-radius:100px;
-}
-.t-purple { background:rgba(91,79,255,.15); color:#a78bfa; }
-.t-green  { background:rgba(15,212,164,.12); color:var(--teal); }
-.t-yellow { background:rgba(245,166,35,.12); color:var(--amber); }
-.t-red    { background:rgba(244,63,94,.12);  color:var(--rose); }
-.t-blue   { background:rgba(56,189,248,.12); color:var(--sky); }
-.t-pink   { background:rgba(236,72,153,.12); color:#f472b6; }
-.t-cyan   { background:rgba(34,211,238,.12); color:#22d3ee; }
-.t-orange { background:rgba(249,115,22,.12); color:#fb923c; }
+/* DISC */
+.disc{background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.18);border-radius:9px;padding:.875rem 1.1rem;font-size:.75rem;color:rgba(245,166,35,.75);margin-top:1.25rem;line-height:1.65}
 
-.pcard h3 {
-  font-family: var(--font-head);
-  font-size:1.05rem; font-weight:700;
-  color:#fff; letter-spacing:-.01em;
-}
-.pcard-desc {
-  font-size:.85rem; color:var(--muted);
-  line-height:1.65; flex:1;
-}
-.pcard-foot {
-  display:flex; align-items:center;
-  justify-content:space-between;
-  padding-top:1rem;
-  border-top:1px solid var(--border);
-  gap:.75rem; margin-top:auto;
-}
-.pcard-price {
-  font-family: var(--font-head);
-  font-size:1.5rem; font-weight:800;
-  color:#fff; line-height:1;
-}
-.pcard-price small {
-  display:block; font-size:.7rem;
-  color:var(--muted); font-weight:400;
-  font-family:var(--font-body);
-  margin-top:2px;
-}
+/* ANIM */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.page.active .pt,.page.active .pb>*{animation:fadeUp .35s ease both}
+.page.active .pb>*:nth-child(1){animation-delay:.04s}
+.page.active .pb>*:nth-child(2){animation-delay:.09s}
+.page.active .pb>*:nth-child(3){animation-delay:.14s}
+.page.active .pb>*:nth-child(4){animation-delay:.19s}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* ─── BUTTONS ────────────────────────────────────────────────────────── */
-.btn {
-  display:inline-flex; align-items:center; gap:.4rem;
-  font-family:var(--font-body);
-  font-size:.8rem; font-weight:600;
-  padding:9px 18px; border-radius:var(--r-sm);
-  border:none; cursor:pointer;
-  white-space:nowrap; transition:all .2s;
-  text-decoration:none;
+/* RESPONSIVE */
+@media(max-width:860px){
+  .layout{display:block}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;max-width:100vw}
+  .mob-btn{display:flex}
+  .ovl.show{display:block}
+  .pt{padding:4rem 1.25rem 1.75rem}
+  .pb{padding:1.25rem}
 }
-.btn-primary {
-  background:var(--indigo); color:#fff;
-  box-shadow:0 4px 20px rgba(91,79,255,.3);
-}
-.btn-primary:hover {
-  background:#4a3fee;
-  box-shadow:0 6px 28px rgba(91,79,255,.5);
-  transform:translateY(-1px);
-}
-.btn-teal {
-  background:rgba(15,212,164,.15);
-  color:var(--teal);
-  border:1px solid rgba(15,212,164,.3);
-}
-.btn-teal:hover { background:rgba(15,212,164,.25); transform:translateY(-1px); }
-.btn-ghost {
-  background:rgba(255,255,255,.05);
-  color:var(--dim);
-  border:1px solid var(--border2);
-}
-.btn-ghost:hover { background:rgba(255,255,255,.08); color:var(--text); }
-
-/* ─── AFFILIATE ROWS ─────────────────────────────────────────────────── */
-.aff-list { display:flex; flex-direction:column; gap:.6rem; margin-bottom:2rem; }
-.aff-row {
-  display:flex; align-items:center; gap:1.25rem;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:var(--r-md);
-  padding:1rem 1.25rem;
-  text-decoration:none; color:inherit;
-  transition:all .2s;
-}
-.aff-row:hover {
-  border-color:var(--border2);
-  background:rgba(255,255,255,.03);
-  transform:translateX(4px);
-}
-.aff-emo {
-  width:44px; height:44px; border-radius:10px;
-  background:rgba(255,255,255,.05);
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.4rem; flex-shrink:0;
-}
-.aff-text { flex:1; }
-.aff-text h4 { font-size:.9rem; font-weight:600; color:#fff; margin-bottom:.15rem; }
-.aff-text p { font-size:.78rem; color:var(--muted); }
-.aff-comm {
-  font-size:.65rem; font-weight:700;
-  padding:3px 9px; border-radius:100px;
-  background:rgba(15,212,164,.1); color:var(--teal);
-  white-space:nowrap; flex-shrink:0;
-}
-.aff-arr { color:var(--muted); flex-shrink:0; font-size:.9rem; }
-
-/* ─── ABOUT STATS ────────────────────────────────────────────────────── */
-.stat-row {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:1px; background:var(--border);
-  border:1px solid var(--border);
-  border-radius:var(--r-lg); overflow:hidden;
-  margin-bottom:2rem;
-}
-.stat-cell {
-  background:var(--panel);
-  padding:2rem 1.5rem; text-align:center;
-}
-.stat-num {
-  font-family: var(--font-head);
-  font-size:2.8rem; font-weight:800;
-  color:#fff; line-height:1; display:block;
-  background: linear-gradient(135deg, #fff 40%, var(--muted));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.stat-label {
-  font-size:.75rem; color:var(--muted);
-  margin-top:.4rem; display:block;
-  letter-spacing:.05em;
-}
-
-/* ─── STORY BLOCK ────────────────────────────────────────────────────── */
-.story-block {
-  border:1px solid var(--border);
-  border-radius:var(--r-lg);
-  padding:2.5rem;
-  background: linear-gradient(135deg, var(--panel) 0%, rgba(91,79,255,.06) 100%);
-  margin-bottom:2rem;
-  position:relative; overflow:hidden;
-}
-.story-block::after {
-  content:'';
-  position:absolute; bottom:-40px; right:-40px;
-  width:200px; height:200px; border-radius:50%;
-  background:radial-gradient(circle, var(--glow-t) 0%, transparent 70%);
-  pointer-events:none;
-}
-.story-block h2 {
-  font-family:var(--font-head);
-  font-size:1.6rem; font-weight:800;
-  color:#fff; line-height:1.3;
-  margin-bottom:1.25rem; letter-spacing:-.02em;
-}
-.story-block h2 span { color:var(--teal); }
-.story-block p {
-  font-size:.9rem; color:var(--muted);
-  line-height:1.8; margin-bottom:.75rem;
-}
-
-/* ─── SMS PAGE ───────────────────────────────────────────────────────── */
-.sms-hero-num {
-  font-family:var(--font-head);
-  font-size:2.4rem; font-weight:800;
-  color:var(--teal); text-align:center;
-  background:rgba(15,212,164,.06);
-  border:1px solid rgba(15,212,164,.2);
-  border-radius:var(--r-md);
-  padding:1.5rem;
-  margin-bottom:1.5rem;
-  letter-spacing:.04em;
-  box-shadow:0 0 40px rgba(15,212,164,.06);
-}
-
-/* ─── CONTACT CARDS ──────────────────────────────────────────────────── */
-.contact-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:1px; background:var(--border);
-  border:1px solid var(--border);
-  border-radius:var(--r-lg); overflow:hidden;
-  margin-bottom:2rem;
-}
-.contact-cell {
-  background:var(--panel);
-  padding:2rem 1.5rem; text-align:center;
-  display:flex; flex-direction:column; align-items:center; gap:.75rem;
-  text-decoration:none; color:inherit;
-  transition:background .2s;
-}
-.contact-cell:hover { background:rgba(255,255,255,.03); }
-.contact-cell .ico { font-size:2rem; }
-.contact-cell h3 { font-family:var(--font-head); font-size:.95rem; font-weight:700; color:#fff; }
-.contact-cell p { font-size:.8rem; color:var(--muted); }
-
-/* ─── LEGAL CARDS ────────────────────────────────────────────────────── */
-.legal-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  gap:1px; background:var(--border);
-  border:1px solid var(--border);
-  border-radius:var(--r-lg); overflow:hidden;
-  margin-bottom:2rem;
-}
-.legal-cell {
-  background:var(--panel);
-  padding:1.75rem;
-  display:flex; flex-direction:column; gap:1rem;
-}
-.legal-cell h3 { font-family:var(--font-head); font-size:1rem; font-weight:700; color:#fff; }
-.legal-cell p { font-size:.82rem; color:var(--muted); flex:1; }
-
-/* ─── STACK TAGS ─────────────────────────────────────────────────────── */
-.stack-wrap { display:flex; flex-wrap:wrap; gap:.5rem; }
-.stack-pill {
-  font-size:.75rem; font-weight:500;
-  color:var(--dim); background:rgba(255,255,255,.04);
-  border:1px solid var(--border);
-  padding:5px 12px; border-radius:100px;
-  transition:all .2s;
-}
-.stack-pill:hover { color:var(--text); border-color:var(--border2); }
-
-/* ─── DISCLOSURE ─────────────────────────────────────────────────────── */
-.disclosure {
-  background:rgba(245,166,35,.06);
-  border:1px solid rgba(245,166,35,.2);
-  border-radius:var(--r-sm);
-  padding:1rem 1.25rem;
-  font-size:.78rem; color:rgba(245,166,35,.8);
-  margin-top:1.5rem; line-height:1.65;
-}
-
-/* ─── STEP CARDS ─────────────────────────────────────────────────────── */
-.steps-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:1px; background:var(--border);
-  border:1px solid var(--border);
-  border-radius:var(--r-lg); overflow:hidden;
-  margin-bottom:2rem;
-}
-.step-cell {
-  background:var(--panel);
-  padding:1.75rem;
-  display:flex; flex-direction:column; gap:.6rem;
-}
-.step-num {
-  font-family:var(--font-head);
-  font-size:3rem; font-weight:800; line-height:1;
-  color:rgba(91,79,255,.15);
-}
-.step-cell h3 { font-family:var(--font-head); font-size:1rem; font-weight:700; color:#fff; }
-.step-cell p { font-size:.82rem; color:var(--muted); line-height:1.65; }
-
-/* ─── COMING SOON ────────────────────────────────────────────────────── */
-.soon-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
-  gap:1px; background:var(--border);
-  border:1px solid var(--border);
-  border-radius:var(--r-lg); overflow:hidden;
-  opacity:.55; margin-bottom:2.5rem;
-}
-.soon-cell { background:var(--panel); padding:1.75rem; }
-.soon-cell h3 { font-family:var(--font-head); font-size:1rem; font-weight:700; color:#fff; margin-bottom:.5rem; }
-.soon-cell p { font-size:.82rem; color:var(--muted); }
-
-/* ─── ANIMATIONS ─────────────────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.page.active .page-top,
-.page.active .page-body > * {
-  animation: fadeUp .4s ease both;
-}
-.page.active .page-body > *:nth-child(1) { animation-delay:.05s; }
-.page.active .page-body > *:nth-child(2) { animation-delay:.1s; }
-.page.active .page-body > *:nth-child(3) { animation-delay:.15s; }
-.page.active .page-body > *:nth-child(4) { animation-delay:.2s; }
-
-/* ─── SCROLLBAR ──────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width:4px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--border2); border-radius:4px; }
-
-/* ─── RESPONSIVE ─────────────────────────────────────────────────────── */
-@media(max-width:900px) {
-  :root { --sidebar:0px; }
-  .sidebar { transform:translateX(-268px); width:268px; }
-  .sidebar.open { transform:translateX(0); }
-  .main { margin-left:0; max-width:100vw; }
-  .mob-toggle { display:flex; }
-  .overlay.show { display:block; }
-  .page-top { padding:4.5rem 1.25rem 2rem; }
-  .page-body { padding:1.25rem; }
-}
-@media(max-width:600px) {
-  .card-grid,
-  .steps-grid,
-  .soon-grid,
-  .legal-grid,
-  .contact-grid { grid-template-columns:1fr; }
-  .stat-row { grid-template-columns:1fr 1fr; }
+@media(max-width:500px){
+  .grid,.ag,.stg,.lg,.cg{grid-template-columns:1fr}
+  .sg{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
 
-<button class="mob-toggle" onclick="toggleSidebar()">☰</button>
-<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+<button class="mob-btn" onclick="toggleSidebar()">☰</button>
+<div class="ovl" id="ovl" onclick="toggleSidebar()"></div>
 
-<div class="app">
+<div class="layout">
 
-<!-- ══════════════════════════════════════════════════════
-     SIDEBAR
-════════════════════════════════════════════════════════ -->
+<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-mark">
-      <div class="dot"></div>
-      DealDily
-    </div>
-    <div class="logo-sub">AI Tools · Automations · Deals</div>
+  <div class="sb-logo">
+    <div class="sb-brand"><div class="sb-dot"></div>DealDily</div>
+    <div class="sb-sub">AI Tools · Automations · Deals</div>
   </div>
-
-  <nav class="sidebar-nav">
-    <div class="nav-group-label">Main</div>
-
-    <button class="nav-item active" onclick="nav('saas',this)">
-      <span class="nav-icon">🛠</span> SaaS Tools
-      <span class="nav-badge badge-hot">{{ site.saas_tools.length }}</span>
-    </button>
-    <button class="nav-item" onclick="nav('workflows',this)">
-      <span class="nav-icon">🔄</span> AI Workflows
-    </button>
-    <button class="nav-item" onclick="nav('automations',this)">
-      <span class="nav-icon">⚡</span> Automations
-    </button>
-    <button class="nav-item" onclick="nav('affiliates',this)">
-      <span class="nav-icon">💰</span> Affiliate Deals
-      <span class="nav-badge badge-new">New</span>
-    </button>
-
-    <div class="nav-group-label">Services</div>
-    <button class="nav-item" onclick="nav('sms',this)">
-      <span class="nav-icon">📲</span> SMS Service
-    </button>
-    <button class="nav-item" onclick="nav('about',this)">
-      <span class="nav-icon">👤</span> About / Story
-    </button>
-    <button class="nav-item" onclick="nav('contact',this)">
-      <span class="nav-icon">✉️</span> Contact
-    </button>
-
-    <div class="nav-group-label">Legal</div>
-    <button class="nav-item" onclick="nav('legal',this)">
-      <span class="nav-icon">📋</span> Legal & Compliance
-    </button>
+  <nav class="sb-nav">
+    <div class="sb-grp">Main</div>
+    <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">7</span></button>
+    <button class="sb-btn" onclick="go('workflows',this)"><span class="sb-ico">🔄</span>AI Workflows</button>
+    <button class="sb-btn" onclick="go('automations',this)"><span class="sb-ico">⚡</span>Automations</button>
+    <button class="sb-btn" onclick="go('affiliates',this)"><span class="sb-ico">💰</span>Affiliate Deals<span class="sb-badge new">New</span></button>
+    <button class="sb-btn" onclick="go('amazon',this)"><span class="sb-ico">🛒</span>Amazon Picks</button>
+    <div class="sb-grp">Services</div>
+    <button class="sb-btn" onclick="go('sms',this)"><span class="sb-ico">📲</span>SMS Service</button>
+    <button class="sb-btn" onclick="go('about',this)"><span class="sb-ico">👤</span>About / Story</button>
+    <button class="sb-btn" onclick="go('contact',this)"><span class="sb-ico">✉️</span>Contact</button>
+    <div class="sb-grp">Legal</div>
+    <button class="sb-btn" onclick="go('legal',this)"><span class="sb-ico">📋</span>Legal & Compliance</button>
   </nav>
-
-  <div class="sidebar-foot">
-    <a href="mailto:contact@dealdily.com">✉ contact@dealdily.com</a>
-  </div>
+  <div class="sb-foot"><a href="mailto:contact@dealdily.com">✉ contact@dealdily.com</a></div>
 </aside>
 
-<!-- ══════════════════════════════════════════════════════
-     MAIN CONTENT
-════════════════════════════════════════════════════════ -->
+<!-- MAIN -->
 <main class="main">
 
-<!-- ─── SAAS TOOLS ───────────────────────────────────── -->
+<!-- SAAS -->
 <div class="page active" id="page-saas">
-  <div class="page-top">
-    <div class="chip">🛠 SaaS Tools</div>
-    <h1>{{ site.hero_title }}<br><em>{{ site.hero_subtitle }}</em></h1>
-    <p>{{ site.hero_description }}</p>
-  </div>
-  <div class="page-body">
-    <div class="card-grid">
-      {% for tool in site.saas_tools %}
-      <div class="pcard">
-        <div class="pcard-accent" style="background:{{ tool.card_color }}"></div>
-        <div class="pcard-icon">{{ tool.icon }}</div>
-        <span class="pcard-tag t-{{ tool.tag_color }}">
-          {% if tool.tag == "Most Popular" %}⭐ {% endif %}{{ tool.tag }}
-        </span>
-        <h3>{{ tool.name }}</h3>
-        <p class="pcard-desc">{{ tool.description }}</p>
-        <div class="pcard-foot">
-          <div class="pcard-price">{{ tool.price }}<small>{{ tool.price_note }}</small></div>
-          <a href="{{ tool.button_link }}" class="btn btn-primary">{{ tool.button_text }}</a>
-        </div>
-      </div>
-      {% endfor %}
+  <div class="pt"><div class="chip">🛠 SaaS Tools</div><h1>Tools that work<br><em>while you don't.</em></h1><p>Real automation tools built by a real business owner. No fluff. No filler. Buy once, use forever.</p></div>
+  <div class="pb">
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:#6d28d9"></div><div class="pci">🗺️</div><span class="pct t-purple">⭐ Most Popular</span><h3>Competitor Intel Engine</h3><p class="pcd">See who's outranking you on Google Maps, their review strength, and exactly where you can beat them — in 60 seconds. Built for painters, contractors & local businesses.</p><div class="pcf"><div class="pcp">$19<small>Lifetime access</small></div><a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" target="_blank" class="btn btn-p">Get Access →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f59e0b"></div><div class="pci">🧾</div><span class="pct t-yellow">Mobile App</span><h3>ReceiptVault</h3><p class="pcd">Snap a photo of any receipt. It automatically organizes it and emails it to your accountant. No more panic at tax time.</p><div class="pcf"><div class="pcp">Free<small>Then $9.99/mo</small></div><a href="https://receipt-manager-offers8.replit.app" target="_blank" class="btn btn-g">Try Free →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#10b981"></div><div class="pci">📲</div><span class="pct t-green">Automation</span><h3>SMS Reminder Bot</h3><p class="pcd">Text it like a human. "Remind me to call the doctor Friday at 3pm" — done. No app. No setup. Just smart reminders.</p><div class="pcf"><div class="pcp">$9<small>/mo · Plans available</small></div><a href="https://sms-consent--offers8.replit.app" target="_blank" class="btn btn-p">Get Started →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#8b5cf6"></div><div class="pci">🤖</div><span class="pct t-purple">API</span><h3>AI Content Repurposer</h3><p class="pcd">Paste a YouTube link. Get captions for TikTok, Instagram, LinkedIn, Twitter, Facebook & Pinterest. Clean JSON. One API call.</p><div class="pcf"><div class="pcp">$27<small>/mo · API access</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get API →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#ef4444"></div><div class="pci">💳</div><span class="pct t-red">SaaS</span><h3>Payment Link Generator</h3><p class="pcd">Generate Stripe payment links with time-based access, coupon logic, and auto-checkout. Sell access, get paid, move on.</p><div class="pcf"><div class="pcp">$47<small>/mo · Unlimited links</small></div><a href="mailto:contact@dealdily.com?subject=Payment Link Generator" class="btn btn-p">Get Access →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f97316"></div><div class="pci">📘</div><span class="pct t-orange">eBook</span><h3>Beginners' Workflow AI</h3><p class="pcd">Build & sell AI automations with n8n, Google Sheets, and ChatGPT. Zero coding. Step-by-step. Build once, earn forever.</p><div class="pcf"><div class="pcp">$10<small>One-time · PDF</small></div><a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" class="btn btn-p">Buy Now →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#06b6d4"></div><div class="pci">😂</div><span class="pct t-cyan">Telegram Bot</span><h3>Joke Factory Bot</h3><p class="pcd">Fresh AI-generated jokes straight to your Telegram. Clean, dark humor, one-liners. Buy → press start → laugh instantly.</p><div class="pcf"><div class="pcp">$5<small>One-time · Lifetime</small></div><a href="https://toolsmith721.gumroad.com/l/xkhbgh" target="_blank" class="btn btn-p">Get Bot →</a></div></div>
     </div>
   </div>
 </div>
 
-<!-- ─── AI WORKFLOWS ─────────────────────────────────── -->
+<!-- WORKFLOWS -->
 <div class="page" id="page-workflows">
-  <div class="page-top">
-    <div class="chip">🔄 AI Workflows</div>
-    <h1>Workflows that<br><em>print results.</em></h1>
-    <p>Pre-built n8n workflows you can deploy in minutes. Connect your tools. Let AI handle the rest.</p>
-  </div>
-  <div class="page-body">
-    <div class="sec-label">Ready to deploy</div>
-    <div class="card-grid">
-      {% for wf in site.workflows %}
-      <div class="pcard">
-        <div class="pcard-accent" style="background:{{ wf.card_color }}"></div>
-        <div class="pcard-icon">{{ wf.icon }}</div>
-        <span class="pcard-tag t-{{ wf.tag_color }}">{{ wf.tag }}</span>
-        <h3>{{ wf.name }}</h3>
-        <p class="pcard-desc">{{ wf.description }}</p>
-        <div class="pcard-foot">
-          <div class="pcard-price">{{ wf.price }}<small>{{ wf.price_note }}</small></div>
-          <a href="{{ wf.button_link }}" class="btn btn-primary">{{ wf.button_text }}</a>
-        </div>
-      </div>
-      {% endfor %}
+  <div class="pt"><div class="chip">🔄 AI Workflows</div><h1>Workflows that<br><em>print results.</em></h1><p>Pre-built n8n workflows you can deploy in minutes. Connect your tools. Let AI handle the rest.</p></div>
+  <div class="pb">
+    <div class="sl">Ready to deploy</div>
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:#6d28d9"></div><div class="pci">🎬</div><span class="pct t-purple">Content</span><h3>YouTube → TikTok Repurposer</h3><p class="pcd">Automatically takes any YouTube video, extracts the transcript, rewrites it for TikTok, and outputs a ready-to-post script.</p><div class="pcf"><div class="pcp">$27<small>/mo · API included</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get Workflow →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#10b981"></div><div class="pci">📞</div><span class="pct t-green">Reminder</span><h3>AI Reminder Bot (Voice + SMS)</h3><p class="pcd">Text a reminder in plain English. AI parses it, schedules it, and sends a voice call or SMS at the right time.</p><div class="pcf"><div class="pcp">$9<small>/mo · Unlimited reminders</small></div><a href="https://sms-consent--offers8.replit.app" target="_blank" class="btn btn-p">Deploy Now →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f59e0b"></div><div class="pci">🗺️</div><span class="pct t-yellow">Lead Gen</span><h3>Google Maps Lead Scraper</h3><p class="pcd">Scrape local businesses from Google Maps by niche and location. Extract names, ratings, review counts, and contact info.</p><div class="pcf"><div class="pcp">$19<small>One-time · Lifetime</small></div><a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" target="_blank" class="btn btn-p">Get It →</a></div></div>
     </div>
-
-    <div class="sec-label">Coming soon</div>
+    <div class="sl">Coming soon</div>
     <div class="soon-grid">
-      {% for cs in site.coming_soon %}
-      <div class="soon-cell">
-        <span class="pcard-tag t-{{ cs.tag_color }}" style="margin-bottom:.75rem;display:inline-block">{{ cs.tag }}</span>
-        <h3>{{ cs.icon }} {{ cs.name }}</h3>
-        <p>{{ cs.description }}</p>
-      </div>
-      {% endfor %}
+      <div class="snc"><span class="pct t-blue" style="display:inline-block;margin-bottom:.6rem">Email</span><h3>📧 Cold Outreach Automation</h3><p>Scrape leads → enrich → send personalized cold emails. Full n8n workflow.</p></div>
+      <div class="snc"><span class="pct t-pink" style="display:inline-block;margin-bottom:.6rem">Social</span><h3>📱 Auto Social Poster</h3><p>Generate and schedule 10–15 posts/day across TikTok, Instagram, Twitter.</p></div>
     </div>
   </div>
 </div>
 
-<!-- ─── AUTOMATIONS ──────────────────────────────────── -->
+<!-- AUTOMATIONS -->
 <div class="page" id="page-automations">
-  <div class="page-top">
-    <div class="chip">⚡ Automations</div>
-    <h1>Set it once.<br><em>Run it forever.</em></h1>
-    <p>Custom automation systems built with n8n, Stripe, Twilio, and AI. Your business on autopilot.</p>
-  </div>
-  <div class="page-body">
-    <div class="sec-label">What we automate</div>
-    <div class="card-grid">
-      {% for a in site.automations %}
-      <div class="pcard">
-        <div class="pcard-accent" style="background:{{ a.card_color }}"></div>
-        <div class="pcard-icon">{{ a.icon }}</div>
-        <span class="pcard-tag t-{{ a.tag_color }}">{{ a.tag }}</span>
-        <h3>{{ a.name }}</h3>
-        <p class="pcard-desc">{{ a.description }}</p>
-        <div class="pcard-foot">
-          <div class="pcard-price">{{ a.price }}<small>{{ a.price_note }}</small></div>
-          <a href="{{ a.button_link }}" class="btn btn-primary">{{ a.button_text }}</a>
-        </div>
-      </div>
-      {% endfor %}
+  <div class="pt"><div class="chip">⚡ Automations</div><h1>Set it once.<br><em>Run it forever.</em></h1><p>Custom automation systems built with n8n, Stripe, Twilio, and AI. Your business on autopilot.</p></div>
+  <div class="pb">
+    <div class="sl">What we automate</div>
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:#4f46e5"></div><div class="pci">💳</div><span class="pct t-purple">Payments</span><h3>Stripe Payment Automation</h3><p class="pcd">Auto-generate payment links, handle time-based access, manage coupons, and trigger actions on successful payments.</p><div class="pcf"><div class="pcp">$47<small>/mo</small></div><a href="mailto:contact@dealdily.com?subject=Payment Automation" class="btn btn-p">Get Access →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#10b981"></div><div class="pci">📲</div><span class="pct t-green">SMS</span><h3>SMS Marketing System</h3><p class="pcd">Full SMS infrastructure — opt-in pages, consent flows, compliance, auto-recharge, and Twilio/Telnyx integration.</p><div class="pcf"><div class="pcp">$9<small>/mo · Fully compliant</small></div><a href="https://sms-consent--offers8.replit.app" target="_blank" class="btn btn-p">Start →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f59e0b"></div><div class="pci">🧾</div><span class="pct t-yellow">Accounting</span><h3>Receipt Management Automation</h3><p class="pcd">Snap receipts → AI organizes → auto-emails your accountant on schedule. Tax time goes from panic to a single tap.</p><div class="pcf"><div class="pcp">Free<small>Trial then $9.99/mo</small></div><a href="https://receipt-manager-offers8.replit.app" target="_blank" class="btn btn-g">Try Free →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#8b5cf6"></div><div class="pci">🤖</div><span class="pct t-purple">Content</span><h3>Content Repurposing Engine</h3><p class="pcd">One YouTube video becomes 7 platform-ready posts automatically. Feed the content machine once. Post everywhere.</p><div class="pcf"><div class="pcp">$20<small>/mo · API</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get It →</a></div></div>
     </div>
-
-    <div class="sec-label">The stack</div>
-    <div class="stack-wrap">
-      <span class="stack-pill">n8n</span>
-      <span class="stack-pill">Stripe</span>
-      <span class="stack-pill">Twilio</span>
-      <span class="stack-pill">Telnyx</span>
-      <span class="stack-pill">Supabase</span>
-      <span class="stack-pill">Google Sheets</span>
-      <span class="stack-pill">OpenAI</span>
-      <span class="stack-pill">Express</span>
-      <span class="stack-pill">React Native</span>
-      <span class="stack-pill">Replit</span>
-      <span class="stack-pill">Netlify</span>
-      <span class="stack-pill">Mailjet</span>
-    </div>
+    <div class="sl">The stack</div>
+    <div class="stack"><span class="sp">n8n</span><span class="sp">Stripe</span><span class="sp">Twilio</span><span class="sp">Telnyx</span><span class="sp">Supabase</span><span class="sp">Google Sheets</span><span class="sp">OpenAI</span><span class="sp">Express</span><span class="sp">React Native</span><span class="sp">Replit</span><span class="sp">Netlify</span><span class="sp">Mailjet</span></div>
   </div>
 </div>
 
-<!-- ─── AFFILIATES ───────────────────────────────────── -->
+<!-- AFFILIATES -->
 <div class="page" id="page-affiliates">
-  <div class="page-top">
-    <div class="chip">💰 Affiliate Deals</div>
-    <h1>Deals I actually<br><em>use myself.</em></h1>
-    <p>Handpicked tools, products, and courses. Every link is something I've personally vetted.</p>
-  </div>
-  <div class="page-body">
-    <div class="sec-label">🛒 Amazon — Tech & Tools</div>
+  <div class="pt"><div class="chip">💰 Affiliate Deals</div><h1>Deals I actually<br><em>use myself.</em></h1><p>Handpicked tools, products, and courses. Every link is something I've personally vetted.</p></div>
+  <div class="pb">
+    <div class="sl">🛒 Amazon — Tech & Tools</div>
     <div class="aff-list">
-      {% for aff in site.affiliate_amazon %}
-      <a href="{{ aff.link }}" class="aff-row" target="_blank" rel="noopener">
-        <div class="aff-emo">{{ aff.icon }}</div>
-        <div class="aff-text">
-          <h4>{{ aff.name }}</h4>
-          <p>{{ aff.description }}</p>
-        </div>
-        <span class="aff-comm">{{ aff.commission }}</span>
-        <span class="aff-arr">→</span>
-      </a>
-      {% endfor %}
+      <a href="https://www.amazon.com/shop/dealdily" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">💻</div><div class="aff-info"><h4>Best Budget Laptops for Automation</h4><p>The exact setup I recommend for running n8n and workflows on a budget</p></div><span class="aff-comm">Up to 4%</span><span class="aff-arr">→</span></a>
+      <a href="https://www.amazon.com/shop/dealdily" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">📱</div><div class="aff-info"><h4>Best Phones for Business Owners</h4><p>Run your automations, check Stripe, manage SMS — from anywhere</p></div><span class="aff-comm">Up to 4%</span><span class="aff-arr">→</span></a>
+      <a href="https://www.amazon.com/shop/dealdily" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">🖥️</div><div class="aff-info"><h4>PC Components — Best Deals This Week</h4><p>Curated from r/buildapcsales — updated regularly</p></div><span class="aff-comm">Up to 4%</span><span class="aff-arr">→</span></a>
     </div>
-
-    <div class="sec-label">📚 Digital — Courses & Downloads</div>
+    <div class="sl">📚 Digital — Courses & Downloads</div>
     <div class="aff-list">
-      {% for aff in site.affiliate_digital %}
-      <a href="{{ aff.link }}" class="aff-row" target="_blank" rel="noopener">
-        <div class="aff-emo">{{ aff.icon }}</div>
-        <div class="aff-text">
-          <h4>{{ aff.name }}</h4>
-          <p>{{ aff.description }}</p>
-        </div>
-        <span class="aff-comm">{{ aff.commission }}</span>
-        <span class="aff-arr">→</span>
-      </a>
-      {% endfor %}
+      <a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">🤖</div><div class="aff-info"><h4>AI Automation Mastery Course</h4><p>Learn to build and sell automations — the same skills I use every day</p></div><span class="aff-comm">50–70%</span><span class="aff-arr">→</span></a>
+      <a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">💰</div><div class="aff-info"><h4>Make Money with n8n Workflows</h4><p>Step-by-step guide to selling automation services to local businesses</p></div><span class="aff-comm">50–70%</span><span class="aff-arr">→</span></a>
+      <a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">📈</div><div class="aff-info"><h4>Affiliate Marketing Blueprint</h4><p>The system behind building passive affiliate income streams</p></div><span class="aff-comm">50–70%</span><span class="aff-arr">→</span></a>
     </div>
-
-    <div class="disclosure">
-      <strong>Disclosure:</strong> Some links on this page are affiliate links. If you click and purchase, I may earn a small commission at no extra cost to you.
-    </div>
+    <div class="disc"><strong>Disclosure:</strong> Some links are affiliate links. If you click and buy, I may earn a small commission at no extra cost to you.</div>
   </div>
 </div>
 
-<!-- ─── SMS ──────────────────────────────────────────── -->
+<!-- AMAZON PICKS -->
+<div class="page" id="page-amazon">
+  <div class="pt"><div class="chip">🛒 Amazon Picks</div><h1>My Amazon<br><em>picks.</em></h1><p>19 handpicked tech deals. Every link uses my affiliate tag — clicking supports the site at no extra cost to you.</p></div>
+  <div class="pb">
+    <div class="fb-wrap">
+      <span class="fl">Filter:</span>
+      <button class="fb on" onclick="amzF('all',this)">All (19)</button>
+      <button class="fb" onclick="amzF('ipad',this)">iPad</button>
+      <button class="fb" onclick="amzF('charging',this)">Charging</button>
+      <button class="fb" onclick="amzF('laptop',this)">Laptop</button>
+      <button class="fb" onclick="amzF('other',this)">Other</button>
+    </div>
+    <div class="ag" id="amz-grid">
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BJPXXM7D&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Ailun Screen Protector" onerror="this.style.display='none'"><span class="apb">$7.98</span></div><div class="ab"><div class="at">Ailun Screen Protector iPad 11th / 10th Gen</div><div class="ah">Tempered glass, Face ID compatible. Crystal clear protection.</div></div><div class="af"><span class="apr">$7.98</span><a href="https://www.amazon.com/dp/B0BJPXXM7D?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0B8STRJYJ&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="MoKo Case" onerror="this.style.display='none'"><span class="apb">$9.95</span></div><div class="ab"><div class="at">MoKo Slim iPad Case 11th / 10th Gen</div><div class="ah">Ultra-slim hard PC, won't add bulk to your iPad.</div></div><div class="af"><span class="apr">$9.95</span><a href="https://www.amazon.com/dp/B0B8STRJYJ?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B09ZTXVNVD&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Metapen A8" onerror="this.style.display='none'"><span class="apb">$15.98</span></div><div class="ab"><div class="at">Metapen A8 iPad Pencil — 4Min Fast Charge</div><div class="ah">4-min charge, magnetic attach. Smarter than Apple Pencil at a fraction of the cost.</div></div><div class="af"><span class="apr">$15.98</span><a href="https://www.amazon.com/dp/B09ZTXVNVD?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="charging"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0C8HHV9DK&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Anker 20W" onerror="this.style.display='none'"><span class="apb">$13.51</span></div><div class="ab"><div class="at">Anker 2-Pack 20W USB-C Charger iPhone 17/16</div><div class="ah">Two fast chargers in one pack. Stop fighting over the outlet.</div></div><div class="af"><span class="apr">$13.51</span><a href="https://www.amazon.com/dp/B0C8HHV9DK?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="charging"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0G1MRLXMV&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Anker Nano 45W" onerror="this.style.display='none'"><span class="apb">$29.98</span></div><div class="ab"><div class="at">Anker Nano 45W Smart Display Charger</div><div class="ah">Real-time wattage display. Foldable plug. Tiny but powerful.</div></div><div class="af"><span class="apr">$29.98</span><a href="https://www.amazon.com/dp/B0G1MRLXMV?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BKL7KD6Y&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="SPARIN" onerror="this.style.display='none'"><span class="apb">$6.99</span></div><div class="ab"><div class="at">SPARIN 2-Pack Screen Protector iPad 11th</div><div class="ah">Two screens protected for under $7. No-brainer.</div></div><div class="af"><span class="apr">$6.99</span><a href="https://www.amazon.com/dp/B0BKL7KD6Y?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BDKJFRX4&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="ProCase" onerror="this.style.display='none'"><span class="apb">$4.52</span></div><div class="ab"><div class="at">ProCase 2-Pack Tempered Glass iPad 11th / 10th</div><div class="ah">$4.52 to save a $500 screen. Best decision you'll make today.</div></div><div class="af"><span class="apr">$4.52</span><a href="https://www.amazon.com/dp/B0BDKJFRX4?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="other"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B09MQWWP87&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Taygeer Backpack" onerror="this.style.display='none'"><span class="apb">$23.99</span></div><div class="ab"><div class="at">Taygeer Travel Backpack USB Port + TSA 15.6"</div><div class="ah">Carry-on ready, USB charging, laptop slot. Built for travelers.</div></div><div class="af"><span class="apr">$23.99</span><a href="https://www.amazon.com/dp/B09MQWWP87?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BQLLB61B&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Anker Hub" onerror="this.style.display='none'"><span class="apb">$18.99</span></div><div class="ab"><div class="at">Anker 5-in-1 USB-C Hub — 4K HDMI + USB-A</div><div class="ah">5 ports, 4K display output. One cable to rule them all.</div></div><div class="af"><span class="apr">$18.99</span><a href="https://www.amazon.com/dp/B0BQLLB61B?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="other"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0C3L93F2Q&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Nelko Label Maker" onerror="this.style.display='none'"><span class="apb">$17.08</span></div><div class="ab"><div class="at">Nelko P21 Bluetooth Label Maker</div><div class="ah">Print labels wirelessly from your phone. Organize everything.</div></div><div class="af"><span class="apr">$17.08</span><a href="https://www.amazon.com/dp/B0C3L93F2Q?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01N6M1Y9N&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="MOSISO Sleeve" onerror="this.style.display='none'"><span class="apb">$13.99</span></div><div class="ab"><div class="at">MOSISO 13" Laptop Sleeve MacBook / HP / Dell</div><div class="ah">Slim neoprene protection. Fits MacBook Air/Pro and most 13" laptops.</div></div><div class="af"><span class="apr">$13.99</span><a href="https://www.amazon.com/dp/B01N6M1Y9N?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0F21WN48Z&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Stylus" onerror="this.style.display='none'"><span class="apb">$9.99</span></div><div class="ab"><div class="at">Stylus Pen iPad 2018–2025 — 13 Min Charge</div><div class="ah">Tilt sensitivity, palm rejection, fast charge. Under $10.</div></div><div class="af"><span class="apr">$9.99</span><a href="https://www.amazon.com/dp/B0F21WN48Z?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BD9P8CFG&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="MOBDIK" onerror="this.style.display='none'"><span class="apb">$7.98</span></div><div class="ab"><div class="at">MOBDIK 2-Pack Paperfeel Screen Protector iPad A16</div><div class="ah">Matte finish makes writing feel like real paper. Game changer for notes.</div></div><div class="af"><span class="apr">$7.98</span><a href="https://www.amazon.com/dp/B0BD9P8CFG?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07XY28FZG&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="ProCase 9th" onerror="this.style.display='none'"><span class="apb">$9.99</span></div><div class="ab"><div class="at">ProCase iPad 9th / 8th / 7th Gen Case 10.2"</div><div class="ah">Slim folio, multiple colors. Protect your iPad without breaking the bank.</div></div><div class="af"><span class="apr">$9.99</span><a href="https://www.amazon.com/dp/B07XY28FZG?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0C375272K&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Hamile Keyboard" onerror="this.style.display='none'"><span class="apb">$21.97</span></div><div class="ab"><div class="at">Hamile iPad Keyboard Case — 7-Color Backlit</div><div class="ah">Wireless backlit keyboard, detachable folio. iPad 11th/10th gen.</div></div><div class="af"><span class="apr">$21.97</span><a href="https://www.amazon.com/dp/B0C375272K?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0B7H3V2V7&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="MOSISO MacBook" onerror="this.style.display='none'"><span class="apb">$12.99</span></div><div class="ab"><div class="at">MOSISO MacBook Air 13" Hard Shell M4 M3 M2</div><div class="ah">Hard shell + keyboard cover. Fits every MacBook Air 13" since 2022.</div></div><div class="af"><span class="apr">$12.99</span><a href="https://www.amazon.com/dp/B0B7H3V2V7?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0CMWPDGZH&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Harvopu" onerror="this.style.display='none'"><span class="apb">$25.98</span></div><div class="ab"><div class="at">Harvopu iPad Case + Trackpad Keyboard + Pencil</div><div class="ah">Multi-touch trackpad + pencil holder. Turns your iPad into a laptop.</div></div><div class="af"><span class="apr">$25.98</span><a href="https://www.amazon.com/dp/B0CMWPDGZH?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B079MCPJGH&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Webcam Cover" onerror="this.style.display='none'"><span class="apb">$6.99</span></div><div class="ab"><div class="at">CloudValley Webcam Cover 2-Pack Ultra-Thin</div><div class="ah">0.023" thin metal. Privacy in 2 seconds, lid still closes perfectly.</div></div><div class="af"><span class="apr">$6.99</span><a href="https://www.amazon.com/dp/B079MCPJGH?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="charging"><div class="ai"><img src="https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0B1HJ666G&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dealdily20-20" alt="Sunveza 118W" onerror="this.style.display='none'"><span class="apb">$26.83</span></div><div class="ab"><div class="at">Sunveza 118W Charger MacBook Pro/Air M1–M5</div><div class="ah">Charges faster than Apple's own brick. Works with every MacBook.</div></div><div class="af"><span class="apr">$26.83</span><a href="https://www.amazon.com/dp/B0B1HJ666G?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+    </div>
+    <div class="disc"><strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. Buying through these links supports DealDily at no extra cost to you.</div>
+  </div>
+</div>
+
+<!-- SMS -->
 <div class="page" id="page-sms">
-  <div class="page-top">
-    <div class="chip">📲 SMS Service</div>
-    <h1>Never miss what<br><em>matters most.</em></h1>
-    <p>Text your reminders in plain English. We send them back at the right time — automatically.</p>
-  </div>
-  <div class="page-body">
-    <div class="sms-hero-num">{{ site.sms_number }}</div>
-
-    <div class="steps-grid">
-      <div class="step-cell">
-        <div class="step-num">01</div>
-        <h3>Text START</h3>
-        <p>Send START to {{ site.sms_number }}. You'll get a confirmation immediately.</p>
-      </div>
-      <div class="step-cell">
-        <div class="step-num">02</div>
-        <h3>Send Your Reminder</h3>
-        <p>Text naturally — "Remind me to take my meds tomorrow at 8am" or "Remind me weekly to pay rent."</p>
-      </div>
-      <div class="step-cell">
-        <div class="step-num">03</div>
-        <h3>We Remind You</h3>
-        <p>At the right time, you get a text or voice call. Automatic. Reliable. No app needed.</p>
-      </div>
+  <div class="pt"><div class="chip">📲 SMS Service</div><h1>Never miss what<br><em>matters most.</em></h1><p>Text your reminders in plain English. We send them back at the right time — automatically.</p></div>
+  <div class="pb">
+    <div class="sms-num">+1-855-923-0032</div>
+    <div class="stg">
+      <div class="stc"><div class="stn">01</div><h3>Text START</h3><p>Send START to +1-855-923-0032. You'll get a confirmation immediately.</p></div>
+      <div class="stc"><div class="stn">02</div><h3>Send Your Reminder</h3><p>Text naturally — "Remind me to take my meds tomorrow at 8am" or "Pay rent every Friday."</p></div>
+      <div class="stc"><div class="stn">03</div><h3>We Remind You</h3><p>At the right time, you get a text or voice call. Automatic. Reliable. No app needed.</p></div>
     </div>
-
-    <div class="sec-label">Compliance</div>
-    <p style="color:var(--muted);font-size:.85rem;margin-bottom:1.25rem">Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for help.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:.6rem">
-      <a href="terms-conditions.html" class="btn btn-ghost">Terms & Conditions</a>
-      <a href="privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
-      <a href="sms-opt-in.html" class="btn btn-ghost">SMS Opt-In</a>
-      <a href="sms-consent.html" class="btn btn-ghost">SMS Consent</a>
-      <a href="sms-home.html" class="btn btn-ghost">SMS Home</a>
+    <div class="sl">Compliance</div>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.1rem">Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for help.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+      <a href="/terms-conditions.html" class="btn btn-ghost">Terms & Conditions</a>
+      <a href="/privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
+      <a href="/sms-opt-in.html" class="btn btn-ghost">SMS Opt-In</a>
+      <a href="/sms-consent.html" class="btn btn-ghost">SMS Consent</a>
     </div>
   </div>
 </div>
 
-<!-- ─── ABOUT ────────────────────────────────────────── -->
+<!-- ABOUT -->
 <div class="page" id="page-about">
-  <div class="page-top">
-    <div class="chip">👤 The Story</div>
-    <h1>Built by a store owner.<br><em>Not a tech bro.</em></h1>
-    <p>6 months. 7 products. $0 in venture capital. Just a convenience store in Syracuse and a burning desire to build assets instead of wages.</p>
-  </div>
-  <div class="page-body">
-    <div class="story-block">
+  <div class="pt"><div class="chip">👤 The Story</div><h1>Built by a store owner.<br><em>Not a tech bro.</em></h1><p>6 months. 7 products. $0 in venture capital. Just a convenience store in Syracuse and a burning desire to build assets instead of wages.</p></div>
+  <div class="pb">
+    <div class="story">
       <h2>I'm Sal. I work <span>9AM to 10PM.</span><br>7 days a week. 365 days a year.</h2>
       <p>I got tired of watching small businesses lose to bigger competitors who had better systems. I got tired of trading hours for money. I got tired of building someone else's dream.</p>
       <p>So I started building my own. Every tool on this site was built out of a real need — mine or someone else's. No team. No investors. Just late nights, stubborn persistence, and AI.</p>
       <p>I don't care about being a coder. I care about finishing. Revenue first. Perfection later.</p>
     </div>
-
-    <div class="stat-row">
-      <div class="stat-cell">
-        <span class="stat-num">{{ site.about.stats_products }}</span>
-        <span class="stat-label">Products Built</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">{{ site.about.stats_months }}</span>
-        <span class="stat-label">Months Building</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">{{ site.about.stats_funding }}</span>
-        <span class="stat-label">Outside Funding</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-num">{{ site.about.stats_uptime }}</span>
-        <span class="stat-label">Systems Running</span>
-      </div>
+    <div class="sg">
+      <div class="sc"><span class="sn">7</span><span class="sl2">Products Built</span></div>
+      <div class="sc"><span class="sn">6</span><span class="sl2">Months Building</span></div>
+      <div class="sc"><span class="sn">$0</span><span class="sl2">Outside Funding</span></div>
+      <div class="sc"><span class="sn">24/7</span><span class="sl2">Systems Running</span></div>
     </div>
-
-    <div class="sec-label">The philosophy</div>
-    <div class="card-grid">
-      <div class="pcard">
-        <div class="pcard-accent" style="background:var(--indigo)"></div>
-        <div class="pcard-icon">🏗️</div>
-        <h3>Assets Over Wages</h3>
-        <p class="pcard-desc">Don't trade time for money. Build systems that generate money while you sleep.</p>
-      </div>
-      <div class="pcard">
-        <div class="pcard-accent" style="background:var(--teal)"></div>
-        <div class="pcard-icon">🚀</div>
-        <h3>Speed Over Perfection</h3>
-        <p class="pcard-desc">Deploy first. Optimize later. Broken code breaks momentum. Ship it.</p>
-      </div>
-      <div class="pcard">
-        <div class="pcard-accent" style="background:var(--amber)"></div>
-        <div class="pcard-icon">🔒</div>
-        <h3>Privacy First</h3>
-        <p class="pcard-desc">Your data is yours. No selling, no tracking beyond what's absolutely needed.</p>
-      </div>
+    <div class="sl">The philosophy</div>
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:var(--indigo)"></div><div class="pci">🏗️</div><h3>Assets Over Wages</h3><p class="pcd">Don't trade time for money. Build systems that generate money while you sleep.</p></div>
+      <div class="pc"><div class="pcb" style="background:var(--teal)"></div><div class="pci">🚀</div><h3>Speed Over Perfection</h3><p class="pcd">Deploy first. Optimize later. Broken code breaks momentum. Ship it.</p></div>
+      <div class="pc"><div class="pcb" style="background:var(--amber)"></div><div class="pci">🔒</div><h3>Privacy First</h3><p class="pcd">Your data is yours. No selling, no tracking beyond what's absolutely needed.</p></div>
     </div>
   </div>
 </div>
 
-<!-- ─── CONTACT ──────────────────────────────────────── -->
+<!-- CONTACT -->
 <div class="page" id="page-contact">
-  <div class="page-top">
-    <div class="chip">✉️ Contact</div>
-    <h1>Let's talk.<br><em>Real answers only.</em></h1>
-    <p>No bots. No ticket system. Real responses from a real person.</p>
-  </div>
-  <div class="page-body">
-    <div class="contact-grid">
-      <a href="mailto:contact@dealdily.com" class="contact-cell">
-        <span class="ico">📧</span>
-        <h3>General</h3>
-        <p>contact@dealdily.com</p>
-      </a>
-      <a href="mailto:support@dealdily.com" class="contact-cell">
-        <span class="ico">🛟</span>
-        <h3>Support</h3>
-        <p>support@dealdily.com</p>
-      </a>
-      <a href="sms-opt-in.html" class="contact-cell">
-        <span class="ico">📲</span>
-        <h3>SMS</h3>
-        <p>Text START to {{ site.sms_number }}</p>
-      </a>
+  <div class="pt"><div class="chip">✉️ Contact</div><h1>Let's talk.<br><em>Real answers only.</em></h1><p>No bots. No ticket system. Real responses from a real person.</p></div>
+  <div class="pb">
+    <div class="cg">
+      <a href="mailto:contact@dealdily.com" class="cc"><div class="ico">📧</div><h3>General</h3><p>contact@dealdily.com</p></a>
+      <a href="mailto:support@dealdily.com" class="cc"><div class="ico">🛟</div><h3>Support</h3><p>support@dealdily.com</p></a>
+      <a href="/sms-opt-in.html" class="cc"><div class="ico">📲</div><h3>SMS</h3><p>Text START to +1-855-923-0032</p></a>
     </div>
   </div>
 </div>
 
-<!-- ─── LEGAL ────────────────────────────────────────── -->
+<!-- LEGAL -->
 <div class="page" id="page-legal">
-  <div class="page-top">
-    <div class="chip">📋 Legal & Compliance</div>
-    <h1>Transparent.<br><em>Always.</em></h1>
-    <p>All legal documents for DealDily SMS Notifications and our products.</p>
-  </div>
-  <div class="page-body">
-    <div class="legal-grid">
-      <div class="legal-cell">
-        <div class="pcard-icon">📋</div>
-        <h3>Terms & Conditions</h3>
-        <p>Full terms of service for DealDily SMS Notifications.</p>
-        <a href="terms-conditions.html" class="btn btn-primary" style="align-self:flex-start">View →</a>
-      </div>
-      <div class="legal-cell">
-        <div class="pcard-icon">🔒</div>
-        <h3>Privacy Policy</h3>
-        <p>How we collect, use, and protect your data.</p>
-        <a href="privacy-policy.html" class="btn btn-primary" style="align-self:flex-start">View →</a>
-      </div>
-      <div class="legal-cell">
-        <div class="pcard-icon">✅</div>
-        <h3>SMS Opt-In</h3>
-        <p>How to subscribe to DealDily SMS reminders.</p>
-        <a href="sms-opt-in.html" class="btn btn-primary" style="align-self:flex-start">View →</a>
-      </div>
-      <div class="legal-cell">
-        <div class="pcard-icon">📝</div>
-        <h3>SMS Consent</h3>
-        <p>Explicit consent language required by TCPA compliance.</p>
-        <a href="sms-consent.html" class="btn btn-primary" style="align-self:flex-start">View →</a>
-      </div>
+  <div class="pt"><div class="chip">📋 Legal</div><h1>Transparent.<br><em>Always.</em></h1><p>All legal documents for DealDily SMS Notifications and our products.</p></div>
+  <div class="pb">
+    <div class="lg">
+      <div class="lc"><div class="pci">📋</div><h3>Terms & Conditions</h3><p>Full terms of service for DealDily SMS Notifications.</p><a href="/terms-conditions.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
+      <div class="lc"><div class="pci">🔒</div><h3>Privacy Policy</h3><p>How we collect, use, and protect your data.</p><a href="/privacy-policy.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
+      <div class="lc"><div class="pci">✅</div><h3>SMS Opt-In</h3><p>How to subscribe to DealDily SMS reminders.</p><a href="/sms-opt-in.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
+      <div class="lc"><div class="pci">📝</div><h3>SMS Consent</h3><p>Explicit consent language for TCPA compliance.</p><a href="/sms-consent.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
     </div>
   </div>
 </div>
 
 </main>
-</div><!-- /.app -->
+</div>
 
 <script>
-function nav(name, btn) {
+function go(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'));
   document.getElementById('page-' + name).classList.add('active');
-  btn.classList.add('active');
-  window.scrollTo(0,0);
-  if(window.innerWidth <= 900) closeSidebar();
+  btn.classList.add('on');
+  window.scrollTo(0, 0);
+  if (window.innerWidth <= 860) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('ovl').classList.remove('show');
+  }
 }
-
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show');
+  document.getElementById('ovl').classList.toggle('show');
 }
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
-}
-
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on("init", user => {
-    if (!user) {
-      window.netlifyIdentity.on("login", () => {
-        document.location.href = "/admin/";
-      });
-    }
+function amzF(cat, btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.ac').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'flex' : 'none';
   });
 }
 </script>
