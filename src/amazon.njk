@@ -1,654 +1,435 @@
----
-layout: null
-title: Amazon Picks — DealDily
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amazon Picks — DealDily</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>DealDily — AI Tools That Work While You Don't</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black:  #07070f;
-  --panel:  #0f0f1a;
-  --card:   #131320;
-  --border: rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.13);
-  --text:   #e4e4f0;
-  --muted:  #6a6a90;
-  --dim:    rgba(255,255,255,0.3);
-  --indigo: #5b4fff;
-  --teal:   #0fd4a4;
-  --amber:  #f5a623;
-  --orange: #ff6b35;
-  --font-h: 'Syne', sans-serif;
-  --font-b: 'DM Sans', sans-serif;
-}
-*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
-html { font-size:16px; }
-body {
-  font-family: var(--font-b);
-  background: var(--black);
-  color: var(--text);
-  min-height:100vh;
-  line-height:1.6;
-}
-a { color:inherit; text-decoration:none; }
+:root{--bg:#06060f;--panel:#0d0d1a;--card:#111120;--card2:#141428;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--text:#e2e2ef;--muted:#64648a;--dim:rgba(255,255,255,0.28);--indigo:#5b4fff;--indigo2:#4338e0;--teal:#0fd4a4;--amber:#f5a623;--rose:#f43f5e;--sky:#38bdf8;--orange:#ff6b35;--sw:260px;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 
-/* ── NAV ── */
-nav {
-  position: sticky; top:0; z-index:100;
-  background: rgba(7,7,15,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem; height:60px;
-  display:flex; align-items:center; justify-content:space-between;
-}
-.nav-logo {
-  font-family: var(--font-h);
-  font-size:1.3rem; font-weight:800;
-  color:#fff; display:flex; align-items:center; gap:.4rem;
-  letter-spacing:-.02em;
-}
-.nav-logo .dot {
-  width:7px; height:7px; border-radius:50%;
-  background:var(--teal); box-shadow:0 0 10px var(--teal);
-}
-.nav-back {
-  font-size:.8rem; font-weight:500; color:var(--muted);
-  padding:7px 14px; border-radius:8px;
-  border:1px solid var(--border2);
-  transition:all .2s;
-}
-.nav-back:hover { color:var(--text); border-color:var(--border2); background:rgba(255,255,255,.04); }
+/* LAYOUT */
+.layout{display:flex;min-height:100vh}
+.main{margin-left:var(--sw);flex:1;min-width:0;max-width:calc(100vw - var(--sw))}
+.page{display:none}.page.active{display:block}
 
-/* ── HERO ── */
-.hero {
-  padding: 4rem 2rem 3rem;
-  max-width: 1200px; margin:0 auto;
-  display:flex; align-items:flex-end; justify-content:space-between;
-  gap:2rem; flex-wrap:wrap;
-}
-.hero-left {}
-.chip {
-  display:inline-flex; align-items:center; gap:.4rem;
-  font-size:.65rem; font-weight:700;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:var(--orange);
-  background:rgba(255,107,53,.1);
-  border:1px solid rgba(255,107,53,.25);
-  padding:4px 12px; border-radius:100px;
-  margin-bottom:1rem;
-}
-.hero h1 {
-  font-family: var(--font-h);
-  font-size: clamp(2rem,4vw,3.2rem);
-  font-weight:800; line-height:1.1;
-  letter-spacing:-.03em; color:#fff;
-  margin-bottom:.75rem;
-}
-.hero h1 span {
-  background: linear-gradient(90deg, var(--orange), var(--amber));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.hero p { color:var(--muted); font-size:.95rem; max-width:440px; }
-.hero-count {
-  font-family: var(--font-h);
-  font-size:4rem; font-weight:800; line-height:1;
-  color:rgba(255,255,255,.06);
-  white-space:nowrap;
-}
+/* SIDEBAR */
+.sidebar{width:var(--sw);position:fixed;top:0;left:0;bottom:0;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:200;transition:transform .3s ease}
+.sb-logo{padding:1.75rem 1.25rem 1.25rem;border-bottom:1px solid var(--border)}
+.sb-brand{display:flex;align-items:center;gap:.5rem;font-family:var(--fh);font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-.02em}
+.sb-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);flex-shrink:0}
+.sb-sub{font-size:.62rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:.35rem}
+.sb-nav{flex:1;padding:1rem .625rem;overflow-y:auto}
+.sb-nav::-webkit-scrollbar{width:2px}
+.sb-nav::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.sb-grp{font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:.75rem .625rem .35rem;opacity:.5}
+.sb-btn{display:flex;align-items:center;gap:.65rem;width:100%;padding:.575rem .75rem;border-radius:9px;color:var(--muted);font-size:.85rem;font-weight:500;transition:all .15s;position:relative;text-align:left}
+.sb-btn:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.sb-btn.on{color:#fff;background:rgba(91,79,255,.14);font-weight:600}
+.sb-btn.on::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:2px;border-radius:0 2px 2px 0;background:linear-gradient(180deg,var(--indigo),#8b5cf6)}
+.sb-ico{font-size:.95rem;width:17px;text-align:center;flex-shrink:0}
+.sb-badge{margin-left:auto;font-size:.57rem;font-weight:700;padding:2px 6px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase}
+.sb-badge.hot{background:rgba(244,63,94,.18);color:var(--rose)}
+.sb-badge.new{background:rgba(15,212,164,.13);color:var(--teal)}
+.sb-foot{padding:.875rem 1.25rem;border-top:1px solid var(--border);font-size:.72rem;color:var(--muted)}
+.sb-foot a{color:var(--muted);transition:color .15s}
+.sb-foot a:hover{color:var(--text)}
 
-/* ── FILTER BAR ── */
-.filter-bar {
-  max-width:1200px; margin:0 auto;
-  padding:0 2rem 1.5rem;
-  display:flex; gap:.5rem; flex-wrap:wrap;
-  align-items:center;
-}
-.filter-label { font-size:.72rem; color:var(--muted); margin-right:.25rem; }
-.filter-btn {
-  font-family:var(--font-b); font-size:.75rem; font-weight:500;
-  padding:6px 14px; border-radius:100px;
-  border:1px solid var(--border);
-  background:transparent; color:var(--muted);
-  cursor:pointer; transition:all .15s;
-}
-.filter-btn:hover, .filter-btn.active {
-  background:rgba(91,79,255,.15);
-  border-color:rgba(91,79,255,.4);
-  color:#fff;
-}
+/* MOB */
+.mob-btn{display:none;position:fixed;top:.875rem;left:.875rem;z-index:300;width:38px;height:38px;border-radius:9px;background:var(--panel);border:1px solid var(--border2);color:#fff;font-size:1rem;align-items:center;justify-content:center}
+.ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:150;backdrop-filter:blur(3px)}
 
-/* ── GRID ── */
-.grid {
-  max-width:1200px; margin:0 auto;
-  padding:0 2rem 4rem;
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:20px;
-  overflow:hidden;
-}
+/* PAGE TOP */
+.pt{padding:2.75rem 2.5rem 2.25rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.pt::after{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(91,79,255,.16) 0%,transparent 70%);pointer-events:none}
+.chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo);background:rgba(91,79,255,.1);border:1px solid rgba(91,79,255,.22);padding:3px 11px;border-radius:100px;margin-bottom:.875rem}
+.pt h1{font-family:var(--fh);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;color:#fff;margin-bottom:.6rem}
+.pt h1 em{font-style:normal;background:linear-gradient(90deg,var(--indigo),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pt p{color:var(--muted);font-size:.9rem;max-width:500px;line-height:1.7}
+.pb{padding:2rem 2.5rem}
 
-/* ── PRODUCT CARD ── */
-.pcard {
-  background:var(--card);
-  display:flex; flex-direction:column;
-  transition:background .2s;
-  position:relative;
-}
-.pcard:hover { background:rgba(255,255,255,.025); }
-.pcard:hover .pcard-img img { transform:scale(1.05); }
+/* SECTION LABEL */
+.sl{display:flex;align-items:center;gap:.6rem;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:1.75rem 0 1.1rem}
+.sl::after{content:'';flex:1;height:1px;background:var(--border)}
 
-.pcard-img {
-  width:100%; aspect-ratio:1/1;
-  background:var(--panel);
-  overflow:hidden; position:relative;
-}
-.pcard-img img {
-  width:100%; height:100%;
-  object-fit:contain;
-  padding:1.5rem;
-  transition:transform .3s ease;
-}
-.pcard-img .price-badge {
-  position:absolute; top:.75rem; right:.75rem;
-  font-family:var(--font-h);
-  font-size:.95rem; font-weight:800;
-  color:#fff;
-  background:rgba(255,107,53,.9);
-  backdrop-filter:blur(8px);
-  padding:4px 10px; border-radius:8px;
-  border:1px solid rgba(255,107,53,.4);
-}
+/* CARD GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:2rem}
 
-.pcard-body {
-  padding:1.25rem 1.25rem .75rem;
-  flex:1; display:flex; flex-direction:column; gap:.5rem;
-}
-.pcard-title {
-  font-family:var(--font-h);
-  font-size:.875rem; font-weight:700;
-  color:#fff; line-height:1.4;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-  overflow:hidden;
-}
-.pcard-hook {
-  font-size:.78rem; color:var(--muted);
-  line-height:1.6; flex:1;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-  overflow:hidden;
-}
+/* PRODUCT CARD */
+.pc{background:var(--card);padding:1.6rem;display:flex;flex-direction:column;gap:.6rem;position:relative;transition:background .18s}
+.pc:hover{background:var(--card2)}
+.pcb{position:absolute;top:0;left:0;right:0;height:2px}
+.pci{font-size:1.75rem;line-height:1;margin-bottom:.15rem}
+.pct{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:2px 8px;border-radius:100px}
+.t-purple{background:rgba(91,79,255,.14);color:#a78bfa}
+.t-green{background:rgba(15,212,164,.1);color:var(--teal)}
+.t-yellow{background:rgba(245,166,35,.1);color:var(--amber)}
+.t-red{background:rgba(244,63,94,.1);color:var(--rose)}
+.t-blue{background:rgba(56,189,248,.1);color:var(--sky)}
+.t-pink{background:rgba(236,72,153,.1);color:#f472b6}
+.t-cyan{background:rgba(34,211,238,.1);color:#22d3ee}
+.t-orange{background:rgba(255,107,53,.1);color:var(--orange)}
+.pc h3{font-family:var(--fh);font-size:1rem;font-weight:700;color:#fff;letter-spacing:-.01em}
+.pcd{font-size:.82rem;color:var(--muted);line-height:1.65;flex:1}
+.pcf{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding-top:.875rem;border-top:1px solid var(--border);margin-top:auto}
+.pcp{font-family:var(--fh);font-size:1.4rem;font-weight:800;color:#fff;line-height:1}
+.pcp small{display:block;font-size:.67rem;color:var(--muted);font-weight:400;font-family:var(--fb);margin-top:2px}
 
-.pcard-foot {
-  padding:.75rem 1.25rem 1.25rem;
-  display:flex; align-items:center; gap:.75rem;
-  border-top:1px solid var(--border);
-  margin-top:auto;
-}
-.pcard-price {
-  font-family:var(--font-h);
-  font-size:1.3rem; font-weight:800; color:#fff;
-  flex:1;
-}
-.btn-buy {
-  display:inline-flex; align-items:center; gap:.35rem;
-  font-family:var(--font-b); font-size:.78rem; font-weight:600;
-  padding:8px 16px; border-radius:8px;
-  background:var(--indigo); color:#fff;
-  border:none; cursor:pointer;
-  transition:all .2s; white-space:nowrap;
-  box-shadow:0 3px 16px rgba(91,79,255,.3);
-  text-decoration:none;
-}
-.btn-buy:hover {
-  background:#4a3fee;
-  box-shadow:0 5px 22px rgba(91,79,255,.5);
-  transform:translateY(-1px);
-}
-.btn-buy svg { flex-shrink:0; }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fb);font-size:.78rem;font-weight:600;padding:8px 16px;border-radius:8px;white-space:nowrap;transition:all .18s;text-decoration:none;cursor:pointer;border:none}
+.btn-p{background:var(--indigo);color:#fff;box-shadow:0 3px 16px rgba(91,79,255,.28)}
+.btn-p:hover{background:var(--indigo2);box-shadow:0 5px 22px rgba(91,79,255,.45);transform:translateY(-1px)}
+.btn-g{background:rgba(15,212,164,.13);color:var(--teal);border:1px solid rgba(15,212,164,.28)}
+.btn-g:hover{background:rgba(15,212,164,.22);transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--border2)}
+.btn-ghost:hover{background:rgba(255,255,255,.09);color:var(--text)}
 
-/* ── DISCLOSURE ── */
-.disclosure {
-  max-width:1200px; margin:0 auto;
-  padding:0 2rem 3rem;
-  font-size:.75rem; color:var(--muted);
-  line-height:1.65;
-}
-.disclosure strong { color:rgba(245,166,35,.7); }
+/* AMAZON */
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:2rem}
+.ac{background:var(--card);display:flex;flex-direction:column;transition:background .18s}
+.ac:hover{background:var(--card2)}
+.ac:hover .ai img{transform:scale(1.04)}
+.ai{aspect-ratio:1;background:var(--panel);overflow:hidden;position:relative}
+.ai img{width:100%;height:100%;object-fit:contain;padding:1.25rem;transition:transform .3s ease}
+.apb{position:absolute;top:.6rem;right:.6rem;font-family:var(--fh);font-size:.82rem;font-weight:800;color:#fff;background:rgba(255,107,53,.92);backdrop-filter:blur(6px);padding:3px 9px;border-radius:7px}
+.ab{padding:1rem 1rem .75rem;flex:1;display:flex;flex-direction:column;gap:.4rem}
+.at{font-family:var(--fh);font-size:.82rem;font-weight:700;color:#fff;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ah{font-size:.75rem;color:var(--muted);line-height:1.55;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.af{padding:.6rem 1rem 1rem;display:flex;align-items:center;gap:.6rem;border-top:1px solid var(--border)}
+.apr{font-family:var(--fh);font-size:1.15rem;font-weight:800;color:#fff;flex:1}
+.abtn{display:inline-flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:600;padding:7px 13px;border-radius:7px;background:var(--indigo);color:#fff;white-space:nowrap;transition:all .18s;box-shadow:0 2px 12px rgba(91,79,255,.25)}
+.abtn:hover{background:var(--indigo2);transform:translateY(-1px)}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(12px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-.pcard {
-  animation: fadeUp .4s ease both;
-}
-.pcard:nth-child(1)  { animation-delay:.02s }
-.pcard:nth-child(2)  { animation-delay:.04s }
-.pcard:nth-child(3)  { animation-delay:.06s }
-.pcard:nth-child(4)  { animation-delay:.08s }
-.pcard:nth-child(5)  { animation-delay:.10s }
-.pcard:nth-child(6)  { animation-delay:.12s }
-.pcard:nth-child(7)  { animation-delay:.14s }
-.pcard:nth-child(8)  { animation-delay:.16s }
-.pcard:nth-child(9)  { animation-delay:.18s }
-.pcard:nth-child(10) { animation-delay:.20s }
-.pcard:nth-child(11) { animation-delay:.22s }
-.pcard:nth-child(12) { animation-delay:.24s }
+/* FILTER */
+.fb-wrap{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+.fl{font-size:.7rem;color:var(--muted);margin-right:.2rem}
+.fb{font-size:.72rem;font-weight:500;padding:5px 13px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.fb:hover,.fb.on{background:rgba(91,79,255,.14);border-color:rgba(91,79,255,.38);color:#fff}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width:4px; }
-::-webkit-scrollbar-thumb { background:var(--border2); border-radius:4px; }
+/* AFF */
+.aff-list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.75rem}
+.aff-row{display:flex;align-items:center;gap:1rem;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.875rem 1.1rem;transition:all .18s}
+.aff-row:hover{border-color:var(--border2);background:var(--card2);transform:translateX(3px)}
+.aff-ico{width:40px;height:40px;border-radius:9px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.aff-info{flex:1}
+.aff-info h4{font-size:.87rem;font-weight:600;color:#fff;margin-bottom:.12rem}
+.aff-info p{font-size:.75rem;color:var(--muted)}
+.aff-comm{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:100px;background:rgba(15,212,164,.1);color:var(--teal);white-space:nowrap;flex-shrink:0}
+.aff-arr{color:var(--muted);flex-shrink:0}
 
-/* ── RESPONSIVE ── */
-@media(max-width:600px) {
-  .hero { padding:3rem 1.25rem 2rem; }
-  .filter-bar { padding:0 1.25rem 1.25rem; }
-  .grid { margin:0 1.25rem; padding:0; border-radius:14px; }
-  .disclosure { padding:1.5rem 1.25rem 3rem; }
-  .hero-count { display:none; }
+/* STATS */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.sc{background:var(--card);padding:1.75rem 1.5rem;text-align:center}
+.sn{font-family:var(--fh);font-size:2.6rem;font-weight:800;color:#fff;line-height:1;display:block;background:linear-gradient(135deg,#fff 30%,var(--muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sl2{font-size:.72rem;color:var(--muted);margin-top:.35rem;display:block}
+
+/* STORY */
+.story{background:linear-gradient(135deg,var(--card) 0%,rgba(91,79,255,.07) 100%);border:1px solid var(--border);border-radius:18px;padding:2.25rem;margin-bottom:1.75rem;position:relative;overflow:hidden}
+.story::after{content:'';position:absolute;bottom:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(15,212,164,.12) 0%,transparent 70%);pointer-events:none}
+.story h2{font-family:var(--fh);font-size:1.5rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:1.1rem;letter-spacing:-.02em}
+.story h2 span{color:var(--teal)}
+.story p{font-size:.87rem;color:var(--muted);line-height:1.8;margin-bottom:.7rem}
+
+/* SMS */
+.sms-num{font-family:var(--fh);font-size:2.1rem;font-weight:800;color:var(--teal);text-align:center;background:rgba(15,212,164,.05);border:1px solid rgba(15,212,164,.18);border-radius:14px;padding:1.35rem;margin-bottom:1.5rem;letter-spacing:.03em}
+.stg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.stc{background:var(--card);padding:1.6rem;display:flex;flex-direction:column;gap:.5rem}
+.stn{font-family:var(--fh);font-size:2.8rem;font-weight:800;line-height:1;color:rgba(91,79,255,.13)}
+.stc h3{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff}
+.stc p{font-size:.8rem;color:var(--muted);line-height:1.65}
+
+/* CONTACT */
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.cc{background:var(--card);padding:1.75rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.6rem;transition:background .18s}
+.cc:hover{background:var(--card2)}
+.cc .ico{font-size:1.8rem}
+.cc h3{font-family:var(--fh);font-size:.9rem;font-weight:700;color:#fff}
+.cc p{font-size:.75rem;color:var(--muted)}
+
+/* LEGAL */
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:1.75rem}
+.lc{background:var(--card);padding:1.6rem;display:flex;flex-direction:column;gap:.875rem}
+.lc h3{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff}
+.lc p{font-size:.78rem;color:var(--muted);flex:1}
+
+/* STACK / SOON */
+.stack{display:flex;flex-wrap:wrap;gap:.4rem}
+.sp{font-size:.72rem;font-weight:500;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:4px 11px;border-radius:100px;transition:all .18s}
+.sp:hover{color:var(--text);border-color:var(--border2)}
+.soon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;opacity:.5;margin-bottom:2rem}
+.snc{background:var(--card);padding:1.6rem}
+.snc h3{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.snc p{font-size:.78rem;color:var(--muted)}
+
+/* DISC */
+.disc{background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.18);border-radius:9px;padding:.875rem 1.1rem;font-size:.75rem;color:rgba(245,166,35,.75);margin-top:1.25rem;line-height:1.65}
+
+/* ANIM */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.page.active .pt,.page.active .pb>*{animation:fadeUp .35s ease both}
+.page.active .pb>*:nth-child(1){animation-delay:.04s}
+.page.active .pb>*:nth-child(2){animation-delay:.09s}
+.page.active .pb>*:nth-child(3){animation-delay:.14s}
+.page.active .pb>*:nth-child(4){animation-delay:.19s}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .layout{display:block}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;max-width:100vw}
+  .mob-btn{display:flex}
+  .ovl.show{display:block}
+  .pt{padding:4rem 1.25rem 1.75rem}
+  .pb{padding:1.25rem}
+}
+@media(max-width:500px){
+  .grid,.ag,.stg,.lg,.cg{grid-template-columns:1fr}
+  .sg{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="/" class="nav-logo"><div class="dot"></div> DealDily</a>
-  <a href="/" class="nav-back">← Back to Tools</a>
-</nav>
+<button class="mob-btn" onclick="toggleSidebar()">☰</button>
+<div class="ovl" id="ovl" onclick="toggleSidebar()"></div>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="chip">🛒 Amazon Affiliate</div>
-    <h1>My Amazon<br><span>Picks.</span></h1>
-    <p>Handpicked tech deals I actually use. Every link supports the site at no extra cost to you.</p>
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-brand"><div class="sb-dot"></div>DealDily</div>
+    <div class="sb-sub">AI Tools · Automations · Deals</div>
   </div>
-  <div class="hero-count">19<br><span style="font-size:1rem;color:var(--muted);font-family:var(--font-b);font-weight:400">products</span></div>
+  <nav class="sb-nav">
+    <div class="sb-grp">Main</div>
+    <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">7</span></button>
+    <button class="sb-btn" onclick="go('workflows',this)"><span class="sb-ico">🔄</span>AI Workflows</button>
+    <button class="sb-btn" onclick="go('automations',this)"><span class="sb-ico">⚡</span>Automations</button>
+    <button class="sb-btn" onclick="go('affiliates',this)"><span class="sb-ico">💰</span>Affiliate Deals<span class="sb-badge new">New</span></button>
+    <button class="sb-btn" onclick="go('amazon',this)"><span class="sb-ico">🛒</span>Amazon Picks</button>
+    <div class="sb-grp">Services</div>
+    <button class="sb-btn" onclick="go('sms',this)"><span class="sb-ico">📲</span>SMS Service</button>
+    <button class="sb-btn" onclick="go('about',this)"><span class="sb-ico">👤</span>About / Story</button>
+    <button class="sb-btn" onclick="go('contact',this)"><span class="sb-ico">✉️</span>Contact</button>
+    <div class="sb-grp">Legal</div>
+    <button class="sb-btn" onclick="go('legal',this)"><span class="sb-ico">📋</span>Legal & Compliance</button>
+  </nav>
+  <div class="sb-foot"><a href="mailto:contact@dealdily.com">✉ contact@dealdily.com</a></div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- SAAS -->
+<div class="page active" id="page-saas">
+  <div class="pt"><div class="chip">🛠 SaaS Tools</div><h1>Tools that work<br><em>while you don't.</em></h1><p>Real automation tools built by a real business owner. No fluff. No filler. Buy once, use forever.</p></div>
+  <div class="pb">
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:#6d28d9"></div><div class="pci">🗺️</div><span class="pct t-purple">⭐ Most Popular</span><h3>Competitor Intel Engine</h3><p class="pcd">See who's outranking you on Google Maps, their review strength, and exactly where you can beat them — in 60 seconds. Built for painters, contractors & local businesses.</p><div class="pcf"><div class="pcp">$19<small>Lifetime access</small></div><a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" target="_blank" class="btn btn-p">Get Access →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f59e0b"></div><div class="pci">🧾</div><span class="pct t-yellow">Mobile App</span><h3>ReceiptVault</h3><p class="pcd">Snap a photo of any receipt. It automatically organizes it and emails it to your accountant. No more panic at tax time.</p><div class="pcf"><div class="pcp">Free<small>Then $9.99/mo</small></div><a href="https://receipt-manager-offers8.replit.app" target="_blank" class="btn btn-g">Try Free →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#10b981"></div><div class="pci">📲</div><span class="pct t-green">Automation</span><h3>SMS Reminder Bot</h3><p class="pcd">Text it like a human. "Remind me to call the doctor Friday at 3pm" — done. No app. No setup. Just smart reminders.</p><div class="pcf"><div class="pcp">$9<small>/mo · Plans available</small></div><a href="https://sms-consent--offers8.replit.app" target="_blank" class="btn btn-p">Get Started →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#8b5cf6"></div><div class="pci">🤖</div><span class="pct t-purple">API</span><h3>AI Content Repurposer</h3><p class="pcd">Paste a YouTube link. Get captions for TikTok, Instagram, LinkedIn, Twitter, Facebook & Pinterest. Clean JSON. One API call.</p><div class="pcf"><div class="pcp">$27<small>/mo · API access</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get API →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#ef4444"></div><div class="pci">💳</div><span class="pct t-red">SaaS</span><h3>Payment Link Generator</h3><p class="pcd">Generate Stripe payment links with time-based access, coupon logic, and auto-checkout. Sell access, get paid, move on.</p><div class="pcf"><div class="pcp">$47<small>/mo · Unlimited links</small></div><a href="mailto:contact@dealdily.com?subject=Payment Link Generator" class="btn btn-p">Get Access →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f97316"></div><div class="pci">📘</div><span class="pct t-orange">eBook</span><h3>Beginners' Workflow AI</h3><p class="pcd">Build & sell AI automations with n8n, Google Sheets, and ChatGPT. Zero coding. Step-by-step. Build once, earn forever.</p><div class="pcf"><div class="pcp">$10<small>One-time · PDF</small></div><a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" class="btn btn-p">Buy Now →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#06b6d4"></div><div class="pci">😂</div><span class="pct t-cyan">Telegram Bot</span><h3>Joke Factory Bot</h3><p class="pcd">Fresh AI-generated jokes straight to your Telegram. Clean, dark humor, one-liners. Buy → press start → laugh instantly.</p><div class="pcf"><div class="pcp">$5<small>One-time · Lifetime</small></div><a href="https://toolsmith721.gumroad.com/l/xkhbgh" target="_blank" class="btn btn-p">Get Bot →</a></div></div>
+    </div>
+  </div>
 </div>
 
-<!-- FILTER BAR -->
-<div class="filter-bar">
-  <span class="filter-label">Filter:</span>
-  <button class="filter-btn active" onclick="filter('all',this)">All</button>
-  <button class="filter-btn" onclick="filter('ipad',this)">iPad</button>
-  <button class="filter-btn" onclick="filter('charging',this)">Charging</button>
-  <button class="filter-btn" onclick="filter('laptop',this)">Laptop</button>
-  <button class="filter-btn" onclick="filter('other',this)">Other</button>
+<!-- WORKFLOWS -->
+<div class="page" id="page-workflows">
+  <div class="pt"><div class="chip">🔄 AI Workflows</div><h1>Workflows that<br><em>print results.</em></h1><p>Pre-built n8n workflows you can deploy in minutes. Connect your tools. Let AI handle the rest.</p></div>
+  <div class="pb">
+    <div class="sl">Ready to deploy</div>
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:#6d28d9"></div><div class="pci">🎬</div><span class="pct t-purple">Content</span><h3>YouTube → TikTok Repurposer</h3><p class="pcd">Automatically takes any YouTube video, extracts the transcript, rewrites it for TikTok, and outputs a ready-to-post script.</p><div class="pcf"><div class="pcp">$27<small>/mo · API included</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get Workflow →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#10b981"></div><div class="pci">📞</div><span class="pct t-green">Reminder</span><h3>AI Reminder Bot (Voice + SMS)</h3><p class="pcd">Text a reminder in plain English. AI parses it, schedules it, and sends a voice call or SMS at the right time.</p><div class="pcf"><div class="pcp">$9<small>/mo · Unlimited reminders</small></div><a href="https://sms-consent--offers8.replit.app" target="_blank" class="btn btn-p">Deploy Now →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f59e0b"></div><div class="pci">🗺️</div><span class="pct t-yellow">Lead Gen</span><h3>Google Maps Lead Scraper</h3><p class="pcd">Scrape local businesses from Google Maps by niche and location. Extract names, ratings, review counts, and contact info.</p><div class="pcf"><div class="pcp">$19<small>One-time · Lifetime</small></div><a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" target="_blank" class="btn btn-p">Get It →</a></div></div>
+    </div>
+    <div class="sl">Coming soon</div>
+    <div class="soon-grid">
+      <div class="snc"><span class="pct t-blue" style="display:inline-block;margin-bottom:.6rem">Email</span><h3>📧 Cold Outreach Automation</h3><p>Scrape leads → enrich → send personalized cold emails. Full n8n workflow.</p></div>
+      <div class="snc"><span class="pct t-pink" style="display:inline-block;margin-bottom:.6rem">Social</span><h3>📱 Auto Social Poster</h3><p>Generate and schedule 10–15 posts/day across TikTok, Instagram, Twitter.</p></div>
+    </div>
+  </div>
 </div>
 
-<!-- PRODUCT GRID -->
-<div class="grid" id="grid">
+<!-- AUTOMATIONS -->
+<div class="page" id="page-automations">
+  <div class="pt"><div class="chip">⚡ Automations</div><h1>Set it once.<br><em>Run it forever.</em></h1><p>Custom automation systems built with n8n, Stripe, Twilio, and AI. Your business on autopilot.</p></div>
+  <div class="pb">
+    <div class="sl">What we automate</div>
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:#4f46e5"></div><div class="pci">💳</div><span class="pct t-purple">Payments</span><h3>Stripe Payment Automation</h3><p class="pcd">Auto-generate payment links, handle time-based access, manage coupons, and trigger actions on successful payments.</p><div class="pcf"><div class="pcp">$47<small>/mo</small></div><a href="mailto:contact@dealdily.com?subject=Payment Automation" class="btn btn-p">Get Access →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#10b981"></div><div class="pci">📲</div><span class="pct t-green">SMS</span><h3>SMS Marketing System</h3><p class="pcd">Full SMS infrastructure — opt-in pages, consent flows, compliance, auto-recharge, and Twilio/Telnyx integration.</p><div class="pcf"><div class="pcp">$9<small>/mo · Fully compliant</small></div><a href="https://sms-consent--offers8.replit.app" target="_blank" class="btn btn-p">Start →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#f59e0b"></div><div class="pci">🧾</div><span class="pct t-yellow">Accounting</span><h3>Receipt Management Automation</h3><p class="pcd">Snap receipts → AI organizes → auto-emails your accountant on schedule. Tax time goes from panic to a single tap.</p><div class="pcf"><div class="pcp">Free<small>Trial then $9.99/mo</small></div><a href="https://receipt-manager-offers8.replit.app" target="_blank" class="btn btn-g">Try Free →</a></div></div>
+      <div class="pc"><div class="pcb" style="background:#8b5cf6"></div><div class="pci">🤖</div><span class="pct t-purple">Content</span><h3>Content Repurposing Engine</h3><p class="pcd">One YouTube video becomes 7 platform-ready posts automatically. Feed the content machine once. Post everywhere.</p><div class="pcf"><div class="pcp">$20<small>/mo · API</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get It →</a></div></div>
+    </div>
+    <div class="sl">The stack</div>
+    <div class="stack"><span class="sp">n8n</span><span class="sp">Stripe</span><span class="sp">Twilio</span><span class="sp">Telnyx</span><span class="sp">Supabase</span><span class="sp">Google Sheets</span><span class="sp">OpenAI</span><span class="sp">Express</span><span class="sp">React Native</span><span class="sp">Replit</span><span class="sp">Netlify</span><span class="sp">Mailjet</span></div>
+  </div>
+</div>
 
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0BJPXXM7D.01._SCLZZZZZZZ_.jpg" alt="Ailun Screen Protector" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=📱'">
-      <span class="price-badge">$7.98</span>
+<!-- AFFILIATES -->
+<div class="page" id="page-affiliates">
+  <div class="pt"><div class="chip">💰 Affiliate Deals</div><h1>Deals I actually<br><em>use myself.</em></h1><p>Handpicked tools, products, and courses. Every link is something I've personally vetted.</p></div>
+  <div class="pb">
+    <div class="sl">🛒 Amazon — Tech & Tools</div>
+    <div class="aff-list">
+      <a href="https://www.amazon.com/shop/dealdily" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">💻</div><div class="aff-info"><h4>Best Budget Laptops for Automation</h4><p>The exact setup I recommend for running n8n and workflows on a budget</p></div><span class="aff-comm">Up to 4%</span><span class="aff-arr">→</span></a>
+      <a href="https://www.amazon.com/shop/dealdily" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">📱</div><div class="aff-info"><h4>Best Phones for Business Owners</h4><p>Run your automations, check Stripe, manage SMS — from anywhere</p></div><span class="aff-comm">Up to 4%</span><span class="aff-arr">→</span></a>
+      <a href="https://www.amazon.com/shop/dealdily" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">🖥️</div><div class="aff-info"><h4>PC Components — Best Deals This Week</h4><p>Curated from r/buildapcsales — updated regularly</p></div><span class="aff-comm">Up to 4%</span><span class="aff-arr">→</span></a>
     </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Ailun Screen Protector for iPad 11th Gen / 10th Generation</div>
-      <div class="pcard-hook">Worried about cracks? Upgrade your iPad's defense with Ailun's tempered glass.</div>
+    <div class="sl">📚 Digital — Courses & Downloads</div>
+    <div class="aff-list">
+      <a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">🤖</div><div class="aff-info"><h4>AI Automation Mastery Course</h4><p>Learn to build and sell automations — the same skills I use every day</p></div><span class="aff-comm">50–70%</span><span class="aff-arr">→</span></a>
+      <a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">💰</div><div class="aff-info"><h4>Make Money with n8n Workflows</h4><p>Step-by-step guide to selling automation services to local businesses</p></div><span class="aff-comm">50–70%</span><span class="aff-arr">→</span></a>
+      <a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" rel="noopener" class="aff-row"><div class="aff-ico">📈</div><div class="aff-info"><h4>Affiliate Marketing Blueprint</h4><p>The system behind building passive affiliate income streams</p></div><span class="aff-comm">50–70%</span><span class="aff-arr">→</span></a>
     </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$7.98</div>
-      <a href="https://www.amazon.com/dp/B0BJPXXM7D?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
+    <div class="disc"><strong>Disclosure:</strong> Some links are affiliate links. If you click and buy, I may earn a small commission at no extra cost to you.</div>
+  </div>
+</div>
+
+<!-- AMAZON PICKS -->
+<div class="page" id="page-amazon">
+  <div class="pt"><div class="chip">🛒 Amazon Picks</div><h1>My Amazon<br><em>picks.</em></h1><p>19 handpicked tech deals. Every link uses my affiliate tag — clicking supports the site at no extra cost to you.</p></div>
+  <div class="pb">
+    <div class="fb-wrap">
+      <span class="fl">Filter:</span>
+      <button class="fb on" onclick="amzF('all',this)">All (19)</button>
+      <button class="fb" onclick="amzF('ipad',this)">iPad</button>
+      <button class="fb" onclick="amzF('charging',this)">Charging</button>
+      <button class="fb" onclick="amzF('laptop',this)">Laptop</button>
+      <button class="fb" onclick="amzF('other',this)">Other</button>
+    </div>
+    <div class="ag" id="amz-grid">
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/719R46dVUTL._AC_SX466_.jpg" alt="Ailun Screen Protector"><span class="apb">$7.98</span></div><div class="ab"><div class="at">Ailun Screen Protector iPad 11th / 10th Gen</div><div class="ah">Tempered glass, Face ID compatible. Crystal clear protection.</div></div><div class="af"><span class="apr">$7.98</span><a href="https://www.amazon.com/dp/B0BJPXXM7D?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/51IFiSD+kCL._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="MoKo Case"><span class="apb">$9.95</span></div><div class="ab"><div class="at">MoKo Slim iPad Case 11th / 10th Gen</div><div class="ah">Ultra-slim hard PC, won't add bulk to your iPad.</div></div><div class="af"><span class="apr">$9.95</span><a href="https://www.amazon.com/dp/B0B8STRJYJ?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="Metapen A8"><span class="apb">$15.98</span></div><div class="ab"><div class="at">Metapen A8 iPad Pencil — 4Min Fast Charge</div><div class="ah">4-min charge, magnetic attach. Smarter than Apple Pencil at a fraction of the cost.</div></div><div class="af"><span class="apr">$15.98</span><a href="https://www.amazon.com/dp/B09ZTXVNVD?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="charging"><div class="ai"><img src="https://m.media-amazon.com/images/I/615HRY2dnML._AC_SX466_.jpg" alt="Anker 20W"><span class="apb">$13.51</span></div><div class="ab"><div class="at">Anker 2-Pack 20W USB-C Charger iPhone 17/16</div><div class="ah">Two fast chargers in one pack. Stop fighting over the outlet.</div></div><div class="af"><span class="apr">$13.51</span><a href="https://www.amazon.com/dp/B0C8HHV9DK?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="charging"><div class="ai"><img src="https://m.media-amazon.com/images/I/61j-0VbdDQL._AC_SX466_.jpg" alt="Anker Nano 45W"><span class="apb">$29.98</span></div><div class="ab"><div class="at">Anker Nano 45W Smart Display Charger</div><div class="ah">Real-time wattage display. Foldable plug. Tiny but powerful.</div></div><div class="af"><span class="apr">$29.98</span><a href="https://www.amazon.com/dp/B0G1MRLXMV?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/51O7hjOd0QL._AC_SY355_.jpg" alt="SPARIN"><span class="apb">$6.99</span></div><div class="ab"><div class="at">SPARIN 2-Pack Screen Protector iPad 11th</div><div class="ah">Two screens protected for under $7. No-brainer.</div></div><div class="af"><span class="apr">$6.99</span><a href="https://www.amazon.com/dp/B0BKL7KD6Y?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/51nliDIEP9L._AC_SY450_.jpg" alt="ProCase Screen Protector"><span class="apb">$4.52</span></div><div class="ab"><div class="at">ProCase 2-Pack Tempered Glass iPad 11th / 10th</div><div class="ah">$4.52 to save a $500 screen. Best decision you'll make today.</div></div><div class="af"><span class="apr">$4.52</span><a href="https://www.amazon.com/dp/B0BDKJFRX4?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="other"><div class="ai"><img src="https://m.media-amazon.com/images/I/51nQJi7RvAL._AC_SX425_.jpg" alt="Taygeer Backpack"><span class="apb">$23.99</span></div><div class="ab"><div class="at">Taygeer Travel Backpack USB Port + TSA 15.6"</div><div class="ah">Carry-on ready, USB charging, laptop slot. Built for travelers.</div></div><div class="af"><span class="apr">$23.99</span><a href="https://www.amazon.com/dp/B09MQWWP87?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://m.media-amazon.com/images/I/51QXqomzfdL._AC_SY355_.jpg" alt="Anker USB-C Hub"><span class="apb">$18.99</span></div><div class="ab"><div class="at">Anker 5-in-1 USB-C Hub — 4K HDMI + USB-A</div><div class="ah">5 ports, 4K display output. One cable to rule them all.</div></div><div class="af"><span class="apr">$18.99</span><a href="https://www.amazon.com/dp/B0BQLLB61B?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="other"><div class="ai"><img src="https://m.media-amazon.com/images/I/61Kez7aUF9L._AC_SY355_.jpg" alt="Nelko Label Maker"><span class="apb">$17.08</span></div><div class="ab"><div class="at">Nelko P21 Bluetooth Label Maker</div><div class="ah">Print labels wirelessly from your phone. Organize everything.</div></div><div class="af"><span class="apr">$17.08</span><a href="https://www.amazon.com/dp/B0C3L93F2Q?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://m.media-amazon.com/images/I/71Gf93EDYML._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="MOSISO Laptop Sleeve"><span class="apb">$13.99</span></div><div class="ab"><div class="at">MOSISO 13" Laptop Sleeve MacBook / HP / Dell</div><div class="ah">Slim neoprene protection. Fits MacBook Air/Pro and most 13" laptops.</div></div><div class="af"><span class="apr">$13.99</span><a href="https://www.amazon.com/dp/B01N6M1Y9N?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/71iZhpB2FpL._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="Stylus Pen"><span class="apb">$9.99</span></div><div class="ab"><div class="at">Stylus Pen iPad 2018–2025 — 13 Min Charge</div><div class="ah">Tilt sensitivity, palm rejection, fast charge. Under $10.</div></div><div class="af"><span class="apr">$9.99</span><a href="https://www.amazon.com/dp/B0F21WN48Z?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/51O7hjOd0QL._AC_SY355_.jpg" alt="MOBDIK Paperfeel"><span class="apb">$7.98</span></div><div class="ab"><div class="at">MOBDIK 2-Pack Paperfeel Screen Protector iPad A16</div><div class="ah">Matte finish makes writing feel like real paper. Game changer for notes.</div></div><div class="af"><span class="apr">$7.98</span><a href="https://www.amazon.com/dp/B0BD9P8CFG?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/719R46dVUTL._AC_SX466_.jpg" alt="ProCase iPad 9th"><span class="apb">$9.99</span></div><div class="ab"><div class="at">ProCase iPad 9th / 8th / 7th Gen Case 10.2"</div><div class="ah">Slim folio, multiple colors. Protect your iPad without breaking the bank.</div></div><div class="af"><span class="apr">$9.99</span><a href="https://www.amazon.com/dp/B07XY28FZG?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/615HRY2dnML._AC_SX466_.jpg" alt="Hamile Keyboard"><span class="apb">$21.97</span></div><div class="ab"><div class="at">Hamile iPad Keyboard Case — 7-Color Backlit</div><div class="ah">Wireless backlit keyboard, detachable folio. iPad 11th/10th gen.</div></div><div class="af"><span class="apr">$21.97</span><a href="https://www.amazon.com/dp/B0C375272K?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://m.media-amazon.com/images/I/61j-0VbdDQL._AC_SX466_.jpg" alt="MOSISO MacBook Case"><span class="apb">$12.99</span></div><div class="ab"><div class="at">MOSISO MacBook Air 13" Hard Shell M4 M3 M2</div><div class="ah">Hard shell + keyboard cover. Fits every MacBook Air 13" since 2022.</div></div><div class="af"><span class="apr">$12.99</span><a href="https://www.amazon.com/dp/B0B7H3V2V7?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="ipad"><div class="ai"><img src="https://m.media-amazon.com/images/I/51nliDIEP9L._AC_SY450_.jpg" alt="Harvopu Keyboard Case"><span class="apb">$25.98</span></div><div class="ab"><div class="at">Harvopu iPad Case + Trackpad Keyboard + Pencil</div><div class="ah">Multi-touch trackpad + pencil holder. Turns your iPad into a laptop.</div></div><div class="af"><span class="apr">$25.98</span><a href="https://www.amazon.com/dp/B0CMWPDGZH?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="laptop"><div class="ai"><img src="https://m.media-amazon.com/images/I/51QXqomzfdL._AC_SY355_.jpg" alt="CloudValley Webcam Cover"><span class="apb">$6.99</span></div><div class="ab"><div class="at">CloudValley Webcam Cover 2-Pack Ultra-Thin</div><div class="ah">0.023" thin metal. Privacy in 2 seconds, lid still closes perfectly.</div></div><div class="af"><span class="apr">$6.99</span><a href="https://www.amazon.com/dp/B079MCPJGH?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+      <div class="ac" data-cat="charging"><div class="ai"><img src="https://m.media-amazon.com/images/I/71Gf93EDYML._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="Sunveza 118W"><span class="apb">$26.83</span></div><div class="ab"><div class="at">Sunveza 118W Charger MacBook Pro/Air M1–M5</div><div class="ah">Charges faster than Apple's own brick. Works with every MacBook.</div></div><div class="af"><span class="apr">$26.83</span><a href="https://www.amazon.com/dp/B0B1HJ666G?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
+    </div>
+    <div class="disc"><strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. Buying through these links supports DealDily at no extra cost to you.</div>
+  </div>
+</div>
+
+<!-- SMS -->
+<div class="page" id="page-sms">
+  <div class="pt"><div class="chip">📲 SMS Service</div><h1>Never miss what<br><em>matters most.</em></h1><p>Text your reminders in plain English. We send them back at the right time — automatically.</p></div>
+  <div class="pb">
+    <div class="sms-num">+1-855-923-0032</div>
+    <div class="stg">
+      <div class="stc"><div class="stn">01</div><h3>Text START</h3><p>Send START to +1-855-923-0032. You'll get a confirmation immediately.</p></div>
+      <div class="stc"><div class="stn">02</div><h3>Send Your Reminder</h3><p>Text naturally — "Remind me to take my meds tomorrow at 8am" or "Pay rent every Friday."</p></div>
+      <div class="stc"><div class="stn">03</div><h3>We Remind You</h3><p>At the right time, you get a text or voice call. Automatic. Reliable. No app needed.</p></div>
+    </div>
+    <div class="sl">Compliance</div>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.1rem">Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for help.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+      <a href="/terms-conditions.html" class="btn btn-ghost">Terms & Conditions</a>
+      <a href="/privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
+      <a href="/sms-opt-in.html" class="btn btn-ghost">SMS Opt-In</a>
+      <a href="/sms-consent.html" class="btn btn-ghost">SMS Consent</a>
     </div>
   </div>
+</div>
 
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0B8STRJYJ.01._SCLZZZZZZZ_.jpg" alt="MoKo iPad Case" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=📱'">
-      <span class="price-badge">$9.95</span>
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="pt"><div class="chip">👤 The Story</div><h1>Built by a store owner.<br><em>Not a tech bro.</em></h1><p>6 months. 7 products. $0 in venture capital. Just a convenience store in Syracuse and a burning desire to build assets instead of wages.</p></div>
+  <div class="pb">
+    <div class="story">
+      <h2>I'm Sal. I work <span>9AM to 10PM.</span><br>7 days a week. 365 days a year.</h2>
+      <p>I got tired of watching small businesses lose to bigger competitors who had better systems. I got tired of trading hours for money. I got tired of building someone else's dream.</p>
+      <p>So I started building my own. Every tool on this site was built out of a real need — mine or someone else's. No team. No investors. Just late nights, stubborn persistence, and AI.</p>
+      <p>I don't care about being a coder. I care about finishing. Revenue first. Perfection later.</p>
     </div>
-    <div class="pcard-body">
-      <div class="pcard-title">MoKo Slim Stand Hard PC Case for iPad 11th / 10th Generation</div>
-      <div class="pcard-hook">Tired of bulky iPad cases? Upgrade to MoKo's ultra-slim hard PC case.</div>
+    <div class="sg">
+      <div class="sc"><span class="sn">7</span><span class="sl2">Products Built</span></div>
+      <div class="sc"><span class="sn">6</span><span class="sl2">Months Building</span></div>
+      <div class="sc"><span class="sn">$0</span><span class="sl2">Outside Funding</span></div>
+      <div class="sc"><span class="sn">24/7</span><span class="sl2">Systems Running</span></div>
     </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$9.95</div>
-      <a href="https://www.amazon.com/dp/B0B8STRJYJ?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
+    <div class="sl">The philosophy</div>
+    <div class="grid">
+      <div class="pc"><div class="pcb" style="background:var(--indigo)"></div><div class="pci">🏗️</div><h3>Assets Over Wages</h3><p class="pcd">Don't trade time for money. Build systems that generate money while you sleep.</p></div>
+      <div class="pc"><div class="pcb" style="background:var(--teal)"></div><div class="pci">🚀</div><h3>Speed Over Perfection</h3><p class="pcd">Deploy first. Optimize later. Broken code breaks momentum. Ship it.</p></div>
+      <div class="pc"><div class="pcb" style="background:var(--amber)"></div><div class="pci">🔒</div><h3>Privacy First</h3><p class="pcd">Your data is yours. No selling, no tracking beyond what's absolutely needed.</p></div>
     </div>
   </div>
+</div>
 
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B09ZTXVNVD.01._SCLZZZZZZZ_.jpg" alt="Metapen A8 iPad Pencil" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=✏️'">
-      <span class="price-badge">$15.98</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Metapen A8 iPad Pencil — 4Min Fast Charge, Magnetic Attachment</div>
-      <div class="pcard-hook">Tired of slow charging styluses? 4-minute charge, magnetic attach. Smart tech, smart price.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$15.98</div>
-      <a href="https://www.amazon.com/dp/B09ZTXVNVD?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="pt"><div class="chip">✉️ Contact</div><h1>Let's talk.<br><em>Real answers only.</em></h1><p>No bots. No ticket system. Real responses from a real person.</p></div>
+  <div class="pb">
+    <div class="cg">
+      <a href="mailto:contact@dealdily.com" class="cc"><div class="ico">📧</div><h3>General</h3><p>contact@dealdily.com</p></a>
+      <a href="mailto:support@dealdily.com" class="cc"><div class="ico">🛟</div><h3>Support</h3><p>support@dealdily.com</p></a>
+      <a href="/sms-opt-in.html" class="cc"><div class="ico">📲</div><h3>SMS</h3><p>Text START to +1-855-923-0032</p></a>
     </div>
   </div>
+</div>
 
-  <div class="pcard" data-cat="charging">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0C8HHV9DK.01._SCLZZZZZZZ_.jpg" alt="Anker 20W Charger 2-Pack" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=🔌'">
-      <span class="price-badge">$13.51</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Anker 2-Pack 20W Fast USB-C Charger Block for iPhone 17/16</div>
-      <div class="pcard-hook">Still using slow chargers? Two 20W USB-C blocks in one pack — unbeatable value.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$13.51</div>
-      <a href="https://www.amazon.com/dp/B0C8HHV9DK?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
+<!-- LEGAL -->
+<div class="page" id="page-legal">
+  <div class="pt"><div class="chip">📋 Legal</div><h1>Transparent.<br><em>Always.</em></h1><p>All legal documents for DealDily SMS Notifications and our products.</p></div>
+  <div class="pb">
+    <div class="lg">
+      <div class="lc"><div class="pci">📋</div><h3>Terms & Conditions</h3><p>Full terms of service for DealDily SMS Notifications.</p><a href="/terms-conditions.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
+      <div class="lc"><div class="pci">🔒</div><h3>Privacy Policy</h3><p>How we collect, use, and protect your data.</p><a href="/privacy-policy.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
+      <div class="lc"><div class="pci">✅</div><h3>SMS Opt-In</h3><p>How to subscribe to DealDily SMS reminders.</p><a href="/sms-opt-in.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
+      <div class="lc"><div class="pci">📝</div><h3>SMS Consent</h3><p>Explicit consent language for TCPA compliance.</p><a href="/sms-consent.html" class="btn btn-p" style="align-self:flex-start">View →</a></div>
     </div>
   </div>
+</div>
 
-  <div class="pcard" data-cat="charging">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0G1MRLXMV.01._SCLZZZZZZZ_.jpg" alt="Anker Nano 45W Charger" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=⚡'">
-      <span class="price-badge">$29.98</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Anker Nano 45W USB-C Smart Display Charger, 180° Foldable Plug</div>
-      <div class="pcard-hook">Smart display shows real-time wattage. Foldable plug, 45W fast charging in a tiny body.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$29.98</div>
-      <a href="https://www.amazon.com/dp/B0G1MRLXMV?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0BKL7KD6Y.01._SCLZZZZZZZ_.jpg" alt="SPARIN Screen Protector" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=📱'">
-      <span class="price-badge">$6.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">SPARIN 2-Pack Screen Protector for iPad A16 11th / 10th Gen</div>
-      <div class="pcard-hook">2-pack tempered glass — protect your screen twice for under $7.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$6.99</div>
-      <a href="https://www.amazon.com/dp/B0BKL7KD6Y?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0BDKJFRX4.01._SCLZZZZZZZ_.jpg" alt="ProCase Screen Protector" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=📱'">
-      <span class="price-badge">$4.52</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">ProCase 2-Pack Tempered Glass Screen Protector for iPad 11th / 10th Gen</div>
-      <div class="pcard-hook">Cracked screens cost hundreds to fix. Protect your iPad now for $4.52.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$4.52</div>
-      <a href="https://www.amazon.com/dp/B0BDKJFRX4?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="other">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B09MQWWP87.01._SCLZZZZZZZ_.jpg" alt="Taygeer Travel Backpack" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=🎒'">
-      <span class="price-badge">$23.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Taygeer Travel Backpack — USB Charging Port, TSA, 15.6" Laptop</div>
-      <div class="pcard-hook">Carry-on ready with USB charging, shoe pouch, and 15.6" laptop slot.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$23.99</div>
-      <a href="https://www.amazon.com/dp/B09MQWWP87?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="laptop">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0BQLLB61B.01._SCLZZZZZZZ_.jpg" alt="Anker USB-C Hub" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=🔌'">
-      <span class="price-badge">$18.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Anker 5-in-1 USB-C Hub — 4K HDMI, 2x USB-A 3.0, USB-C 5Gbps</div>
-      <div class="pcard-hook">5 ports. 4K display. One hub. Stop fighting for ports.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$18.99</div>
-      <a href="https://www.amazon.com/dp/B0BQLLB61B?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="other">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0C3L93F2Q.01._SCLZZZZZZZ_.jpg" alt="Nelko Label Maker" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=🏷️'">
-      <span class="price-badge">$17.08</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Nelko P21 Bluetooth Label Maker — Wireless, Multiple Templates</div>
-      <div class="pcard-hook">Tired of messy labels? Print via Bluetooth from your phone, instantly.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$17.08</div>
-      <a href="https://www.amazon.com/dp/B0C3L93F2Q?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="laptop">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B01N6M1Y9N.01._SCLZZZZZZZ_.jpg" alt="MOSISO Laptop Sleeve" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=💻'">
-      <span class="price-badge">$13.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">MOSISO 13-13.3" Laptop Sleeve — MacBook Air/Pro, HP, Dell</div>
-      <div class="pcard-hook">Don't risk scratches on your laptop. Slim neoprene sleeve, fits most 13" machines.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$13.99</div>
-      <a href="https://www.amazon.com/dp/B01N6M1Y9N?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0F21WN48Z.01._SCLZZZZZZZ_.jpg" alt="Stylus Pen for iPad" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=✏️'">
-      <span class="price-badge">$9.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Stylus Pen for iPad (2018–2025) — 13 Min Fast Charge, Palm Rejection</div>
-      <div class="pcard-hook">Fast 13-min charge, tilt sensitivity, palm rejection. Under $10.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$9.99</div>
-      <a href="https://www.amazon.com/dp/B0F21WN48Z?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0BD9P8CFG.01._SCLZZZZZZZ_.jpg" alt="MOBDIK Paperfeel Screen Protector" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=📱'">
-      <span class="price-badge">$7.98</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">MOBDIK 2-Pack Paperfeel Screen Protector — iPad A16 11th / Air 11</div>
-      <div class="pcard-hook">Matte paperfeel finish makes writing feel like real paper. Worth every penny.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$7.98</div>
-      <a href="https://www.amazon.com/dp/B0BD9P8CFG?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B07XY28FZG.01._SCLZZZZZZZ_.jpg" alt="ProCase iPad 9th Gen" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=📱'">
-      <span class="price-badge">$9.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">ProCase for iPad 9th / 8th / 7th Generation 10.2 Inch Case</div>
-      <div class="pcard-hook">Protect your iPad without breaking the bank. Slim folio, multiple colors.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$9.99</div>
-      <a href="https://www.amazon.com/dp/B07XY28FZG?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0C375272K.01._SCLZZZZZZZ_.jpg" alt="Hamile iPad Keyboard Case" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=⌨️'">
-      <span class="price-badge">$21.97</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Hamile iPad Keyboard Case — 7-Color Backlit, Wireless Detachable</div>
-      <div class="pcard-hook">7-color backlit keys, detachable folio, works with iPad 11th/10th gen.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$21.97</div>
-      <a href="https://www.amazon.com/dp/B0C375272K?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="laptop">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0B7H3V2V7.01._SCLZZZZZZZ_.jpg" alt="MOSISO MacBook Air Case" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=💻'">
-      <span class="price-badge">$12.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">MOSISO MacBook Air 13" Hard Shell Case — M4 M3 M2 2022–2026</div>
-      <div class="pcard-hook">Fits every recent MacBook Air 13". Hard shell, keyboard cover included.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$12.99</div>
-      <a href="https://www.amazon.com/dp/B0B7H3V2V7?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="ipad">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0CMWPDGZH.01._SCLZZZZZZZ_.jpg" alt="Harvopu iPad Keyboard Case" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=⌨️'">
-      <span class="price-badge">$25.98</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Harvopu iPad Case with Keyboard — Trackpad, Folio, Pencil Holder</div>
-      <div class="pcard-hook">Multi-touch trackpad, pencil holder, full folio. Turns your iPad into a laptop.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$25.98</div>
-      <a href="https://www.amazon.com/dp/B0CMWPDGZH?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="laptop">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B079MCPJGH.01._SCLZZZZZZZ_.jpg" alt="CloudValley Webcam Cover" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=🔒'">
-      <span class="price-badge">$6.99</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">CloudValley Webcam Cover Slide 2-Pack — 0.023" Ultra-Thin Metal</div>
-      <div class="pcard-hook">Worried about hackers? 0.023" thin — won't interfere with your lid closing.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$6.99</div>
-      <a href="https://www.amazon.com/dp/B079MCPJGH?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-  <div class="pcard" data-cat="charging">
-    <div class="pcard-img">
-      <img src="https://images-na.ssl-images-amazon.com/images/I/B0B1HJ666G.01._SCLZZZZZZZ_.jpg" alt="Sunveza 118W MacBook Charger" onerror="this.src='https://via.placeholder.com/300x300/131320/5b4fff?text=⚡'">
-      <span class="price-badge">$26.83</span>
-    </div>
-    <div class="pcard-body">
-      <div class="pcard-title">Sunveza 118W USB-C Fast Charger — MacBook Pro/Air M1–M5, iPad Pro</div>
-      <div class="pcard-hook">118W GaN charger for MacBook Pro/Air. Charges faster than Apple's own brick.</div>
-    </div>
-    <div class="pcard-foot">
-      <div class="pcard-price">$26.83</div>
-      <a href="https://www.amazon.com/dp/B0B1HJ666G?tag=dealdily20-20" target="_blank" rel="noopener" class="btn-buy">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on Amazon
-      </a>
-    </div>
-  </div>
-
-</div><!-- /.grid -->
-
-<!-- DISCLOSURE -->
-<div class="disclosure">
-  <strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. Clicking links and buying products through this page supports DealDily at no additional cost to you. Prices shown are approximate and may vary.
+</main>
 </div>
 
 <script>
-function filter(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.pcard').forEach(card => {
-    if (cat === 'all' || card.dataset.cat === cat) {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
+function go(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('on');
+  window.scrollTo(0, 0);
+  if (window.innerWidth <= 860) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('ovl').classList.remove('show');
+  }
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('ovl').classList.toggle('show');
+}
+function amzF(cat, btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.ac').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'flex' : 'none';
   });
 }
 </script>
