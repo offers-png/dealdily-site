@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GhostCheck — The End of Rental Scams</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f0d;
+    --bg2: #0f1712;
+    --card: #121a14;
+    --border: rgba(52,211,153,0.12);
+    --em: #34d399;
+    --em2: #6ee7b7;
+    --slate: #94a3b8;
+    --text: #e2e8f0;
+    --red: #f87171;
+    --amber: #fbbf24;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+  .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing:0.02em; }
+
+  /* Scan line effect */
+  body::after {
+    content:'';
+    position:fixed; inset:0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events:none; z-index:999;
+  }
+
+  /* Noise */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:998;
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; width:100%; z-index:100;
+    background:rgba(10,15,13,0.9);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner { max-width:1100px; margin:auto; padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; }
+  .logo { display:flex; align-items:center; gap:8px; }
+  .logo-icon { width:28px; height:28px; background:var(--em); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .logo-text { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.1em; color:white; }
+  .nav-links { display:flex; gap:32px; }
+  .nav-links a { font-size:13px; color:var(--slate); text-decoration:none; transition:color .2s; }
+  .nav-links a:hover { color:var(--em2); }
+  .nav-cta {
+    background:var(--em); color:#0a0f0d; font-family:'Bebas Neue',sans-serif;
+    font-size:14px; letter-spacing:0.08em; padding:8px 20px; border-radius:6px;
+    text-decoration:none; transition:all .2s;
+  }
+  .nav-cta:hover { background:var(--em2); transform:translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; align-items:center;
+    padding:100px 24px 60px;
+    position:relative; overflow:hidden;
+  }
+  .hero-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(52,211,153,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(52,211,153,0.03) 1px, transparent 1px);
+    background-size:80px 80px;
+  }
+  .hero-glow {
+    position:absolute; top:20%; left:50%; transform:translateX(-50%);
+    width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(52,211,153,0.07) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner { max-width:1100px; margin:auto; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; position:relative; }
+
+  /* BADGE */
+  .badge {
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--border); border-radius:100px;
+    padding:6px 14px; font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--em); margin-bottom:24px;
+  }
+  .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--em); animation:pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+  /* HEADLINE */
+  .hero-headline {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(52px,7vw,88px);
+    line-height:0.95;
+    letter-spacing:0.01em;
+    margin-bottom:24px;
+  }
+  .hero-headline .accent { color:var(--em); }
+  .hero-headline .cross {
+    position:relative; display:inline-block;
+    color:var(--slate);
+  }
+  .hero-headline .cross::after {
+    content:'';
+    position:absolute; left:0; top:50%;
+    width:100%; height:3px;
+    background:var(--red); transform:translateY(-50%);
+  }
+
+  .hero-sub { color:var(--slate); font-size:16px; line-height:1.7; max-width:460px; margin-bottom:36px; }
+
+  /* TRUST BAR */
+  .trust-pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; }
+  .trust-pill {
+    display:flex; align-items:center; gap:6px;
+    background:rgba(52,211,153,0.06); border:1px solid var(--border);
+    border-radius:100px; padding:6px 14px; font-size:12px; color:var(--em2);
+  }
+
+  /* CTA */
+  .cta-group { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .btn-primary {
+    background:var(--em); color:#0a0f0d;
+    font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:0.08em;
+    padding:14px 36px; border-radius:8px; text-decoration:none;
+    transition:all .25s; display:inline-block; position:relative; overflow:hidden;
+  }
+  .btn-primary::before {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(135deg,transparent 0%,rgba(255,255,255,0.15) 100%);
+    opacity:0; transition:opacity .25s;
+  }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(52,211,153,0.3); }
+  .btn-primary:hover::before { opacity:1; }
+  .btn-ghost {
+    color:var(--slate); font-size:13px; text-decoration:none;
+    display:flex; align-items:center; gap:6px; transition:color .2s;
+  }
+  .btn-ghost:hover { color:var(--em2); }
+
+  /* REPORT CARD */
+  .report-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:24px; position:relative;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .report-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .report-title { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--em); }
+  .score-badge {
+    background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.3);
+    border-radius:100px; padding:4px 12px; font-family:'Bebas Neue',sans-serif;
+    font-size:18px; color:var(--em); letter-spacing:0.05em;
+  }
+  .report-address { font-size:13px; color:var(--slate); margin-bottom:4px; }
+  .report-unit { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em; margin-bottom:16px; }
+  .report-divider { height:1px; background:var(--border); margin:16px 0; }
+  .report-item { display:flex; gap:10px; align-items:flex-start; padding:6px 0; font-size:13px; }
+  .report-item .icon { flex-shrink:0; width:18px; text-align:center; margin-top:1px; }
+  .report-item .label { color:var(--slate); }
+  .report-item .val { color:var(--text); margin-left:auto; font-size:12px; }
+  .verdict-box {
+    margin-top:16px; padding:12px; border-radius:8px;
+    background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2);
+  }
+  .verdict-label { font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--amber); margin-bottom:4px; }
+  .verdict-text { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.05em; color:var(--amber); }
+  .report-footer { display:flex; justify-content:space-between; align-items:center; margin-top:16px; font-size:11px; color:var(--slate); }
+
+  /* Floating chips */
+  .chip {
+    position:absolute; background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:8px 14px; font-size:12px; white-space:nowrap;
+  }
+  .chip-1 { top:-20px; right:-20px; color:var(--em); animation:float 3s ease-in-out infinite 0.5s; }
+  .chip-2 { bottom:-16px; left:-20px; color:var(--slate); animation:float 3.5s ease-in-out infinite 1s; }
+
+  /* SECTION STYLES */
+  section { padding:96px 24px; }
+  .section-inner { max-width:1100px; margin:auto; }
+  .section-tag {
+    display:inline-block; font-size:11px; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--em);
+    border:1px solid var(--border); border-radius:100px;
+    padding:4px 14px; margin-bottom:16px;
+  }
+  .section-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(40px,5vw,60px); line-height:1;
+    letter-spacing:0.02em; margin-bottom:16px;
+  }
+  .section-sub { color:var(--slate); font-size:16px; line-height:1.7; max-width:560px; }
+
+  /* TRUST BAR SECTION */
+  .trust-section { background:var(--bg2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:32px 24px; }
+  .trust-scroll { display:flex; gap:48px; overflow-x:auto; padding-bottom:4px; }
+  .trust-scroll::-webkit-scrollbar { display:none; }
+  .trust-item-lg { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+  .trust-icon { font-size:22px; }
+  .trust-label { font-size:13px; font-weight:500; color:var(--text); white-space:nowrap; }
+  .trust-desc { font-size:11px; color:var(--slate); white-space:nowrap; }
+
+  /* HOW IT WORKS */
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
+  .step-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:32px; position:relative;
+    transition:all .3s;
+  }
+  .step-card:hover { border-color:rgba(52,211,153,0.3); transform:translateY(-4px); }
+  .step-num {
+    font-family:'Bebas Neue',sans-serif; font-size:64px; letter-spacing:0.02em;
+    color:rgba(52,211,153,0.08); position:absolute; top:16px; right:20px; line-height:1;
+  }
+  .step-emoji { font-size:32px; margin-bottom:20px; }
+  .step-title { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:0.04em; margin-bottom:10px; }
+  .step-desc { color:var(--slate); font-size:14px; line-height:1.7; }
+  .step-connector {
+    display:none;
+  }
+
+  /* REPORT SAMPLE */
+  .report-sample { background:var(--bg2); }
+  .sample-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; margin-top:56px; }
+  .sample-card {
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:32px; font-size:13px;
+  }
+  .sample-section-title {
+    font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--em); margin-bottom:12px; padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .sample-row { display:flex; gap:8px; align-items:flex-start; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .sample-row:last-child { border-bottom:none; }
+  .sample-icon { flex-shrink:0; width:16px; }
+  .sample-text { color:var(--text); line-height:1.5; }
+  .sample-text .dim { color:var(--slate); }
+  .trust-score-display {
+    text-align:center; padding:32px;
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+  }
+  .score-num {
+    font-family:'Bebas Neue',sans-serif; font-size:96px; line-height:1;
+    color:var(--amber); letter-spacing:0.02em;
+  }
+  .score-label { font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--slate); margin-top:4px; }
+  .verdict-big {
+    margin-top:20px; padding:16px; border-radius:10px;
+    background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2);
+    font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--amber); letter-spacing:0.05em;
+  }
+
+  /* PRICING */
+  .pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:56px; max-width:760px; }
+  .price-card {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:16px; padding:36px; transition:all .3s;
+  }
+  .price-card.featured {
+    border-color:rgba(52,211,153,0.4);
+    background:linear-gradient(135deg,rgba(52,211,153,0.05) 0%,var(--card) 100%);
+    position:relative;
+  }
+  .price-card:hover { transform:translateY(-4px); }
+  .featured-badge {
+    position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+    background:var(--em); color:#0a0f0d; font-family:'Bebas Neue',sans-serif;
+    font-size:12px; letter-spacing:0.1em; padding:4px 16px; border-radius:100px;
+  }
+  .price-name { font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--slate); margin-bottom:12px; }
+  .price-amount { font-family:'Bebas Neue',sans-serif; font-size:64px; color:var(--em); line-height:1; letter-spacing:0.02em; }
+  .price-period { font-size:13px; color:var(--slate); margin-bottom:24px; }
+  .price-features { list-style:none; margin-bottom:28px; }
+  .price-features li { display:flex; gap:8px; padding:7px 0; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .price-features li:last-child { border:none; }
+  .price-features .check { color:var(--em); flex-shrink:0; }
+  .price-btn {
+    display:block; text-align:center;
+    background:var(--em); color:#0a0f0d;
+    font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:0.08em;
+    padding:12px; border-radius:8px; text-decoration:none; transition:all .2s;
+  }
+  .price-btn:hover { background:var(--em2); }
+  .price-btn.ghost-btn {
+    background:transparent; color:var(--em);
+    border:1px solid rgba(52,211,153,0.3);
+  }
+  .price-btn.ghost-btn:hover { background:rgba(52,211,153,0.06); }
+
+  /* FAQ */
+  .faq-section { background:var(--bg2); }
+  .faq-grid { display:grid; gap:16px; margin-top:56px; max-width:800px; }
+  .faq-item {
+    background:var(--card); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden;
+  }
+  .faq-q {
+    padding:20px 24px; font-weight:500; cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center;
+    transition:color .2s;
+  }
+  .faq-q:hover { color:var(--em2); }
+  .faq-q .arrow { color:var(--em); transition:transform .3s; font-size:18px; flex-shrink:0; }
+  .faq-a {
+    max-height:0; overflow:hidden; transition:max-height .4s ease;
+    color:var(--slate); font-size:14px; line-height:1.8;
+  }
+  .faq-a.open { max-height:300px; }
+  .faq-a-inner { padding:0 24px 20px; }
+  .faq-item.active .faq-q { color:var(--em2); }
+  .faq-item.active .arrow { transform:rotate(45deg); }
+
+  /* CTA FINAL */
+  .final-cta {
+    text-align:center; position:relative; overflow:hidden;
+    background:var(--bg);
+  }
+  .final-cta-glow {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:500px; height:300px; border-radius:50%;
+    background:radial-gradient(circle,rgba(52,211,153,0.08) 0%,transparent 70%);
+  }
+  .final-cta-inner { position:relative; z-index:1; max-width:700px; margin:auto; }
+  .final-em { font-size:80px; margin-bottom:24px; display:block; animation:float 3s ease-in-out infinite; }
+  .final-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(48px,6vw,72px); line-height:1; letter-spacing:0.02em; margin-bottom:16px; }
+  .final-sub { color:var(--slate); font-size:16px; line-height:1.7; margin-bottom:40px; }
+  .final-cities { font-size:12px; color:var(--slate); margin-top:20px; letter-spacing:0.1em; }
+  .final-cities span { color:var(--em); }
+
+  /* FOOTER */
+  footer {
+    border-top:1px solid var(--border); padding:32px 24px;
+    background:var(--bg2);
+  }
+  .footer-inner { max-width:1100px; margin:auto; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; }
+  .footer-links { display:flex; gap:24px; }
+  .footer-links a { font-size:13px; color:var(--slate); text-decoration:none; }
+  .footer-links a:hover { color:var(--em2); }
+
+  /* RESPONSIVE */
+  @media(max-width:768px) {
+    .hero-inner { grid-template-columns:1fr; }
+    .steps { grid-template-columns:1fr; }
+    .sample-grid { grid-template-columns:1fr; }
+    .pricing-grid { grid-template-columns:1fr; }
+    .nav-links { display:none; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation:fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay:0.1s; opacity:0; }
+  .delay-2 { animation-delay:0.25s; opacity:0; }
+  .delay-3 { animation-delay:0.4s; opacity:0; }
+  .delay-4 { animation-delay:0.55s; opacity:0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-icon">👻</div>
+      <span class="logo-text">GhostCheck</span>
+    </div>
+    <div class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#report">Sample Report</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#pricing" class="nav-cta">Get Verified — $59</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <!-- Left -->
+    <div>
+      <div class="badge fade-up delay-1">
+        <span class="badge-dot"></span>
+        Now Live in Austin, TX
+      </div>
+      <h1 class="hero-headline fade-up delay-2">
+        THE END<br>
+        OF <span class="cross">RENTAL</span><br>
+        <span class="accent">SCAMS.</span>
+      </h1>
+      <p class="hero-sub fade-up delay-3">
+        Send a local Ghoster to physically verify any address in 60 minutes. 
+        You get a full inspection report — photos, smells, sounds, red flags — 
+        before you sign anything.
+      </p>
+      <div class="trust-pills fade-up delay-3">
+        <div class="trust-pill">📹 Verified 4K Video</div>
+        <div class="trust-pill">👃 Smell & Sound Checks</div>
+        <div class="trust-pill">🚫 Bribe-Proof Reports</div>
+      </div>
+      <div class="cta-group fade-up delay-4">
+        <a href="#pricing" class="btn-primary">Send a Ghoster — $59</a>
+        <a href="#report" class="btn-ghost">See a sample report →</a>
+      </div>
+    </div>
+
+    <!-- Right — Report card mockup -->
+    <div style="position:relative;padding:24px">
+      <div class="report-card">
+        <div class="chip chip-1">🟢 Ghoster en route</div>
+        <div class="chip chip-2">📸 22 photos captured</div>
+
+        <div class="report-header">
+          <span class="report-title">GhostCheck Report</span>
+          <div class="score-badge">7.2 / 10</div>
+        </div>
+        <div class="report-address">2847 S Congress Ave, Austin TX</div>
+        <div class="report-unit">Unit 3B — 2BR/1BA</div>
+
+        <div class="report-item">
+          <span class="icon">⚠️</span>
+          <span class="label">Mold detected behind bathroom vanity</span>
+        </div>
+        <div class="report-item">
+          <span class="icon">🚨</span>
+          <span class="label">Listing says 850sqft — measured 710sqft</span>
+        </div>
+        <div class="report-item">
+          <span class="icon">✅</span>
+          <span class="label">AC unit functional, no strange odors</span>
+        </div>
+        <div class="report-item">
+          <span class="icon">⚠️</span>
+          <span class="label">Heavy highway noise 8AM–9PM daily</span>
+        </div>
+        <div class="report-item">
+          <span class="icon">✅</span>
+          <span class="label">Neighborhood walkability score: 82/100</span>
+        </div>
+
+        <div class="verdict-box">
+          <div class="verdict-label">Final Verdict</div>
+          <div class="verdict-text">VERIFIED WITH CAVEATS — Negotiate price or pass</div>
+        </div>
+
+        <div class="report-footer">
+          <span>Verified by Ghoster #TX-047</span>
+          <span style="color:var(--em)">GC-202602-8841</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-section">
+  <div class="trust-scroll" style="max-width:1100px;margin:auto">
+    <div class="trust-item-lg">
+      <span class="trust-icon">📹</span>
+      <div>
+        <div class="trust-label">4K Video Walkthrough</div>
+        <div class="trust-desc">Every corner, every closet</div>
+      </div>
+    </div>
+    <div class="trust-item-lg">
+      <span class="trust-icon">👃</span>
+      <div>
+        <div class="trust-label">Sensory Audit</div>
+        <div class="trust-desc">Smell, sound & feel assessments</div>
+      </div>
+    </div>
+    <div class="trust-item-lg">
+      <span class="trust-icon">🚫</span>
+      <div>
+        <div class="trust-label">Bribe-Proof Reports</div>
+        <div class="trust-desc">Ghosters can't be paid by landlords</div>
+      </div>
+    </div>
+    <div class="trust-item-lg">
+      <span class="trust-icon">📐</span>
+      <div>
+        <div class="trust-label">Dimension Verification</div>
+        <div class="trust-desc">We measure. Listings lie.</div>
+      </div>
+    </div>
+    <div class="trust-item-lg">
+      <span class="trust-icon">⚡</span>
+      <div>
+        <div class="trust-label">60-Minute Dispatch</div>
+        <div class="trust-desc">Austin coverage, same day</div>
+      </div>
+    </div>
+    <div class="trust-item-lg">
+      <span class="trust-icon">📋</span>
+      <div>
+        <div class="trust-label">PDF Report Delivered</div>
+        <div class="trust-desc">In your inbox within 24hrs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-tag">Process</div>
+    <h2 class="section-title">Three Steps.<br>Zero Surprises.</h2>
+    <p class="section-sub">From order to report in under 24 hours. You stay home. We do the legwork.</p>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-emoji">🛒</div>
+        <div class="step-title">You Order</div>
+        <p class="step-desc">Enter the address, pay $59 via Stripe. Takes 90 seconds. Available for any address in Austin right now.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-emoji">👻</div>
+        <div class="step-title">Ghoster Dispatched</div>
+        <p class="step-desc">A vetted local Ghoster visits the property. They shoot 4K video, measure rooms, check for smells, mold, noise, and document everything the landlord doesn't want you to see.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-emoji">📋</div>
+        <div class="step-title">You Get the Truth</div>
+        <p class="step-desc">A professional PDF report with Trust Score, Red Flags, Sensory Audit, and Final Verdict. Lands in your inbox. You decide from your couch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLE REPORT -->
+<section id="report" class="report-sample">
+  <div class="section-inner">
+    <div class="section-tag">Sample Output</div>
+    <h2 class="section-title">What You Actually Get</h2>
+    <p class="section-sub">This is a real report structure. Objective, clinical, and brutally honest.</p>
+
+    <div class="sample-grid">
+      <div>
+        <div class="sample-card" style="margin-bottom:16px">
+          <div class="sample-section-title">1 — Property Condition</div>
+          <div class="sample-row"><span class="sample-icon">✅</span><span class="sample-text">Living room: clean walls, no visible water staining</span></div>
+          <div class="sample-row"><span class="sample-icon">⚠️</span><span class="sample-text">Kitchen faucet: minor rust, functional <span class="dim">— negotiate repair</span></span></div>
+          <div class="sample-row"><span class="sample-icon">🚨</span><span class="sample-text">Bathroom: mold patch behind toilet (~3in) <span class="dim">— disclose required</span></span></div>
+          <div class="sample-row"><span class="sample-icon">⚠️</span><span class="sample-text">Bedroom window: broken latch <span class="dim">— security risk</span></span></div>
+        </div>
+        <div class="sample-card" style="margin-bottom:16px">
+          <div class="sample-section-title">2 — Sensory Audit</div>
+          <div class="sample-row"><span class="sample-icon">👃</span><span class="sample-text">No smoke or pet odors detected. Mild musty smell near bathroom — consistent with mold finding.</span></div>
+          <div class="sample-row"><span class="sample-icon">🔊</span><span class="sample-text">Street traffic audible but tolerable. No neighbor noise during 40-min visit.</span></div>
+        </div>
+        <div class="sample-card">
+          <div class="sample-section-title">3 — Accuracy vs Listing</div>
+          <div class="sample-row"><span class="sample-icon">🚨</span><span class="sample-text"><strong>Listed:</strong> 750 sqft &nbsp;|&nbsp; <strong>Measured:</strong> 680 sqft <span class="dim">(−9.3% — actionable)</span></span></div>
+          <div class="sample-row"><span class="sample-icon">✅</span><span class="sample-text">Photos match actual room colors and layout</span></div>
+          <div class="sample-row"><span class="sample-icon">⚠️</span><span class="sample-text">"Quiet neighborhood" claim: partially false — highway noise present</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="trust-score-display" style="margin-bottom:16px">
+          <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--slate);margin-bottom:8px">Trust Score</div>
+          <div class="score-num">6.8</div>
+          <div class="score-label">out of 10 — Listing Accuracy</div>
+          <div class="verdict-big">VERIFIED WITH CAVEATS</div>
+          <p style="font-size:13px;color:var(--slate);margin-top:16px;line-height:1.6">Property has real issues not disclosed in listing. Mold and sqft discrepancy give strong negotiation leverage. Proceed only if price is adjusted.</p>
+        </div>
+        <div class="sample-card">
+          <div class="sample-section-title">4 — Red Flags</div>
+          <div class="sample-row"><span class="sample-icon">🚩</span><span class="sample-text">Square footage overstated by 70sqft (~$140/mo overcharge at Austin rates)</span></div>
+          <div class="sample-row"><span class="sample-icon">🚩</span><span class="sample-text">Bathroom mold not disclosed — landlord may be aware</span></div>
+          <div class="sample-row"><span class="sample-icon">🚩</span><span class="sample-text">Window latch broken — no mention in listing safety section</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-title">One Price. Full Truth.</h2>
+    <p class="section-sub">Less than a bad deposit. Way less than a year of regret.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card featured">
+        <div class="featured-badge">MOST POPULAR</div>
+        <div class="price-name">Standard Check</div>
+        <div class="price-amount">$59</div>
+        <div class="price-period">One-time · per property</div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Physical property visit</li>
+          <li><span class="check">✓</span> 15+ photos</li>
+          <li><span class="check">✓</span> Smell & sound audit</li>
+          <li><span class="check">✓</span> Dimension verification</li>
+          <li><span class="check">✓</span> Trust Score + Red Flags</li>
+          <li><span class="check">✓</span> PDF report in 24hrs</li>
+        </ul>
+        <a href="YOUR_STRIPE_LINK" class="price-btn">Order Standard Check</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Deep Check</div>
+        <div class="price-amount" style="color:var(--em2)">$99</div>
+        <div class="price-period">One-time · per property</div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Everything in Standard</li>
+          <li><span class="check">✓</span> 4K video walkthrough</li>
+          <li><span class="check">✓</span> Building + street audit</li>
+          <li><span class="check">✓</span> 12-hour priority delivery</li>
+          <li><span class="check">✓</span> Landlord Q&A transcript</li>
+          <li><span class="check">✓</span> Negotiation bullet points</li>
+        </ul>
+        <a href="YOUR_STRIPE_LINK_DEEP" class="price-btn ghost-btn">Order Deep Check</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="section-inner">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-title">Real Questions.<br>Real Answers.</h2>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Why can't I just ask the landlord for more photos?</span>
+          <span class="arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Because landlords control the camera. They choose the angle, the lighting, and what's cropped out. Every photo they send you is a marketing asset — not a disclosure. GhostCheck sends someone who works for <em>you</em>, not the landlord. Our Ghosters are contractually prohibited from accepting tips, gifts, or bribes from property managers. What they find is what you get — unedited.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Can't I just ask a friend who lives nearby to check it out?</span>
+          <span class="arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            You can — but your friend doesn't know what to look for. They won't measure square footage, test water pressure, check for mold behind fixtures, note noise levels at 8AM, or document findings in a format you can use to negotiate. Our Ghosters follow a 47-point inspection checklist. They're trained to find what landlords hide — and to document it in a way that holds up in a lease dispute.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What if the landlord refuses to let the Ghoster in?</span>
+          <span class="arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            That's actually valuable information. If a landlord refuses an independent walkthrough before you sign, that's a significant red flag we include in your report. In those cases, our Ghoster performs an exterior audit — building condition, neighborhood assessment, noise levels, street safety, nearby amenities — and you get a full refund on the interior portion. Either way, you make a more informed decision than you would have otherwise.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>How do I know the Ghoster isn't being paid by the landlord?</span>
+          <span class="arrow">+</span>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Every Ghoster signs our Code of Conduct which explicitly prohibits accepting anything of value from landlords or property managers. Any Ghoster who violates this is immediately terminated — and we pay a $50 whistleblower bonus to any Ghoster who reports a violation. We also run a tamper-evident audit on every report: if a finding is missing from the checklist with no explanation, it triggers a review. Your report is generated by AI from raw field notes before any human editing happens.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BECOME A GHOSTER -->
+<section style="padding:80px 24px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div style="max-width:700px;margin:auto;text-align:center">
+    <div style="font-size:40px;margin-bottom:16px">🔍</div>
+    <h2 class="bebas" style="font-size:clamp(36px,6vw,56px);color:var(--text);margin-bottom:12px">Based in Austin?<br><span style="color:var(--em)">Earn $25 Per Visit.</span></h2>
+    <p style="color:var(--slate);font-size:16px;max-width:500px;margin:0 auto 32px">Join our crew of local Ghosters. Visit apartments, take notes, get paid same-day via Venmo. Flexible hours — you pick the jobs.</p>
+    <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:36px">
+      <div style="text-align:center">
+        <div style="font-size:28px;font-weight:700;color:var(--em)">$25</div>
+        <div style="font-size:13px;color:var(--slate)">per visit</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:28px;font-weight:700;color:var(--em)">30–45</div>
+        <div style="font-size:13px;color:var(--slate)">min per job</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:28px;font-weight:700;color:var(--em)">Same-day</div>
+        <div style="font-size:13px;color:var(--slate)">Venmo payout</div>
+      </div>
+    </div>
+    <a href="https://tally.so/r/jayp0Q" target="_blank" style="display:inline-block;background:transparent;border:2px solid var(--em);color:var(--em);font-weight:600;font-size:16px;padding:14px 40px;border-radius:8px;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='var(--em)';this.style.color='#0a0f0d'" onmouseout="this.style.background='transparent';this.style.color='var(--em)'">Apply to Be a Ghoster →</a>
+    <p style="margin-top:16px;font-size:12px;color:var(--slate)">Austin area only · Smartphone required · No experience needed</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-glow"></div>
+  <div class="final-cta-inner">
+    <span class="final-em">👻</span>
+    <h2 class="final-title">Don't Sign Blind.<br><span style="color:var(--em)">Get It Verified.</span></h2>
+    <p class="final-sub">Join remote renters who stopped gambling on listings and started moving with confidence.</p>
+    <a href="#pricing" class="btn-primary" style="font-size:20px;padding:16px 48px">Send a Ghoster — Starting at $59</a>
+    <div class="final-cities">📍 Live now in <span>Austin</span> · Coming soon to <span>Miami</span> · <span>NYC</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="logo">
+      <div class="logo-icon">👻</div>
+      <span class="logo-text">GhostCheck</span>
+    </div>
+    <div style="font-size:12px;color:var(--slate)">© 2026 GhostCheck. Trust through physical verification.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Ghoster Code of Conduct</a>
+      <a href="/cdn-cgi/l/email-protection#98f0fdf4f4f7d8fff0f7ebecfbf0fdfbf3b6f1f7">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const answer = item.querySelector('.faq-a');
+  const isOpen = answer.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  // Open clicked if it was closed
+  if (!isOpen) {
+    answer.classList.add('open');
+    item.classList.add('active');
+  }
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+
+// Intersection observer for fade-up
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.style.animationPlayState='running'; obs.unobserve(e.target); } });
+}, {threshold:0.
