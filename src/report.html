@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Market Intelligence Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0f;
+    --surface: #13131a;
+    --border: #1e1e2e;
+    --text: #e8e8f0;
+    --muted: #5a5a7a;
+    --accent: #00e5ff;
+    --accent-dim: #00e5ff12;
+    --green: #00ff88;
+    --yellow: #ffd600;
+    --red: #ff4444;
+    --orange: #ff8c00;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scan line overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,229,255,0.015) 2px,
+      rgba(0,229,255,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Loading screen */
+  #loading {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 500;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+
+  #loading.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .loader-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    animation: blink 1s ease infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .loader-bar {
+    width: 200px;
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .loader-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    animation: load 1.8s ease forwards;
+  }
+
+  @keyframes load {
+    to { width: 100%; }
+  }
+
+  /* Error screen */
+  #error-screen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 500;
+  }
+
+  #error-screen.visible { display: flex; }
+
+  /* Main layout */
+  #report {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  #report.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Header */
+  .report-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .report-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .report-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .report-title span { color: var(--accent); }
+
+  .report-meta {
+    text-align: right;
+  }
+
+  .scan-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .location-badge {
+    background: var(--accent-dim);
+    border: 1px solid rgba(0,229,255,0.2);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 3px;
+    display: inline-block;
+    letter-spacing: 0.08em;
+  }
+
+  /* Temperature hero */
+  .temp-hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .temp-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .temp-hero.HOT::before { background: linear-gradient(90deg, var(--red), var(--orange)); }
+  .temp-hero.WARM::before { background: linear-gradient(90deg, var(--yellow), var(--orange)); }
+  .temp-hero.COLD::before { background: linear-gradient(90deg, var(--accent), var(--green)); }
+
+  .temp-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .temp-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .temp-value.HOT { color: var(--red); }
+  .temp-value.WARM { color: var(--yellow); }
+  .temp-value.COLD { color: var(--accent); }
+
+  .temp-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    max-width: 400px;
+    line-height: 1.5;
+  }
+
+  .temp-icon {
+    font-size: 4rem;
+    opacity: 0.6;
+  }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-dim), transparent);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .report-header { flex-direction: column; }
+    .report-meta { text-align: left; }
+  }
+
+  /* Action box */
+  .action-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .action-box .stat-label { color: var(--green); }
+
+  .action-text {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* Pricing box */
+  .pricing-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .pricing-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* Competitors section */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .competitor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .competitor-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.25rem;
+    align-items: center;
+    transition: border-color 0.2s, background 0.2s;
+    animation: slideIn 0.4s ease both;
+  }
+
+  .competitor-card:nth-child(1) { animation-delay: 0.05s; }
+  .competitor-card:nth-child(2) { animation-delay: 0.1s; }
+  .competitor-card:nth-child(3) { animation-delay: 0.15s; }
+  .competitor-card:nth-child(4) { animation-delay: 0.2s; }
+  .competitor-card:nth-child(5) { animation-delay: 0.25s; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .competitor-card:hover {
+    border-color: rgba(0,229,255,0.25);
+    background: #16161f;
+  }
+
+  .rank-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .rank-1 { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
+  .rank-2 { background: rgba(255,140,0,0.15); color: var(--orange); border: 1px solid rgba(255,140,0,0.3); }
+  .rank-3 { background: rgba(255,214,0,0.1); color: var(--yellow); border: 1px solid rgba(255,214,0,0.25); }
+  .rank-4 { background: rgba(0,229,255,0.08); color: var(--accent); border: 1px solid rgba(0,229,255,0.2); }
+  .rank-5 { background: rgba(0,229,255,0.05); color: var(--muted); border: 1px solid var(--border); }
+
+  .comp-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .comp-meta {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .comp-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .comp-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .threat-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .threat-HIGH { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
+  .threat-MEDIUM { background: rgba(255,214,0,0.1); color: var(--yellow); border: 1px solid rgba(255,214,0,0.25); }
+  .threat-LOW { background: rgba(90,90,122,0.15); color: var(--muted); border: 1px solid var(--border); }
+
+  .comp-phone {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+
+  .stars {
+    color: var(--yellow);
+    font-size: 12px;
+  }
+
+  /* Footer */
+  .report-footer {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .refresh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(0,229,255,0.2);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    margin-bottom: 1rem;
+  }
+
+  .refresh-btn:hover {
+    background: rgba(0,229,255,0.15);
+    border-color: rgba(0,229,255,0.4);
+  }
+
+  .saturation-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+
+  .sat-LOW .bar-fill { width: 25%; background: var(--green); }
+  .sat-MEDIUM .bar-fill { width: 55%; background: var(--yellow); }
+  .sat-HIGH .bar-fill { width: 90%; background: var(--red); }
+
+  .sat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading">
+  <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.1em; color:var(--accent);">SCANNING MARKET</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text">Analyzing local competitors...</div>
+</div>
+
+<!-- Error -->
+<div id="error-screen">
+  <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--red);">ACCESS DENIED</div>
+  <div style="font-family:'DM Mono',monospace; font-size:12px; color:var(--muted);" id="error-msg">Invalid or expired token.</div>
+  <div style="font-size:13px; color:var(--muted); margin-top:1rem;">Contact offers@dealdily.com for support.</div>
+</div>
+
+<!-- Report -->
+<div id="report">
+  <!-- Header -->
+  <div class="report-header">
+    <div>
+      <div class="report-brand">Market Intelligence Report</div>
+      <div class="report-title">YOUR <span id="rpt-business-type">MARKET</span><br>INTEL</div>
+    </div>
+    <div class="report-meta">
+      <div class="scan-date" id="rpt-scan-date">—</div>
+      <div class="location-badge" id="rpt-location">—</div>
+    </div>
+  </div>
+
+  <!-- Market Temperature -->
+  <div class="temp-hero" id="rpt-temp-hero">
+    <div>
+      <div class="temp-label">Market Temperature</div>
+      <div class="temp-value" id="rpt-temp">—</div>
+      <div class="temp-desc" id="rpt-temp-desc">—</div>
+    </div>
+    <div class="temp-icon" id="rpt-temp-icon">🌡️</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Competitors Found</div>
+      <div class="stat-value" id="rpt-total">—</div>
+      <div class="stat-sub">in your area</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Market Leaders</div>
+      <div class="stat-value" id="rpt-leaders">—</div>
+      <div class="stat-sub">dominant players</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Rating</div>
+      <div class="stat-value" id="rpt-avg-rating">—</div>
+      <div class="stat-sub">out of 5.0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Reviews</div>
+      <div class="stat-value" id="rpt-avg-reviews">—</div>
+      <div class="stat-sub">per competitor</div>
+    </div>
+  </div>
+
+  <!-- Saturation -->
+  <div class="stats-grid" style="grid-template-columns:1fr; margin-bottom:1.5rem;">
+    <div class="stat-card" id="rpt-sat-card">
+      <div class="stat-label">Market Saturation</div>
+      <div class="saturation-bar" id="rpt-sat-bar">
+        <div class="bar-track"><div class="bar-fill"></div></div>
+        <div class="sat-label" id="rpt-sat-label">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action + Pricing -->
+  <div class="two-col" style="margin-bottom:2.5rem;">
+    <div class="action-box">
+      <div class="stat-label">✦ Action For Today</div>
+      <div class="action-text" id="rpt-action">—</div>
+    </div>
+    <div class="pricing-box">
+      <div class="stat-label" style="color:var(--yellow);">💰 Pricing Strategy</div>
+      <div class="pricing-text" id="rpt-pricing">—</div>
+    </div>
+  </div>
+
+  <!-- Competitors -->
+  <div class="section-title">Top Threats</div>
+  <div class="competitor-list" id="rpt-competitors">
+    <!-- populated by JS -->
+  </div>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    <button class="refresh-btn" onclick="window.location.reload()">↺ &nbsp;Refresh Report</button>
+    <div>Data refreshes every time you open this link &nbsp;·&nbsp; Powered by DealDily</div>
+  </div>
+</div>
+
+<script>
+  const WEBHOOK_BASE = 'https://saleh852.app.n8n.cloud/webhook/run-report';
+
+  function getToken() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('token');
+  }
+
+  function formatDate(iso) {
+    try {
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    } catch { return iso; }
+  }
+
+  function stars(rating) {
+    if (!rating) return '';
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5 ? 1 : 0;
+    return '★'.repeat(full) + (half ? '½' : '') + ` ${rating}`;
+  }
+
+  function tempMeta(temp) {
+    const map = {
+      HOT:  { icon: '🔥', desc: 'Highly competitive market. Customers are actively searching and competitors are busy. Differentiate on speed, reviews, or specialization.' },
+      WARM: { icon: '⚡', desc: 'Active market with steady demand. Good opportunity to grow your presence and build reviews to stand out from the pack.' },
+      COLD: { icon: '❄️', desc: 'Low competition — ideal conditions to dominate. Early movers who build reviews and online presence will own this market.' },
+    };
+    return map[temp] || { icon: '📊', desc: '' };
+  }
+
+  async function loadReport() {
+    const token = getToken();
+    if (!token) {
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('error-screen').classList.add('visible');
+      document.getElementById('error-msg').textContent = 'No access token found in URL.';
+      return;
+    }
+
+    try {
+      const res = await fetch(`${WEBHOOK_BASE}?token=${encodeURIComponent(token)}`);
+      const data = await res.json();
+
+      if (!data || data.error || data.business_type === undefined) {
+        throw new Error(data?.error || 'Invalid response');
+      }
+
+      renderReport(data);
+    } catch (err) {
+      document.getElementById('loading').classList.add('hidden');
+      const es = document.getElementById('error-screen');
+      es.classList.add('visible');
+      document.getElementById('error-msg').textContent = err.message || 'Could not load your report.';
+    }
+  }
+
+  function renderReport(d) {
+    const mi = d.market_intelligence || {};
+    const loc = d.location || {};
+    const temp = (mi.temperature || 'WARM').toUpperCase();
+    const tm = tempMeta(temp);
+
+    // Header
+    document.getElementById('rpt-business-type').textContent = (d.business_type || 'market').toUpperCase();
+    document.getElementById('rpt-scan-date').textContent = 'Scanned ' + formatDate(d.scan_date);
+    document.getElementById('rpt-location').textContent = `📍 ${loc.city || '—'}, ${loc.state || '—'}`;
+
+    // Temperature
+    const hero = document.getElementById('rpt-temp-hero');
+    hero.classList.add(temp);
+    const tv = document.getElementById('rpt-temp');
+    tv.textContent = temp;
+    tv.classList.add(temp);
+    document.getElementById('rpt-temp-icon').textContent = tm.icon;
+    document.getElementById('rpt-temp-desc').textContent = tm.desc;
+
+    // Stats
+    document.getElementById('rpt-total').textContent = mi.total_competitors || '—';
+    document.getElementById('rpt-leaders').textContent = mi.market_leaders || '—';
+    document.getElementById('rpt-avg-rating').textContent = mi.avg_competitor_rating ? mi.avg_competitor_rating.toFixed(1) : '—';
+    document.getElementById('rpt-avg-reviews').textContent = mi.avg_competitor_reviews ? mi.avg_competitor_reviews.toLocaleString() : '—';
+
+    // Saturation
+    const sat = (mi.saturation_level || 'MEDIUM').toUpperCase();
+    const satCard = document.getElementById('rpt-sat-card');
+    satCard.classList.add('sat-' + sat);
+    document.getElementById('rpt-sat-label').textContent = sat;
+
+    // Action + Pricing
+    document.getElementById('rpt-action').textContent = d.action_today || '—';
+    document.getElementById('rpt-pricing').textContent = d.pricing_recommendation || '—';
+
+    // Competitors
+    const comps = d.top_5_competitors || [];
+    const container = document.getElementById('rpt-competitors');
+    container.innerHTML = '';
+
+    comps.forEach((c, i) => {
+      if (!c.name || c.name === 'Unknown') return;
+      const rank = i + 1;
+      const div = document.createElement('div');
+      div.className = 'competitor-card';
+      div.innerHTML = `
+        <div class="rank-badge rank-${rank}">${rank}</div>
+        <div>
+          <div class="comp-name">${c.name}</div>
+          <div class="comp-meta">
+            ${c.rating ? `<span><span class="stars">★</span> ${c.rating}</span>` : ''}
+            ${c.reviews ? `<span>💬 ${c.reviews.toLocaleString()} reviews</span>` : ''}
+            ${c.status ? `<span>· ${c.status.replace('_', ' ')}</span>` : ''}
+          </div>
+        </div>
+        <div class="comp-right">
+          <div class="threat-badge threat-${c.threat_level || 'LOW'}">${c.threat_level || 'LOW'}</div>
+          ${c.phone && c.phone !== 'N/A' ? `<div class="comp-phone">${c.phone}</div>` : ''}
+        </div>
+      `;
+      container.appendChild(div);
+    });
+
+    if (container.children.length === 0) {
+      container.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:1rem 0;">No competitor data available.</div>';
+    }
+
+    // Show report
+    document.getElementById('loading').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('report').classList.add('visible');
+    }, 100);
+  }
+
+  // Start
+  setTimeout(loadReport, 1800); // let loader animate
+</script>
+</body>
+</html>
