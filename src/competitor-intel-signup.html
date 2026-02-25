@@ -518,35 +518,36 @@
 
     try {
       // 1. Save lead info to n8n (stores in Google Sheets tied to email)
-      await fetch(N8N_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          phone,
-          business_type: businessType,
-          city,
-          state,
-          signup_date: new Date().toISOString(),
-          source: 'landing_page'
-        })
-      });
-    } catch (e) {
-      // Don't block the user — still send to Stripe even if webhook fails
-      console.warn('Webhook save failed:', e);
-    }
+     const response = await fetch(N8N_WEBHOOK, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    first_name: firstName,
+    last_name: lastName,
+    email,
+    phone,
+    business_type: businessType,
+    city,
+    state,
+    signup_date: new Date().toISOString(),
+    source: 'landing_page'
+  })
+});
 
-    // 2. Show success + redirect to Stripe
-    document.getElementById('formState').style.display = 'none';
-    document.getElementById('successState').style.display = 'block';
+const data = await response.json();
 
-    // Pass email to Stripe prefill
-    const stripeUrl = `${STRIPE_PAYMENT_LINK}?prefilled_email=${encodeURIComponent(email)}`;
+if (!data.success || !data.lead_id) {
+  showError("Signup failed. Please try again.");
+  setLoading(false);
+  return;
+}
 
-    setTimeout(() => {
-      window.location.href = stripeUrl;
+const stripeUrl =
+  `https://buy.stripe.com/YOUR_LINK` +
+  `?client_reference_id=${data.lead_id}` +
+  `&prefilled_email=${encodeURIComponent(email)}`;
+
+window.location.href = stripeUrl;
     }, 1800);
   }
 
