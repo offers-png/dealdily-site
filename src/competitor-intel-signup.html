@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitor Intel — Get Your Market Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #222222;
+    --accent: #00ff88;
+    --accent-dim: #00ff8822;
+    --text: #f0f0f0;
+    --muted: #666;
+    --danger: #ff4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, #00ff8815 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .container { width: 100%; max-width: 560px; position: relative; z-index: 1; animation: fadeUp 0.6s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-dim); border: 1px solid #00ff8844;
+    color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px;
+    padding: 6px 12px; border-radius: 4px; margin-bottom: 1.5rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .badge::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
+  h1 span { color: var(--accent); }
+  .subtitle { color: var(--muted); font-size: 1rem; line-height: 1.6; margin-bottom: 2.5rem; }
+  .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; position: relative; overflow: hidden; }
+  .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1.25rem; }
+  label { display: block; font-family: 'DM Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  input, select {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 14px; color: var(--text); font-family: 'Syne', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none;
+  }
+  input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+  input::placeholder { color: #444; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+  select option { background: #111; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+  .price-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .price-label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .price-value { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .price-value span { font-size: 0.75rem; font-weight: 400; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .btn { width: 100%; background: var(--accent); color: #000; border: none; border-radius: 6px; padding: 15px; font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s; }
+  .btn:hover { background: #00ffaa; transform: translateY(-1px); box-shadow: 0 8px 24px #00ff8840; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .btn-inner { display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .trust-row { display: flex; gap: 1.5rem; margin-top: 1.25rem; justify-content: center; flex-wrap: wrap; }
+  .trust-item { display: flex; align-items: center; gap: 5px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .trust-item::before { content: '✓'; color: var(--accent); font-size: 12px; }
+  .success-state { display: none; text-align: center; padding: 2rem 1rem; }
+  .success-icon { width: 64px; height: 64px; background: var(--accent-dim); border: 1px solid #00ff8855; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.8rem; }
+  .success-state h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .success-state p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .error-msg { background: #ff444415; border: 1px solid #ff444444; color: var(--danger); font-family: 'DM Mono', monospace; font-size: 12px; padding: 10px 14px; border-radius: 6px; margin-bottom: 1rem; display: none; }
+  .spinner { width: 18px; height: 18px; border: 2px solid #00000033; border-top-color: #000; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .footer-note { text-align: center; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 11px; color: #333; }
+  .footer-note a { color: #444; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="badge">Live Market Intelligence</div>
+  <h1>Know your market.<br><span>Win more jobs.</span></h1>
+  <p class="subtitle">Get a competitor report for your local market. See who's busy, what they charge, and exactly what to do today.</p>
+
+  <div class="form-card">
+    <div id="formState">
+      <div class="error-msg" id="errorMsg"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="firstName" placeholder="John" required>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lastName" placeholder="Smith" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Business Email</label>
+        <input type="email" id="email" placeholder="john@smithpainting.com" required>
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="phone" placeholder="+1 (315) 555-0000">
+      </div>
+
+      <div class="form-group">
+        <label>Business Type</label>
+        <select id="businessType" required>
+          <option value="" disabled selected>Select your trade...</option>
+          <option value="house painter">House Painter</option>
+          <option value="plumber">Plumber</option>
+          <option value="electrician">Electrician</option>
+          <option value="roofer">Roofer</option>
+          <option value="HVAC contractor">HVAC Contractor</option>
+          <option value="general contractor">General Contractor</option>
+          <option value="landscaper">Landscaper</option>
+          <option value="real estate agent">Real Estate Agent</option>
+          <option value="cleaning service">Cleaning Service</option>
+          <option value="handyman">Handyman</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" id="city" placeholder="Syracuse" required>
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <select id="state" required>
+            <option value="" disabled selected>State</option>
+            <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+            <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+            <option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+            <option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+            <option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+            <option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+            <option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+            <option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+            <option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+            <option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+            <option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+            <option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+            <option>WI</option><option>WY</option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="price-row">
+        <div class="price-label">Competitor Intel Report</div>
+        <div class="price-value">$19 <span>one-time</span></div>
+      </div>
+
+      <button class="btn" id="submitBtn" onclick="handleSubmit()">
+        <div class="btn-inner">
+          <span id="btnText">Get My Report →</span>
+          <div class="spinner" id="spinner"></div>
+        </div>
+      </button>
+
+      <div class="trust-row">
+        <div class="trust-item">Instant report</div>
+        <div class="trust-item">Real Google Maps data</div>
+        <div class="trust-item">Secure payment</div>
+      </div>
+    </div>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon">✓</div>
+      <h2>You're in!</h2>
+      <p>Redirecting you to complete payment...<br><br>
+      Your market report will be ready within minutes after checkout. Check your email for your private access link.</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Questions? <a href="mailto:offers@dealdily.com">offers@dealdily.com</a>
+  </div>
+</div>
+
+<script>
+  const N8N_WEBHOOK = 'https://saleh852.app.n8n.cloud/webhook/capture-lead';
+  const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00';
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 5000);
+  }
+
+  function setLoading(loading) {
+    const btn = document.getElementById('submitBtn');
+    const txt = document.getElementById('btnText');
+    const spin = document.getElementById('spinner');
+    btn.disabled = loading;
+    txt.style.display = loading ? 'none' : 'inline';
+    spin.style.display = loading ? 'block' : 'none';
+  }
+
+  async function handleSubmit() {
+    const firstName    = document.getElementById('firstName').value.trim();
+    const lastName     = document.getElementById('lastName').value.trim();
+    const email        = document.getElementById('email').value.trim();
+    const phone        = document.getElementById('phone').value.trim();
+    const businessType = document.getElementById('businessType').value;
+    const city         = document.getElementById('city').value.trim();
+    const state        = document.getElementById('state').value;
+
+    if (!firstName || !lastName) return showError('Please enter your full name.');
+    if (!email || !email.includes('@')) return showError('Please enter a valid email.');
+    if (!businessType) return showError('Please select your business type.');
+    if (!city) return showError('Please enter your city.');
+    if (!state) return showError('Please select your state.');
+
+    setLoading(true);
+
+    try {
+      await fetch(N8N_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          phone,
+          business_type: businessType,
+          city,
+          state,
+          signup_date: new Date().toISOString(),
+          source: 'landing_page'
+        })
+      });
+
+      // Show success then redirect to Stripe
+      document.getElementById('formState').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = STRIPE_PAYMENT_LINK + '?prefilled_email=' + encodeURIComponent(email);
+      }, 1500);
+
+    } catch (err) {
+      showError('Something went wrong. Please try again.');
+      setLoading(false);
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+</body>
+</html>
