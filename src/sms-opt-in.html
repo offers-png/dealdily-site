@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMS Opt-In — DealDily</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06060f;--panel:#0d0d1a;--card:#111120;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--text:#e2e2ef;--muted:#64648a;--indigo:#5b4fff;--teal:#0fd4a4;--fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:3rem 1.25rem}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:100%;max-width:680px}
+.logo{display:flex;align-items:center;gap:.5rem;font-family:var(--fh);font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:2.5rem}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 12px var(--teal);flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:rgba(15,212,164,.1);border:1px solid rgba(15,212,164,.22);padding:3px 11px;border-radius:100px;margin-bottom:.875rem}
+h1{font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800;line-height:1.15;letter-spacing:-.03em;color:#fff;margin-bottom:.6rem}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--indigo),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:2.5rem;line-height:1.7}
+
+/* NUMBER BOX */
+.num-box{font-family:var(--fh);font-size:2rem;font-weight:800;color:var(--teal);text-align:center;background:rgba(15,212,164,.05);border:1px solid rgba(15,212,164,.2);border-radius:14px;padding:1.25rem;margin-bottom:1.75rem;letter-spacing:.04em}
+
+/* HOW TO OPT IN */
+.step-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:1.75rem}
+.step{background:var(--card);padding:1.4rem}
+.step-n{font-family:var(--fh);font-size:2.4rem;font-weight:800;line-height:1;color:rgba(91,79,255,.15);margin-bottom:.4rem}
+.step h3{font-family:var(--fh);font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.3rem}
+.step p{font-size:.78rem;color:var(--muted);line-height:1.6}
+
+/* CONSENT BOX */
+.consent-box{background:rgba(15,212,164,.04);border:1px solid rgba(15,212,164,.22);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.75rem}
+.consent-box h2{font-family:var(--fh);font-size:1rem;font-weight:700;color:#fff;margin-bottom:.875rem}
+.consent-box p{font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:.875rem}
+.consent-box p:last-child{margin-bottom:0}
+.consent-box strong{color:var(--text)}
+.consent-box .highlight{color:var(--teal);font-weight:600}
+
+/* FINE PRINT */
+.fine{background:rgba(0,0,0,.3);border:1px solid var(--border2);border-radius:10px;padding:1.1rem 1.25rem;font-size:.76rem;color:rgba(255,255,255,.38);line-height:1.85;margin-bottom:1.75rem}
+.fine strong{color:rgba(255,255,255,.55)}
+
+/* LINKS */
+.link-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.pill{font-size:.72rem;font-weight:500;padding:6px 14px;border-radius:100px;border:1px solid var(--border2);background:transparent;color:var(--muted);transition:all .15s;text-decoration:none}
+.pill:hover{border-color:rgba(91,79,255,.4);color:#fff;background:rgba(91,79,255,.1);text-decoration:none}
+
+/* FOOTER */
+.foot{font-size:.72rem;color:var(--muted);text-align:center;border-top:1px solid var(--border);padding-top:1.5rem;width:100%}
+
+@media(max-width:500px){.step-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo"><div class="dot"></div>DealDily</div>
+
+  <div class="badge">📲 SMS Opt-In</div>
+  <h1>Get reminders.<br><em>Stay in control.</em></h1>
+  <p class="sub">DealDily sends transactional SMS notifications — request confirmations, reminders, service updates, and support responses. No spam. No marketing. Just the messages you need.</p>
+
+  <div class="num-box">+1-855-923-0032</div>
+
+  <div class="step-grid">
+    <div class="step"><div class="step-n">01</div><h3>Text START</h3><p>Send <strong>START</strong> to +1-855-923-0032 from your mobile phone to subscribe.</p></div>
+    <div class="step"><div class="step-n">02</div><h3>Get Confirmed</h3><p>You'll receive an instant confirmation SMS. You're now subscribed to DealDily notifications.</p></div>
+    <div class="step"><div class="step-n">03</div><h3>Receive Updates</h3><p>We'll send you relevant transactional messages — only about your active requests or services.</p></div>
+    <div class="step"><div class="step-n">04</div><h3>Opt Out Anytime</h3><p>Reply <strong>STOP</strong> at any time to immediately unsubscribe. No questions asked.</p></div>
+  </div>
+
+  <div class="consent-box">
+    <h2>✅ Consent &amp; Disclosure</h2>
+    <p>By texting <span class="highlight">START</span> to <span class="highlight">+1-855-923-0032</span>, you expressly consent to receive recurring automated SMS notifications from <strong>DealDily</strong> to the mobile number you use to opt in.</p>
+    <p>Messages may include: <strong>request confirmations, service updates, scheduled reminders, and support responses.</strong> These are transactional messages only — no marketing or promotional messages will be sent.</p>
+    <p>This consent is not a condition of any purchase. You may opt out at any time by replying <span class="highlight">STOP</span>. For help, reply <span class="highlight">HELP</span>.</p>
+    <p><strong>Mobile information is not shared with third parties or affiliates for marketing or promotional purposes.</strong></p>
+  </div>
+
+  <div class="fine">
+    <strong>Message frequency varies.</strong> Message &amp; data rates may apply.<br>
+    Reply <strong>STOP</strong> to cancel. Reply <strong>HELP</strong> for help. Supported carriers: AT&amp;T, Verizon, T-Mobile, Sprint, and most major US carriers.<br>
+    T-Mobile is not liable for delayed or undelivered messages.<br>
+    For support, email <strong>support@dealdily.com</strong> or visit <a href="/sms-consent.html" style="color:rgba(255,255,255,.45)">dealdily.com/sms-consent.html</a>
+  </div>
+
+  <div class="link-row">
+    <a href="/terms-conditions.html" class="pill">Terms &amp; Conditions</a>
+    <a href="/privacy-policy.html" class="pill">Privacy Policy</a>
+    <a href="/sms-consent.html" class="pill">SMS Consent</a>
+    <a href="/" class="pill">← Back to DealDily</a>
+  </div>
+
+  <div class="foot">
+    &copy; 2025 DealDily · 419 S. Wilbur Ave, Syracuse, NY · <a href="mailto:support@dealdily.com">support@dealdily.com</a>
+  </div>
+
+</div>
+</body>
+</html>
