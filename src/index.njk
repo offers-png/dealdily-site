@@ -346,10 +346,25 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="stc"><div class="stn">02</div><h3>Send Your Reminder</h3><p>Text naturally — "Remind me to take my meds tomorrow at 8am" or "Pay rent every Friday."</p></div>
       <div class="stc"><div class="stn">03</div><h3>We Remind You</h3><p>At the right time, you get a text or voice call. Automatic. Reliable. No app needed.</p></div>
     </div>
+
+    <!-- OPT-IN CONSENT BOX — Required for Twilio A2P 10DLC compliance -->
+    <div style="background:rgba(15,212,164,.05);border:1px solid rgba(15,212,164,.22);border-radius:14px;padding:1.5rem 1.75rem;margin-bottom:1.75rem">
+      <div style="font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff;margin-bottom:.75rem">📲 How to Opt In</div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem">
+        To subscribe to DealDily SMS notifications, text <strong style="color:var(--teal)">START</strong> to <strong style="color:#fff">+1-855-923-0032</strong>.<br>
+        By texting START, you agree to receive recurring automated SMS notifications from DealDily regarding your service requests, reminders, confirmations, and support updates.
+      </p>
+      <div style="background:rgba(0,0,0,.25);border-radius:9px;padding:1rem 1.25rem;font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.8">
+        Message frequency varies. Message &amp; data rates may apply.<br>
+        Reply <strong style="color:rgba(255,255,255,.65)">STOP</strong> to unsubscribe at any time. Reply <strong style="color:rgba(255,255,255,.65)">HELP</strong> for help.<br>
+        No purchase required to opt in. This is a transactional notification service — no marketing or promotional messages will be sent without your consent.<br>
+        Mobile information will not be shared with third parties or affiliates for marketing or promotional purposes.
+      </div>
+    </div>
+
     <div class="sl">Compliance</div>
-    <p style="color:var(--muted);font-size:.82rem;margin-bottom:1.1rem">Message frequency varies. Message & data rates may apply. Reply STOP to unsubscribe. Reply HELP for help.</p>
     <div style="display:flex;flex-wrap:wrap;gap:.5rem">
-      <a href="/terms-conditions.html" class="btn btn-ghost">Terms & Conditions</a>
+      <a href="/terms-conditions.html" class="btn btn-ghost">Terms &amp; Conditions</a>
       <a href="/privacy-policy.html" class="btn btn-ghost">Privacy Policy</a>
       <a href="/sms-opt-in.html" class="btn btn-ghost">SMS Opt-In</a>
       <a href="/sms-consent.html" class="btn btn-ghost">SMS Consent</a>
@@ -376,10 +391,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     </div>
     <div class="sl">Get verified</div>
     <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1.5rem">
-      <a href="https://tally.so/r/lbNZDW" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#34d399,#059669);color:#000;font-weight:700;font-size:1rem;padding:14px 32px;border-radius:10px;text-decoration:none">Send a Ghoster — $59 →</a>
+      <a href="https://buy.stripe.com/aFa5kDfOI3SQenVfC41Jm03" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#34d399,#059669);color:#000;font-weight:700;font-size:1rem;padding:14px 32px;border-radius:10px;text-decoration:none">Send a Ghoster — $59 →</a>
       <a href="https://tally.so/r/jayp0Q" target="_blank" style="display:inline-block;border:1px solid rgba(52,211,153,0.4);color:#34d399;font-weight:600;font-size:.9rem;padding:13px 24px;border-radius:10px;text-decoration:none">Apply to be a Ghoster →</a>
     </div>
-    <div class="disc">📍 Currently serving Austin, TX · Ghosters are independent contractors prohibited from accepting payment from landlords · Questions? support@ghostcheck.io</div>
+    <div class="disc">📍 Currently serving Austin, TX · Ghosters are independent contractors prohibited from accepting payment from landlords · Questions? <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="463533363629343206212e293532252e23252d682f29">[email&#160;protected]</a></div>
   </div>
 </div>
 
@@ -436,11 +451,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 </main>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function go(name, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('on'));
-    document.getElementById('page-' + name).classList.add('active');
-    if (btn) btn.classList.add('on');
-}
-</script>
+    document.querySelectorAll('.page').forEach(p =>
