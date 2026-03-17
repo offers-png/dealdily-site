@@ -1,114 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SMS Opt-In — DealDily</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root { --bg:#f8f7ff;--ink:#0f0e17;--white:#fff;--primary:#4f46e5;--accent2:#10b981;--muted:#6b7280;--border:#e5e7eb; }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.7;}
-  nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
-  .nav-logo{font-size:1.4rem;font-weight:800;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:0.4rem;}
-  .nav-logo span{background:var(--primary);color:#fff;padding:2px 8px;border-radius:6px;font-size:1rem;}
-  .nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;}
-  .nav-links a{font-size:0.875rem;font-weight:600;color:var(--muted);text-decoration:none;}
-  .nav-links a:hover{color:var(--primary);}
-  .hero{background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:4rem 2rem 3rem;text-align:center;}
-  .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem;}
-  .hero p{color:rgba(255,255,255,0.85);font-size:1rem;}
-  .content{max-width:760px;margin:4rem auto;padding:0 2rem 6rem;}
-  .optin-card{background:#fff;border:2px solid var(--accent2);border-radius:16px;padding:2rem;margin-bottom:2rem;box-shadow:0 4px 24px rgba(16,185,129,0.1);}
-  .optin-card h2{font-size:1.4rem;font-weight:800;color:var(--ink);margin-bottom:1rem;}
-  .sms-number{background:#0f0e17;color:#10b981;font-size:2rem;font-weight:800;text-align:center;padding:1.25rem;border-radius:12px;letter-spacing:0.05em;margin:1rem 0;}
-  .step{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem;padding:1rem;background:#f8f7ff;border-radius:10px;}
-  .step-num{background:var(--primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0;margin-top:2px;}
-  .step p{color:var(--muted);font-size:0.95rem;margin:0;}
-  .step strong{color:var(--ink);}
-  .compliance{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:1.5rem;margin-top:2rem;}
-  .compliance h3{font-size:1rem;font-weight:700;color:#065f46;margin-bottom:0.75rem;}
-  .compliance p,.compliance ul{color:#374151;font-size:0.875rem;}
-  .compliance ul{padding-left:1.25rem;}
-  .compliance ul li{margin-bottom:0.3rem;}
-  .content h2{font-size:1.3rem;font-weight:800;color:var(--ink);margin:2.5rem 0 0.75rem;}
-  .content p{color:var(--muted);font-size:0.95rem;margin-bottom:1rem;}
-  footer{background:var(--ink);color:rgba(255,255,255,0.4);text-align:center;padding:2rem;font-size:0.8rem;}
-  footer a{color:rgba(255,255,255,0.5);text-decoration:none;margin:0 0.75rem;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS Opt-In — Shamrock Market Inc</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#f8f7ff;--ink:#0f0e17;--white:#fff;--primary:#4f46e5;--accent2:#10b981;--muted:#6b7280;--border:#e5e7eb;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.7;}
+    nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .nav-logo{font-size:1.2rem;font-weight:800;color:var(--ink);text-decoration:none;}
+    .nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;}
+    .nav-links a{font-size:0.875rem;font-weight:600;color:var(--muted);text-decoration:none;}
+    .nav-links a:hover{color:var(--primary);}
+    .hero{background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:4rem 2rem 3rem;text-align:center;}
+    .hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+    .hero p{color:rgba(255,255,255,0.85);font-size:1rem;}
+    .content{max-width:760px;margin:4rem auto;padding:0 2rem 6rem;}
+    .optin-card{background:#fff;border:2px solid var(--accent2);border-radius:16px;padding:2rem;margin-bottom:2rem;box-shadow:0 4px 24px rgba(16,185,129,0.1);}
+    .optin-card h2{font-size:1.4rem;font-weight:800;color:var(--ink);margin-bottom:1rem;}
+    .sms-number{background:#0f0e17;color:#10b981;font-size:2rem;font-weight:800;text-align:center;padding:1.25rem;border-radius:12px;letter-spacing:0.05em;margin:1rem 0;}
+    .step{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem;padding:1rem;background:#f8f7ff;border-radius:10px;}
+    .step-num{background:var(--primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0;margin-top:2px;}
+    .step p{color:var(--muted);font-size:0.95rem;margin:0;}
+    .step strong{color:var(--ink);}
+    .compliance{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:1.5rem;margin-top:2rem;}
+    .compliance h3{font-size:1rem;font-weight:700;color:#065f46;margin-bottom:0.75rem;}
+    .compliance p,.compliance ul{color:#374151;font-size:0.875rem;}
+    .compliance ul{padding-left:1.25rem;}
+    .compliance ul li{margin-bottom:0.3rem;}
+    .content h2{font-size:1.3rem;font-weight:800;color:var(--ink);margin:2.5rem 0 0.75rem;}
+    .content p{color:var(--muted);font-size:0.95rem;margin-bottom:1rem;}
+    footer{background:var(--ink);color:rgba(255,255,255,0.4);text-align:center;padding:2rem;font-size:0.8rem;}
+    footer a{color:rgba(255,255,255,0.5);text-decoration:none;margin:0 0.75rem;}
+    .brand-note{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:0.75rem 1rem;font-size:0.85rem;color:#92400e;margin-bottom:1.5rem;}
+  </style>
 </head>
 <body>
-<nav>
-  <a href="/" class="nav-logo">Deal<span>Dily</span></a>
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/sms-home.html">SMS Service</a></li>
-    <li><a href="/terms-conditions.html">Terms</a></li>
-    <li><a href="/privacy-policy.html">Privacy</a></li>
-  </ul>
-</nav>
-
-<div class="hero">
-  <h1>📲 SMS Opt-In</h1>
-  <p>Subscribe to DealDily SMS Notifications — reminders, alerts, and more</p>
-</div>
-
-<div class="content">
-
-  <div class="optin-card">
-    <h2>How to Subscribe</h2>
-    <p style="color:var(--muted);font-size:0.95rem;margin-bottom:0.5rem;">Text START to our number below to begin receiving SMS notifications:</p>
-    <div class="sms-number">+1-855-923-0032</div>
-
-    <div class="step">
-      <div class="step-num">1</div>
-      <p>Open your SMS messaging app on your phone.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <p>Send a new message to <strong>+1-855-923-0032</strong></p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <p>Type <strong>START</strong> and send. You'll receive a confirmation message immediately.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <p>You're subscribed! Reply with your reminders in plain English — "Remind me to call the doctor Friday at 3pm" — and we'll handle the rest.</p>
-    </div>
-  </div>
-
-  <h2>SMS Opt-In Information</h2>
-  <p>DealDily SMS Notifications sends SMS messages only to users who explicitly request them by texting START to our number. We never send unsolicited messages.</p>
-
-  <h2>What You'll Receive</h2>
-  <p>Once subscribed, you can send us reminder requests and we will send you SMS reminders at your specified times. You control exactly what reminders you receive and when.</p>
-
-  <div class="compliance">
-    <h3>✅ Important Information</h3>
-    <ul>
-      <li>Message frequency varies based on the reminders you set</li>
-      <li>Message & data rates may apply</li>
-      <li>Reply <strong>STOP</strong> at any time to unsubscribe</li>
-      <li>Reply <strong>HELP</strong> for assistance</li>
-      <li>Consent to receive SMS is not a condition of purchase</li>
-      <li>Supported carriers: AT&T, Verizon, T-Mobile, Sprint & most US carriers</li>
+  <nav>
+    <a href="/" class="nav-logo">Shamrock Market Inc</a>
+    <ul class="nav-links">
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><a href="/sms-opt-in">SMS Opt-In</a></li>
     </ul>
+  </nav>
+
+  <div class="hero">
+    <h1>SMS Opt-In</h1>
+    <p>Subscribe to receive store deals, alerts &amp; notifications from Shamrock Market Inc</p>
   </div>
 
-  <h2>How to Unsubscribe</h2>
-  <p>Reply <strong>STOP</strong> to any message at any time to immediately unsubscribe. You will receive a final confirmation message and no further messages will be sent.</p>
+  <div class="content">
+    <div class="brand-note">
+      This SMS service is operated by <strong>Shamrock Market Inc</strong> (Uncle Sam Market), 419 S Wilbur Ave, Syracuse, NY 13204. Website managed via dealdily.com.
+    </div>
 
-  <h2>Need Help?</h2>
-  <p>Reply <strong>HELP</strong> to any message, or contact us at <a href="mailto:support@dealdily.com" style="color:var(--primary);">support@dealdily.com</a></p>
+    <div class="optin-card">
+      <h2>How to Subscribe</h2>
+      <p style="color:var(--muted);font-size:0.95rem;margin-bottom:0.5rem;">Text <strong>START</strong> to our number below to begin receiving SMS notifications from Shamrock Market Inc:</p>
+      <div class="sms-number">+1-855-923-0032</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <p>Open your SMS messaging app on your phone.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p>Send a new message to <strong>+1-855-923-0032</strong></p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p>Type <strong>START</strong> and send. You will receive a confirmation message immediately.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <p>You are subscribed! You will receive store deals, promotions, account notifications, and delivery updates from Shamrock Market Inc.</p>
+      </div>
+    </div>
 
-  <p style="margin-top:2rem;font-size:0.85rem;color:var(--muted);">
-    By subscribing, you agree to our <a href="/terms-conditions.html" style="color:var(--primary);">Terms & Conditions</a> and <a href="/privacy-policy.html" style="color:var(--primary);">Privacy Policy</a>. See our <a href="/sms-consent.html" style="color:var(--primary);">SMS Consent</a> page for full consent details.
-  </p>
-</div>
+    <h2>SMS Opt-In Information</h2>
+    <p><strong>Shamrock Market Inc</strong> sends SMS messages only to users who explicitly opt in by texting START to our number or completing an in-store sign-up form at 419 S Wilbur Ave, Syracuse, NY 13204. We never send unsolicited messages.</p>
 
-<footer>
-  <p>© 2025 DealDily · <a href="/privacy-policy.html">Privacy Policy</a> <a href="/terms-conditions.html">Terms</a> <a href="/sms-opt-in.html">SMS Opt-In</a> <a href="/sms-consent.html">SMS Consent</a></p>
-</footer>
+    <h2>What You Will Receive</h2>
+    <p>Once subscribed, you will receive:</p>
+    <ul style="color:var(--muted);font-size:0.95rem;padding-left:1.25rem;margin-bottom:1rem;">
+      <li>Store deals and weekly promotions</li>
+      <li>Account notifications and delivery alerts</li>
+      <li>Receipt confirmations and order updates</li>
+      <li>Customer service responses</li>
+    </ul>
+
+    <div class="compliance">
+      <h3>Important Information</h3>
+      <ul>
+        <li>Message frequency varies</li>
+        <li>Message &amp; data rates may apply</li>
+        <li>Reply <strong>STOP</strong> at any time to unsubscribe</li>
+        <li>Reply <strong>HELP</strong> for assistance</li>
+        <li>Consent to receive SMS is not a condition of purchase</li>
+        <li>Supported carriers: AT&amp;T, Verizon, T-Mobile, Sprint &amp; most US carriers</li>
+      </ul>
+    </div>
+
+    <h2>How to Unsubscribe</h2>
+    <p>Reply <strong>STOP</strong> to any message at any time to immediately unsubscribe. You will receive a final confirmation and no further messages will be sent.</p>
+
+    <h2>Need Help?</h2>
+    <p>Reply <strong>HELP</strong> to any message, or contact us at <a href="mailto:offers@dealdily.com" style="color:var(--primary);">offers@dealdily.com</a> or visit us at 419 S Wilbur Ave, Syracuse, NY 13204.</p>
+
+    <p style="margin-top:2rem;font-size:0.85rem;color:var(--muted);">
+      By subscribing, you agree to our <a href="/privacy" style="color:var(--primary);">Privacy Policy</a>.
+    </p>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Shamrock Market Inc (Uncle Sam Market) &middot; 419 S Wilbur Ave, Syracuse NY 13204 &middot;
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/sms-opt-in">SMS Opt-In</a>
+    </p>
+  </footer>
 </body>
 </html>
