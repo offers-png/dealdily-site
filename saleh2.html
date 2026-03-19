@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saleh-2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f0f0f;
+    color: #e8e8e8;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 14px 20px;
+    background: #1a1a1a;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 10px; }
+
+  .avatar {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; color: white;
+  }
+
+  .header-title { font-weight: 600; font-size: 15px; }
+  .header-sub { font-size: 11px; color: #666; margin-top: 1px; }
+
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #22c55e;
+    display: inline-block; margin-right: 5px;
+  }
+
+  #new-chat-btn {
+    background: none; border: 1px solid #333;
+    color: #999; padding: 6px 12px;
+    border-radius: 6px; cursor: pointer;
+    font-size: 12px; transition: all 0.15s;
+  }
+  #new-chat-btn:hover { border-color: #555; color: #ccc; }
+
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    max-width: 85%;
+    animation: fadeIn 0.2s ease;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .message.user { align-self: flex-end; align-items: flex-end; }
+  .message.assistant { align-self: flex-start; align-items: flex-start; }
+
+  .bubble {
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+    word-break: break-word;
+  }
+
+  .user .bubble {
+    background: #6366f1;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+
+  .assistant .bubble {
+    background: #1e1e1e;
+    color: #e8e8e8;
+    border: 1px solid #2a2a2a;
+    border-bottom-left-radius: 4px;
+  }
+
+  /* Markdown-like formatting in assistant bubbles */
+  .assistant .bubble strong { color: #a78bfa; }
+  .assistant .bubble em { color: #94a3b8; font-style: italic; }
+  .assistant .bubble code {
+    background: #2a2a2a; padding: 1px 5px;
+    border-radius: 3px; font-size: 12px;
+    font-family: 'SF Mono', monospace;
+  }
+
+  .msg-time {
+    font-size: 10px; color: #555;
+    margin-top: 4px; padding: 0 4px;
+  }
+
+  /* Typing indicator */
+  .typing-bubble {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    padding: 12px 16px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    display: flex; gap: 5px; align-items: center;
+  }
+
+  .dot {
+    width: 7px; height: 7px;
+    background: #555; border-radius: 50%;
+    animation: bounce 1.2s infinite ease-in-out;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* Input area */
+  #input-area {
+    padding: 12px 16px 20px;
+    background: #1a1a1a;
+    border-top: 1px solid #2a2a2a;
+    flex-shrink: 0;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    background: #252525;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 8px 8px 8px 14px;
+    transition: border-color 0.15s;
+  }
+
+  .input-row:focus-within { border-color: #6366f1; }
+
+  #msg-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #e8e8e8;
+    font-size: 14px;
+    resize: none;
+    max-height: 120px;
+    line-height: 1.5;
+    font-family: inherit;
+    padding: 2px 0;
+  }
+
+  #msg-input::placeholder { color: #555; }
+
+  #send-btn {
+    width: 34px; height: 34px;
+    background: #6366f1;
+    border: none; border-radius: 8px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  #send-btn:hover { background: #4f46e5; }
+  #send-btn:disabled { background: #333; cursor: not-allowed; }
+
+  #send-btn svg { width: 16px; height: 16px; fill: white; }
+
+  /* Welcome state */
+  #welcome {
+    text-align: center;
+    margin: auto;
+    padding: 40px 20px;
+    max-width: 320px;
+  }
+
+  .welcome-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 16px;
+  }
+
+  #welcome h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  #welcome p { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; }
+
+  .quick-prompts {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .qp {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #aaa;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .qp:hover { border-color: #6366f1; color: #e8e8e8; }
+
+  /* Error toast */
+  #error-toast {
+    position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+    background: #ef4444; color: white;
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; display: none;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="avatar">S2</div>
+    <div>
+      <div class="header-title">Saleh-2</div>
+      <div class="header-sub"><span class="status-dot"></span>Your digital twin</div>
+    </div>
+  </div>
+  <button id="new-chat-btn">New Chat</button>
+</header>
+
+<div id="messages">
+  <div id="welcome">
+    <div class="welcome-icon">🧠</div>
+    <h2>Saleh-2</h2>
+    <p>Ask me anything about your businesses, get a quick draft, or think through a decision.</p>
+    <div class="quick-prompts">
+      <button class="qp" onclick="sendQuick(this)">What should I focus on today?</button>
+      <button class="qp" onclick="sendQuick(this)">What's the status of all my businesses?</button>
+      <button class="qp" onclick="sendQuick(this)">Draft a follow-up email for a GhostCheck client</button>
+      <button class="qp" onclick="sendQuick(this)">What's my biggest revenue opportunity right now?</button>
+    </div>
+  </div>
+</div>
+
+<div id="input-area">
+  <div class="input-row">
+    <textarea id="msg-input" rows="1" placeholder="Ask Saleh-2 anything…"></textarea>
+    <button id="send-btn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div id="error-toast"></div>
+
+<script>
+const WEBHOOK = 'https://saleh852.app.n8n.cloud/webhook/saleh2-chat-core-v1';
+const SUPA_URL = 'https://wzcuzyouymauokijaqjk.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind6Y3V6eW91eW1hdW9raWphcWprIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk0NTIwMCwiZXhwIjoyMDg5NTIxMjAwfQ.8BrGR6Ds3PcKwGacM_6Ioyq6GZPy0IMW_r5heYYwwxQ';
+
+let sessionId = localStorage.getItem('s2_session') || newSessionId();
+let waiting = false;
+
+function newSessionId() {
+  const id = 'session-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+  localStorage.setItem('s2_session', id);
+  return id;
+}
+
+function timeStr() {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function addMessage(role, text) {
+  const welcome = document.getElementById('welcome');
+  if (welcome) welcome.remove();
+
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'message ' + role;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = formatText(text);
+
+  const time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = timeStr();
+
+  wrap.appendChild(bubble);
+  wrap.appendChild(time);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+  return wrap;
+}
+
+function formatText(text) {
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
+}
+
+function showTyping() {
+  const msgs = document.getElementById('messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'message assistant';
+  wrap.id = 'typing-indicator';
+  wrap.innerHTML = '<div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function showError(msg) {
+  const t = document.getElementById('error-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 4000);
+}
+
+async function pollForReply(afterTimestamp, pollSessionId) {
+  const deadline = Date.now() + 30000; // 30s timeout
+  while (Date.now() < deadline) {
+    await new Promise(r => setTimeout(r, 1500));
+    try {
+      const res = await fetch(
+        `${SUPA_URL}/rest/v1/saleh2_chat_log?session_id=eq.${encodeURIComponent(pollSessionId)}&role=eq.assistant&created_at=gt.${encodeURIComponent(afterTimestamp)}&order=created_at.desc&limit=1`,
+        { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
+      );
+      const data = await res.json();
+      if (data && data.length > 0) return data[0].content;
+    } catch(e) {}
+  }
+  return null;
+}
+
+async function sendMessage(text) {
+  if (waiting) return;
+  const input = document.getElementById('msg-input');
+  const msg = (text || input.value).trim();
+  if (!msg) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('send-btn').disabled = true;
+  waiting = true;
+
+  addMessage('user', msg);
+  showTyping();
+
+  const sentAt = new Date().toISOString();
+
+  try {
+    await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg, session_id: sessionId })
+    });
+
+    const reply = await pollForReply(sentAt, sessionId);
+    removeTyping();
+
+    if (reply) {
+      addMessage('assistant', reply);
+    } else {
+      addMessage('assistant', "Hmm, I didn't get a response in time. Try again?");
+    }
+  } catch(e) {
+    removeTyping();
+    showError('Connection error. Check your internet.');
+    addMessage('assistant', 'Connection error — try again.');
+  }
+
+  waiting = false;
+  document.getElementById('send-btn').disabled = false;
+  input.focus();
+}
+
+function sendQuick(btn) {
+  sendMessage(btn.textContent);
+}
+
+// Auto-resize textarea
+const input = document.getElementById('msg-input');
+input.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// Send on Enter (Shift+Enter for newline)
+input.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// New chat button
+document.getElementById('new-chat-btn').addEventListener('click', function() {
+  sessionId = newSessionId();
+  const msgs = document.getElementById('messages');
+  msgs.innerHTML = '';
+  // Re-add welcome
+  const w = document.createElement('div');
+  w.id = 'welcome';
+  w.innerHTML = `
+    <div class="welcome-icon">🧠</div>
+    <h2>Saleh-2</h2>
+    <p>Ask me anything about your businesses, get a quick draft, or think through a decision.</p>
+    <div class="quick-prompts">
+      <button class="qp" onclick="sendQuick(this)">What should I focus on today?</button>
+      <button class="qp" onclick="sendQuick(this)">What's the status of all my businesses?</button>
+      <button class="qp" onclick="sendQuick(this)">Draft a follow-up email for a GhostCheck client</button>
+      <button class="qp" onclick="sendQuick(this)">What's my biggest revenue opportunity right now?</button>
+    </div>`;
+  msgs.appendChild(w);
+});
+</script>
+</body>
+</html>
