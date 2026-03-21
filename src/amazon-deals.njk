@@ -118,8 +118,24 @@ img{display:block;max-width:100%}
 }
 .deal:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,.4)}
 .deal.hidden{display:none}
-.deal-top{padding:1.25rem 1.25rem .875rem;display:flex;align-items:flex-start;gap:.75rem;border-bottom:1px solid var(--border)}
-.deal-badges{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+
+/* PRODUCT IMAGE */
+.deal-img{
+  width:100%;height:180px;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;border-bottom:1px solid var(--border);
+}
+.deal-img img{
+  width:100%;height:100%;object-fit:contain;padding:.75rem;
+  transition:transform .3s ease;
+}
+.deal:hover .deal-img img{transform:scale(1.04)}
+.deal-img-placeholder{
+  font-size:3rem;opacity:.35;
+}
+
+.deal-top{padding:1rem 1.25rem .75rem;display:flex;align-items:flex-start;gap:.75rem;}
+.deal-badges{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.45rem}
 .badge-cat{
   font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   padding:2px 8px;border-radius:100px;background:rgba(91,79,255,.14);color:#a78bfa;
@@ -129,7 +145,7 @@ img{display:block;max-width:100%}
   padding:2px 8px;border-radius:100px;background:rgba(15,212,164,.13);color:var(--teal);
 }
 .deal-title{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;letter-spacing:-.01em}
-.deal-body{padding:.875rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:.625rem}
+.deal-body{padding:.75rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:.625rem}
 .deal-price-row{display:flex;align-items:baseline;gap:.5rem}
 .deal-price{font-family:var(--fh);font-size:1.5rem;font-weight:800;color:var(--amazon)}
 .deal-original{font-size:.82rem;color:var(--muted);text-decoration:line-through}
@@ -232,6 +248,14 @@ img{display:block;max-width:100%}
   <div class="grid" id="deal-grid">
     {% for post in collections.posts %}
     <div class="deal" data-cat="{{ post.data.category }}">
+      <div class="deal-img">
+        {% if post.data.image %}
+        <img src="{{ post.data.image }}" alt="{{ post.data.title }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <span class="deal-img-placeholder" style="display:none">🛒</span>
+        {% else %}
+        <span class="deal-img-placeholder">🛒</span>
+        {% endif %}
+      </div>
       <div class="deal-top">
         <div style="flex:1;min-width:0">
           <div class="deal-badges">

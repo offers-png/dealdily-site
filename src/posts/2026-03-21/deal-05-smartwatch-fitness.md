@@ -5,15 +5,16 @@ category: fitness
 price: $50.00
 original_price: $129.99
 discount: 62%
-affiliate_link: https://www.amazon.com/s?k=iBesi+smartwatch+fitness+tracker&tag=dealdily20-20
+affiliate_link: https://www.amazon.com/dp/B0G4BZ5WW9?tag=dealdily20-20
+image: https://images-na.ssl-images-amazon.com/images/P/B0G4BZ5WW9.01.LZZZZZZZ.jpg
 ---
 
 # iBesi Smartwatch — 120 Sport Modes, 62% Off at $50
 
-**$50.00** ~~$129.99~~ — Save $80 (62% off)
+**$50.00** ~~$129.99~~ — Save $79.99 (62% off)
 
-120 sport modes, sleep tracking, heart rate, blood oxygen, notifications — this has everything most people actually use on a fitness tracker. At $50 it costs less than one month at the gym. Long battery life means you're not charging it every other day.
+1.43" AMOLED display, 120+ sport modes, Bluetooth calling, 24/7 heart rate and sleep monitoring, IP68 waterproof, 7-day battery. For $50, this is hard to beat.
 
-👉 [Get the iBesi Smartwatch for $50 →](https://www.amazon.com/s?k=iBesi+smartwatch+fitness+tracker&tag=dealdily20-20)
+👉 [Shop the iBesi Smartwatch →](https://www.amazon.com/dp/B0G4BZ5WW9?tag=dealdily20-20)
 
-*Best bang-for-buck fitness tracker right now. Ideal gift or first smartwatch.*
+*Trending on social — seen in multiple viral fitness videos this week.*

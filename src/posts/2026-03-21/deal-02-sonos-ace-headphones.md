@@ -1,19 +1,20 @@
 ---
 title: "Sonos Ace Headphones — $100 Off, Spatial Audio at a Real Price"
 date: 2026-03-21
-category: electronics
-price: $299.00
-original_price: $399.00
-discount: 25%
-affiliate_link: https://www.amazon.com/s?k=Sonos+Ace+headphones&tag=dealdily20-20
+category: audio
+price: $279.00
+original_price: $379.00
+discount: 26%
+affiliate_link: https://www.amazon.com/dp/B0CYHGPP1L?tag=dealdily20-20
+image: https://images-na.ssl-images-amazon.com/images/P/B0CYHGPP1L.01.LZZZZZZZ.jpg
 ---
 
 # Sonos Ace Headphones — $100 Off, Spatial Audio at a Real Price
 
-**$299.00** ~~$399.00~~ — Save $100 (25% off)
+**$279.00** ~~$379.00~~ — Save $100 (26% off)
 
-Sonos finally made headphones, and they delivered. The Ace has class-leading spatial audio, a premium build that rivals Sony and Bose, and the Sonos ecosystem integration you'd expect. Down to $299 — the lowest they've been.
+Sonos Ace brings the brand's legendary audio into over-ear headphones — noise cancellation, spatial audio with Dolby Atmos, dynamic head tracking, and 30-hour battery. This is the first time they've dropped below $300.
 
-👉 [Shop Sonos Ace for $299 →](https://www.amazon.com/s?k=Sonos+Ace+headphones&tag=dealdily20-20)
+👉 [Shop Sonos Ace →](https://www.amazon.com/dp/B0CYHGPP1L?tag=dealdily20-20)
 
-*If you have a Sonos home system, these are a no-brainer at this price.*
+*Rare discount on premium headphones — Sonos almost never discounts this deep.*
