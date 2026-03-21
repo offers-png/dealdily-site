@@ -2,6 +2,11 @@
 title: "Beats Solo 4 Headphones Are On Sale — 50-Hour Battery, No Compromise"
 date: 2026-03-05
 category: electronics
+affiliate_link: https://www.amazon.com/dp/B0CZPGX972?tag=dealdily20-20
+image: https://m.media-amazon.com/images/I/51JNqP2C4rL._AC_SX522_.jpg
+price: $149.95
+original_price: $199.95
+discount: 25%
 ---
 
 # Beats Solo 4 Headphones Are On Sale — 50-Hour Battery, No Compromise

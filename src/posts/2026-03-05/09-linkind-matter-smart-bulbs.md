@@ -2,6 +2,11 @@
 title: "These Matter Smart Bulbs Work With Every Smart Home — No Hub, No App Required"
 date: 2026-03-05
 category: home
+affiliate_link: https://www.amazon.com/dp/B0CW1NTVT2?tag=dealdily20-20
+image: https://m.media-amazon.com/images/I/71xz+ecVUAL._AC_SX466_.jpg
+price: $24.99
+original_price: $39.99
+discount: 37%
 ---
 
 # These Matter Smart Bulbs Work With Every Smart Home — No Hub, No App Required

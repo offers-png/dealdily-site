@@ -6,7 +6,7 @@ price: $25.19
 original_price: $47.99
 discount: 47%
 affiliate_link: https://www.amazon.com/dp/B0BDLD2HJZ?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B0BDLD2HJZ.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/61E5+Tg-R9L._AC_SY300_SX300_QL70_FMwebp_.jpg
 ---
 
 # EHEYCIGA Orthopedic Dog Bed — 47% Off, $25

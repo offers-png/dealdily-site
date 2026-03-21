@@ -2,6 +2,10 @@
 title: "Epson Printer Drops $60 — First Big Price Cut of 2026, Near All-Time Low"
 date: 2026-03-05
 category: electronics
+affiliate_link: https://www.amazon.com/s?k=Epson+EcoTank+printer&tag=dealdily20-20
+price: $179.99
+original_price: $239.99
+discount: 25%
 ---
 
 # Epson Printer Drops $60 — First Big Price Cut of 2026, Near All-Time Low

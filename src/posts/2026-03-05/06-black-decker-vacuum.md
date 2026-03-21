@@ -2,6 +2,11 @@
 title: "Black+Decker Handheld Vacuum Is $20 Off — Best Price of the Year"
 date: 2026-03-05
 category: home
+affiliate_link: https://www.amazon.com/dp/B006LXOJC0?tag=dealdily20-20
+image: https://m.media-amazon.com/images/I/611QYSatPfL._AC_SY300_SX300_QL70_FMwebp_.jpg
+price: $39.99
+original_price: $59.99
+discount: 33%
 ---
 
 # Black+Decker Handheld Vacuum Is $20 Off — Best Price of the Year

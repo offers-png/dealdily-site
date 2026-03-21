@@ -6,7 +6,7 @@ price: $50.00
 original_price: $129.99
 discount: 62%
 affiliate_link: https://www.amazon.com/dp/B0G4BZ5WW9?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B0G4BZ5WW9.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/71dVHg8ex3L._AC_SY300_SX300_QL70_FMwebp_.jpg
 ---
 
 # iBesi Smartwatch — 120 Sport Modes, 62% Off at $50

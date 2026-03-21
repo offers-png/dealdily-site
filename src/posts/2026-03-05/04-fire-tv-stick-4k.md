@@ -2,6 +2,11 @@
 title: "Amazon Fire TV Stick 4K Select Is On Sale — AI Search + Free Live TV"
 date: 2026-03-05
 category: electronics
+affiliate_link: https://www.amazon.com/dp/B0C6W3D4RM?tag=dealdily20-20
+image: https://m.media-amazon.com/images/I/61gw-l3qyVL._AC_SY741_.jpg
+price: $34.99
+original_price: $49.99
+discount: 30%
 ---
 
 # Amazon Fire TV Stick 4K Select Is On Sale — AI Search + Free Live TV

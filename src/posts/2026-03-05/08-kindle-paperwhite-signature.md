@@ -2,6 +2,11 @@
 title: "Kindle Paperwhite Signature Edition Is Discounted — 32GB, Wireless Charging"
 date: 2026-03-05
 category: electronics
+affiliate_link: https://www.amazon.com/dp/B0C8RR4WN3?tag=dealdily20-20
+image: https://m.media-amazon.com/images/I/71l4ubAJ0BL._AC_SY300_SX300_QL70_FMwebp_.jpg
+price: $154.99
+original_price: $189.99
+discount: 18%
 ---
 
 # Kindle Paperwhite Signature Edition Is Discounted — 32GB, Wireless Charging

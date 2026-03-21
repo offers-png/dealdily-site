@@ -6,7 +6,7 @@ price: $299.00
 original_price: $399.00
 discount: 25%
 affiliate_link: https://www.amazon.com/dp/B0FQF9ZX7P?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B0FQF9ZX7P.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/6110Jv9wqeL._AC_SX522_.jpg
 ---
 
 # Apple Watch Series 11 — $100 Off, Down to $299

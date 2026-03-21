@@ -6,7 +6,7 @@ price: $119.99
 original_price: $199.99
 discount: 40%
 affiliate_link: https://www.amazon.com/dp/B0C53RVH4N?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B0C53RVH4N.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/61qQBU1mYfL._AC_SY300_SX300_QL70_FMwebp_.jpg
 ---
 
 # 6-Quart Touchscreen Air Fryer — 40% Off, $119.99

@@ -6,7 +6,7 @@ price: $279.00
 original_price: $379.00
 discount: 26%
 affiliate_link: https://www.amazon.com/dp/B0CYHGPP1L?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B0CYHGPP1L.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/613GeRd+1WL._AC_SY300_SX300_QL70_FMwebp_.jpg
 ---
 
 # Sonos Ace Headphones — $100 Off, Spatial Audio at a Real Price

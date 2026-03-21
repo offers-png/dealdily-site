@@ -2,6 +2,11 @@
 title: "Beats Powerbeats Fit Drop to All-Time Low — $149.95 Shipped"
 date: 2026-03-05
 category: electronics
+affiliate_link: https://www.amazon.com/dp/B0FPGQZTFB?tag=dealdily20-20
+image: https://m.media-amazon.com/images/I/41r6PyPKJEL._AC_SX522_.jpg
+price: $149.95
+original_price: $199.95
+discount: 25%
 ---
 
 # Beats Powerbeats Fit Drop to All-Time Low — $149.95 Shipped

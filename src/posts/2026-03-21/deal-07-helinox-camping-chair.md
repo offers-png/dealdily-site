@@ -6,7 +6,7 @@ price: $99.99
 original_price: $139.99
 discount: 29%
 affiliate_link: https://www.amazon.com/dp/B08949MRTP?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B08949MRTP.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/911yAmr5P3L._AC_SX342_SY445_QL70_FMwebp_.jpg
 ---
 
 # Helinox Chair One Camping Chair — 29% Off, Ultralight at $100

@@ -6,7 +6,7 @@ price: $6.00
 original_price: $15.99
 discount: 62%
 affiliate_link: https://www.amazon.com/dp/B07SRV3SN8?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B07SRV3SN8.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/81FjOVbngLL._AC_SX679_.jpg
 ---
 
 # Adjustable Drawer Organizer — 62% Off, Only $6

@@ -6,7 +6,7 @@ price: $249.99
 original_price: $349.99
 discount: 30%
 affiliate_link: https://www.amazon.com/dp/B0CZWJXK9Z?tag=dealdily20-20
-image: https://images-na.ssl-images-amazon.com/images/P/B0CZWJXK9Z.01.LZZZZZZZ.jpg
+image: https://m.media-amazon.com/images/I/416LamY5gOL._SY450_.jpg
 ---
 
 # Ring Floodlight + Spotlight Cam Bundle — 30% Off Before Big Spring Sale
