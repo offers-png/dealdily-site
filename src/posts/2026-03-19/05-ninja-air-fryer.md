@@ -2,7 +2,10 @@
 title: "Ninja Air Fryers — From $59.99 (Up to 40% Off Multiple Models)"
 date: 2026-03-19
 category: kitchen
-affiliate_tag: dealdily20-20
+affiliate_link: "https://www.amazon.com/dp/B07FDJMC9Q?tag=dealdily20-20"
+image: "https://m.media-amazon.com/images/I/71+8uTMDRFL._AC_SX679_.jpg"
+price: "from $59.99"
+discount: "up to 40%"
 ---
 
 # Ninja Air Fryers — From $59.99 (Up to 40% Off Multiple Models)

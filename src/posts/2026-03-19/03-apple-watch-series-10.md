@@ -2,7 +2,10 @@
 title: "Apple Watch Series 10 — Up to $300 Off (Rare Apple Discount)"
 date: 2026-03-19
 category: electronics
-affiliate_tag: dealdily20-20
+affiliate_link: "https://www.amazon.com/dp/B0DGHYQ1VJ?tag=dealdily20-20"
+image: "https://m.media-amazon.com/images/I/61Z8y0y2b0L._AC_SX522_.jpg"
+price: "from $299"
+discount: "up to 33%"
 ---
 
 # Apple Watch Series 10 — Up to $300 Off (Rare Apple Discount)
