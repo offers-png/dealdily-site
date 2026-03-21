@@ -35,6 +35,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .sb-badge{margin-left:auto;font-size:.57rem;font-weight:700;padding:2px 6px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase}
 .sb-badge.hot{background:rgba(244,63,94,.18);color:var(--rose)}
 .sb-badge.new{background:rgba(15,212,164,.13);color:var(--teal)}
+.sb-amazon{display:flex;align-items:center;gap:.65rem;width:100%;padding:.7rem .75rem;border-radius:10px;background:linear-gradient(135deg,rgba(255,153,0,.18),rgba(255,153,0,.08));border:1px solid rgba(255,153,0,.3);color:#ffaa33;font-size:.85rem;font-weight:700;font-family:var(--fh);letter-spacing:-.01em;transition:all .18s;margin:.5rem 0 .25rem;position:relative}
+.sb-amazon:hover{background:linear-gradient(135deg,rgba(255,153,0,.28),rgba(255,153,0,.14));border-color:rgba(255,153,0,.5);color:#ffbb55}
+.sb-amazon .sb-ico{font-size:1rem}
+.sb-amazon-badge{margin-left:auto;font-size:.55rem;font-weight:800;padding:2px 7px;border-radius:100px;background:rgba(255,153,0,.25);color:#ff9900;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,153,0,.3)}
 .sb-foot{padding:.875rem 1.25rem;border-top:1px solid var(--border);font-size:.72rem;color:var(--muted)}
 .sb-foot a{color:var(--muted);transition:color .15s}
 .sb-foot a:hover{color:var(--text)}
@@ -209,6 +213,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="sb-sub">AI Tools · Automations · Deals</div>
   </div>
   <nav class="sb-nav">
+    <a href="/amazon-deals/" class="sb-amazon"><span class="sb-ico">🛒</span>Amazon Deals<span class="sb-amazon-badge">Live</span></a>
     <div class="sb-grp">Main</div>
     <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">7</span></button>
     <button class="sb-btn" onclick="go('workflows',this)"><span class="sb-ico">🔄</span>AI Workflows</button>

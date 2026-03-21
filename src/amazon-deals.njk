@@ -1,0 +1,312 @@
+---
+permalink: /amazon-deals/
+title: Amazon Deals — DealDily
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Best Amazon Deals — DealDily</title>
+<meta name="description" content="The best Amazon deals updated daily. Electronics, home, fitness, pets and more — all with my affiliate tag. No extra cost to you.">
+<meta property="og:title" content="Today's Best Amazon Deals — DealDily">
+<meta property="og:description" content="Hand-picked Amazon deals updated every day. Electronics, home, fitness, pets, tools and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dealdily.com/amazon-deals/">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06060f;--surface:#0d0d1a;--card:#111120;--card2:#15152a;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e2e2ef;--muted:#64648a;--dim:rgba(255,255,255,0.3);
+  --indigo:#5b4fff;--teal:#0fd4a4;--amber:#f59e0b;--rose:#f43f5e;
+  --orange:#ff6b35;--sky:#38bdf8;
+  --amazon:#ff9900;--amazon2:#e68a00;
+  --fh:'Syne',sans-serif;--fb:'DM Sans',sans-serif
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{display:block;max-width:100%}
+
+/* HEADER */
+.header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:1rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(12px);
+}
+.logo{display:flex;align-items:center;gap:.5rem;font-family:var(--fh);font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+.header-back{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:.35rem;transition:color .15s}
+.header-back:hover{color:var(--text)}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:3.5rem 1.5rem 2.5rem;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(255,153,0,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--amazon);background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.25);
+  padding:4px 14px;border-radius:100px;margin-bottom:1.25rem;
+}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--amazon);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.hero h1{
+  font-family:var(--fh);font-size:clamp(2rem,6vw,3.2rem);
+  font-weight:800;line-height:1.05;letter-spacing:-.03em;color:#fff;
+  margin-bottom:.75rem;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,var(--amazon),#ffcc00);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero p{color:var(--muted);font-size:.95rem;max-width:480px;margin:0 auto 1.5rem;line-height:1.75}
+.hero-stats{
+  display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;
+  font-size:.78rem;color:var(--muted);
+}
+.hero-stat strong{color:var(--text);font-weight:700;font-family:var(--fh)}
+
+/* FILTERS */
+.filters{
+  padding:.875rem 1.5rem;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--surface);
+  display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;
+  position:sticky;top:61px;z-index:90;
+}
+.filter-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.fbtn{
+  font-size:.75rem;font-weight:600;padding:5px 14px;border-radius:100px;
+  border:1px solid var(--border2);color:var(--muted);
+  transition:all .15s;cursor:pointer;background:none;
+}
+.fbtn:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.fbtn.active{background:var(--amazon);border-color:var(--amazon);color:#000;font-weight:700}
+
+/* DEAL GRID */
+.grid-wrap{padding:1.5rem;max-width:1200px;margin:0 auto}
+.count-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.78rem;color:var(--muted);margin-bottom:1.25rem;
+}
+.count-bar strong{color:var(--text)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1rem;
+}
+
+/* DEAL CARD */
+.deal{
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+}
+.deal:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.deal.hidden{display:none}
+.deal-top{padding:1.25rem 1.25rem .875rem;display:flex;align-items:flex-start;gap:.75rem;border-bottom:1px solid var(--border)}
+.deal-badges{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem}
+.badge-cat{
+  font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 8px;border-radius:100px;background:rgba(91,79,255,.14);color:#a78bfa;
+}
+.badge-discount{
+  font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:100px;background:rgba(15,212,164,.13);color:var(--teal);
+}
+.deal-title{font-family:var(--fh);font-size:.95rem;font-weight:700;color:#fff;line-height:1.35;letter-spacing:-.01em}
+.deal-body{padding:.875rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:.625rem}
+.deal-price-row{display:flex;align-items:baseline;gap:.5rem}
+.deal-price{font-family:var(--fh);font-size:1.5rem;font-weight:800;color:var(--amazon)}
+.deal-original{font-size:.82rem;color:var(--muted);text-decoration:line-through}
+.deal-save{font-size:.72rem;font-weight:700;color:var(--teal);background:rgba(15,212,164,.1);padding:1px 7px;border-radius:100px}
+.deal-date{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+.deal-date::before{content:'📅';font-size:.7rem}
+.deal-footer{padding:.875rem 1.25rem;border-top:1px solid var(--border);margin-top:auto}
+.buy-btn{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  width:100%;padding:.75rem;border-radius:10px;
+  background:linear-gradient(135deg,var(--amazon),var(--amazon2));
+  color:#000;font-family:var(--fh);font-size:.88rem;font-weight:800;
+  letter-spacing:-.01em;transition:all .18s;
+  box-shadow:0 4px 16px rgba(255,153,0,.25);
+}
+.buy-btn:hover{background:linear-gradient(135deg,#ffaa1a,var(--amazon));box-shadow:0 6px 24px rgba(255,153,0,.4);transform:translateY(-1px)}
+.buy-btn svg{width:16px;height:16px;flex-shrink:0}
+
+/* EMPTY STATE */
+.empty{
+  text-align:center;padding:4rem 1.5rem;color:var(--muted);
+  display:none;
+}
+.empty.show{display:block}
+.empty h3{font-family:var(--fh);color:var(--text);margin-bottom:.5rem}
+
+/* FOOTER */
+.footer{
+  text-align:center;padding:2.5rem 1.5rem;
+  border-top:1px solid var(--border);font-size:.75rem;color:var(--muted);
+  margin-top:2rem;
+}
+.footer a{color:var(--muted);transition:color .15s}
+.footer a:hover{color:var(--text)}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:.875rem;flex-wrap:wrap}
+.footer-disc{max-width:560px;margin:.875rem auto 0;font-size:.68rem;line-height:1.7;opacity:.7}
+
+/* MOBILE */
+@media(max-width:600px){
+  .hero{padding:2.5rem 1rem 2rem}
+  .grid{grid-template-columns:1fr}
+  .grid-wrap{padding:1rem}
+  .filters{padding:.75rem 1rem;top:57px}
+  .header{padding:.875rem 1rem}
+  .hero-stats{gap:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <a class="logo" href="/">
+    <span class="logo-dot"></span>DealDily
+  </a>
+  <a class="header-back" href="/">← Back to all tools</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chip">
+    <span class="live-dot"></span>
+    Updated daily
+  </div>
+  <h1>Today's Best<br><span>Amazon Deals</span></h1>
+  <p>Hand-picked deals updated every day — electronics, home, fitness, pets, tools and more. Every link supports the site at zero extra cost to you.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>{{ collections.posts | length }}</strong> deals live</div>
+    <div class="hero-stat"><strong>Daily</strong> updates</div>
+    <div class="hero-stat"><strong>100%</strong> affiliate-tagged</div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+{% set categories = [] %}
+{% for post in collections.posts %}
+  {% if post.data.category and post.data.category not in categories %}
+    {% set categories = (categories.push(post.data.category), categories) %}
+  {% endif %}
+{% endfor %}
+
+<div class="filters" id="filters">
+  <span class="filter-label">Filter:</span>
+  <button class="fbtn active" onclick="filter('all',this)">All Deals</button>
+  {% for cat in categories %}
+  <button class="fbtn" onclick="filter('{{ cat }}',this)">
+    {% if cat == 'electronics' %}⚡{% elif cat == 'fitness' %}💪{% elif cat == 'home' %}🏠{% elif cat == 'pets' %}🐾{% elif cat == 'tools' %}🔧{% elif cat == 'kitchen' %}🍳{% elif cat == 'outdoor' %}🌿{% elif cat == 'smart-home' %}💡{% elif cat == 'audio' %}🎧{% elif cat == 'computers' %}💻{% elif cat == 'gaming' %}🎮{% elif cat == 'cleaning' or cat == 'home-cleaning' %}🧹{% elif cat == 'baby' %}👶{% elif cat == 'robot-vacuums' %}🤖{% else %}🏷️{% endif %}
+    {{ cat | categoryLabel }}
+  </button>
+  {% endfor %}
+</div>
+
+<!-- DEAL GRID -->
+<div class="grid-wrap">
+  <div class="count-bar">
+    <span><strong id="deal-count">{{ collections.posts | length }}</strong> deals showing</span>
+    <span>Last updated {{ collections.posts[0].data.date | date("MMMM d, yyyy") if collections.posts[0] }}</span>
+  </div>
+
+  <div class="grid" id="deal-grid">
+    {% for post in collections.posts %}
+    <div class="deal" data-cat="{{ post.data.category }}">
+      <div class="deal-top">
+        <div style="flex:1;min-width:0">
+          <div class="deal-badges">
+            {% if post.data.category %}
+            <span class="badge-cat">{{ post.data.category | categoryLabel }}</span>
+            {% endif %}
+            {% if post.data.discount %}
+            <span class="badge-discount">{{ post.data.discount }} off</span>
+            {% endif %}
+          </div>
+          <div class="deal-title">{{ post.data.title }}</div>
+        </div>
+      </div>
+      <div class="deal-body">
+        <div class="deal-price-row">
+          {% if post.data.price %}
+          <span class="deal-price">{{ post.data.price }}</span>
+          {% endif %}
+          {% if post.data.original_price %}
+          <span class="deal-original">{{ post.data.original_price }}</span>
+          {% endif %}
+          {% if post.data.discount %}
+          <span class="deal-save">Save {{ post.data.discount }}</span>
+          {% endif %}
+        </div>
+        <div class="deal-date">{{ post.data.date | date("MMMM d, yyyy") }}</div>
+      </div>
+      <div class="deal-footer">
+        <a class="buy-btn" href="{{ post.data.affiliate_link if post.data.affiliate_link else post.url }}" target="_blank" rel="noopener sponsored">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+          Buy on Amazon →
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="empty" id="empty-state">
+    <h3>No deals in this category yet</h3>
+    <p>Check back soon — new deals added daily.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="/">DealDily Home</a>
+    <a href="/deals/">All Deals</a>
+    <a href="mailto:offers@dealdily.com">Contact</a>
+  </div>
+  <div>© 2026 DealDily · offers@dealdily.com</div>
+  <p class="footer-disc">As an Amazon Associate I earn from qualifying purchases. Prices and availability are subject to change. Deal prices shown at time of posting.</p>
+</footer>
+
+<script>
+function filter(cat, btn) {
+  // Update active button
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Show/hide deals
+  const cards = document.querySelectorAll('.deal');
+  let count = 0;
+  cards.forEach(card => {
+    const match = cat === 'all' || card.dataset.cat === cat;
+    card.classList.toggle('hidden', !match);
+    if (match) count++;
+  });
+
+  // Update count
+  document.getElementById('deal-count').textContent = count;
+
+  // Show/hide empty state
+  document.getElementById('empty-state').classList.toggle('show', count === 0);
+}
+</script>
+</body>
+</html>
