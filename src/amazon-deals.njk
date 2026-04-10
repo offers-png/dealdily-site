@@ -249,8 +249,9 @@ img{display:block;max-width:100%}
     {% for post in collections.posts %}
     <div class="deal" data-cat="{{ post.data.category }}">
       <div class="deal-img">
-        {% if post.data.image %}
-        <img src="{{ post.data.image }}" alt="{{ post.data.title }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        {% if post.data.image or post.data.asin %}
+        {% set imgSrc = post.data.image if post.data.image else "https://m.media-amazon.com/images/I/" + post.data.asin + "._AC_SL250_.jpg" %}
+        <img src="{{ imgSrc }}" alt="{{ post.data.title }}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <span class="deal-img-placeholder" style="display:none">🛒</span>
         {% else %}
         <span class="deal-img-placeholder">🛒</span>
