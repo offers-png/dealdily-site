@@ -155,12 +155,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <nav class="sb-nav">
     <a href="/amazon-deals/" class="sb-amz"><span class="sb-ico">🛒</span>Amazon Deals<span class="sb-amz-b">Live</span></a>
     <div class="sb-grp">Main</div>
-    <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">8</span></button>
+    <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">9</span></button>
     <button class="sb-btn" onclick="go('workflows',this)"><span class="sb-ico">🔄</span>AI Workflows</button>
     <button class="sb-btn" onclick="go('automations',this)"><span class="sb-ico">⚡</span>Automations</button>
     <button class="sb-btn" onclick="go('affiliates',this)"><span class="sb-ico">💰</span>Affiliate Deals<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('amazon',this)"><span class="sb-ico">🛒</span>Amazon Picks</button>
     <div class="sb-grp">Services</div>
+    <button class="sb-btn" onclick="go('gigledger',this)"><span class="sb-ico">📒</span>GigLedger<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('listingai',this)"><span class="sb-ico">🏡</span>ListingAI<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('sms',this)"><span class="sb-ico">📲</span>SMS Service</button>
     <button class="sb-btn" onclick="go('about',this)"><span class="sb-ico">👤</span>About / Story</button>
@@ -181,8 +182,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="grid">
       <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">🗺️</div><span class="pct t-pu">⭐ Most Popular</span><h3>Competitor Intel Engine</h3><p class="pcd">See who's outranking you on Google Maps, their review strength, and exactly where you can beat them — in 60 seconds.</p><div class="pcf"><div class="pcp">$29<small>/mo · 3-day free trial</small></div><a href="https://competitor-intel-engine.onrender.com" target="_blank" class="btn btn-p">Start Free Trial →</a></div></div>
       <div class="pc"><div class="pca" style="background:#a06b1a"></div><div class="pci">🧾</div><span class="pct t-am">Mobile App</span><h3>ReceiptVault</h3><p class="pcd">Snap a photo of any receipt. It automatically organizes it and emails it to your accountant. No more panic at tax time.</p><div class="pcf"><div class="pcp">Free<small>Then $9.99/mo</small></div><a href="https://receipts.dealdily.com" target="_blank" class="btn btn-g">Try Free →</a></div></div>
-      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📲</div><span class="pct t-gn">Automation</span><h3>SMS Reminder Bot</h3><p class="pcd">Text it like a human. "Remind me to call the doctor Friday at 3pm" — done. No app. No setup. Just smart reminders.</p><div class="pcf"><div class="pcp">$9<small>/mo · Plans available</small></div><button onclick="go('sms',this)" class="btn btn-p">Get Started →</button></div></div>
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📲</div><span class="pct t-gn">Automation</span><h3>SMS Reminder Bot</h3><p class="pcd">Text it like a human. "Remind me to call the doctor Friday at 3pm" — done. No app. No setup. Just smart reminders.</p><div class="pcf"><div class="pcp">$9<small>/mo · Plans available</small></div><button onclick="goPage('sms')" class="btn btn-p">Get Started →</button></div></div>
       <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">🤖</div><span class="pct t-bl">API</span><h3>AI Content Repurposer</h3><p class="pcd">Paste a YouTube link. Get captions for TikTok, Instagram, LinkedIn, Twitter, Facebook & Pinterest. One API call.</p><div class="pcf"><div class="pcp">$27<small>/mo · API access</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get API →</a></div></div>
+      <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">📒</div><span class="pct t-bl">Freelancer Tool</span><h3>GigLedger</h3><p class="pcd">Track gigs, log income, and stay on top of what you're owed — all in one place. Built for freelancers, gig workers, and side hustlers.</p><div class="pcf"><div class="pcp">Free<small>to start</small></div><a href="https://gigledger-app.netlify.app" target="_blank" class="btn btn-p">Try It →</a></div></div>
       <div class="pc"><div class="pca" style="background:#c25c2a"></div><div class="pci">🏡</div><span class="pct t-og">Real Estate AI</span><h3>ListingAI</h3><p class="pcd">Paste your property details. Get a polished MLS description, social caption, and email blast — in 30 seconds. Built for agents.</p><div class="pcf"><div class="pcp">$19.99<small>/mo · Unlimited</small></div><a href="https://listingai-app.netlify.app" target="_blank" class="btn btn-p">Try It →</a></div></div>
       <div class="pc"><div class="pca" style="background:#e8541a"></div><div class="pci">💳</div><span class="pct t-og">API Access</span><h3>Payment Link Generator</h3><p class="pcd">Buy a time-limited API key via Stripe. Your unique key is generated instantly on payment — 24h, 7-day, 30-day, or lifetime access. No account needed.</p><div class="pcf"><div class="pcp">From $2<small>One-time · Instant key</small></div><a href="https://one-time-checkout.onrender.com" target="_blank" class="btn btn-p">Get Access →</a></div></div>
       <div class="pc"><div class="pca" style="background:#a06b1a"></div><div class="pci">📘</div><span class="pct t-am">eBook</span><h3>Beginners' Workflow AI</h3><p class="pcd">Build & sell AI automations with n8n, Google Sheets, and ChatGPT. Zero coding. Step-by-step. Build once, earn forever.</p><div class="pcf"><div class="pcp">$10<small>One-time · PDF</small></div><a href="https://toolsmith721.gumroad.com/l/ipdpbc" target="_blank" class="btn btn-p">Buy Now →</a></div></div>
@@ -198,7 +200,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="sl">Ready to deploy</div>
     <div class="grid">
       <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">🎬</div><span class="pct t-pu">Content</span><h3>YouTube → TikTok Repurposer</h3><p class="pcd">Automatically takes any YouTube video, extracts the transcript, rewrites it for TikTok, and outputs a ready-to-post script.</p><div class="pcf"><div class="pcp">$27<small>/mo · API included</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get Workflow →</a></div></div>
-      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📞</div><span class="pct t-gn">Reminder</span><h3>AI Reminder Bot (Voice + SMS)</h3><p class="pcd">Text a reminder in plain English. AI parses it, schedules it, and sends a voice call or SMS at the right time.</p><div class="pcf"><div class="pcp">$9<small>/mo · Unlimited reminders</small></div><a href="https://dealdily.com" class="btn btn-p">Deploy Now →</a></div></div>
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📞</div><span class="pct t-gn">Reminder</span><h3>AI Reminder Bot (Voice + SMS)</h3><p class="pcd">Text a reminder in plain English. AI parses it, schedules it, and sends a voice call or SMS at the right time.</p><div class="pcf"><div class="pcp">$9<small>/mo · Unlimited reminders</small></div><button onclick="goPage('sms')" class="btn btn-p">Deploy Now →</button></div></div>
       <div class="pc"><div class="pca" style="background:#a06b1a"></div><div class="pci">🗺️</div><span class="pct t-am">Lead Gen</span><h3>Google Maps Lead Scraper</h3><p class="pcd">Scrape local businesses from Google Maps by niche and location. Extract names, ratings, review counts, and contact info.</p><div class="pcf"><div class="pcp">$19<small>One-time · Lifetime</small></div><a href="https://buy.stripe.com/6oU3cvbys0GEdjR0Ha1Jm00" target="_blank" class="btn btn-p">Get It →</a></div></div>
     </div>
     <div class="sl">Coming soon</div>
@@ -216,7 +218,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="sl">What we automate</div>
     <div class="grid">
       <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">💳</div><span class="pct t-pu">Payments</span><h3>Stripe Payment Automation</h3><p class="pcd">Auto-generate payment links, handle time-based access, manage coupons, and trigger actions on successful payments.</p><div class="pcf"><div class="pcp">From $2<small>One-time</small></div><a href="https://one-time-checkout.onrender.com" target="_blank" class="btn btn-p">Get Access →</a></div></div>
-      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📲</div><span class="pct t-gn">SMS</span><h3>SMS Marketing System</h3><p class="pcd">Full SMS infrastructure — opt-in pages, consent flows, compliance, auto-recharge, and Twilio/Telnyx integration.</p><div class="pcf"><div class="pcp">$9<small>/mo · Fully compliant</small></div><a href="https://dealdily.com" class="btn btn-p">Start →</a></div></div>
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📲</div><span class="pct t-gn">SMS</span><h3>SMS Marketing System</h3><p class="pcd">Full SMS infrastructure — opt-in pages, consent flows, compliance, auto-recharge, and Twilio/Telnyx integration.</p><div class="pcf"><div class="pcp">$9<small>/mo · Fully compliant</small></div><button onclick="goPage('sms')" class="btn btn-p">Start →</button></div></div>
       <div class="pc"><div class="pca" style="background:#a06b1a"></div><div class="pci">🧾</div><span class="pct t-am">Accounting</span><h3>Receipt Management Automation</h3><p class="pcd">Snap receipts → AI organizes → auto-emails your accountant on schedule. Tax time goes from panic to a single tap.</p><div class="pcf"><div class="pcp">Free<small>Trial then $9.99/mo</small></div><a href="https://receipts.dealdily.com" target="_blank" class="btn btn-g">Try Free →</a></div></div>
       <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">🤖</div><span class="pct t-bl">Content</span><h3>Content Repurposing Engine</h3><p class="pcd">One YouTube video becomes 7 platform-ready posts automatically. Feed the content machine once. Post everywhere.</p><div class="pcf"><div class="pcp">$20<small>/mo · API</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get It →</a></div></div>
     </div>
@@ -261,6 +263,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="ac" data-cat="laptop"><div class="ai"><img src="https://m.media-amazon.com/images/I/71Gf93EDYML._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="MOSISO Sleeve"><span class="apb">$13.99</span></div><div class="ab"><div class="at">MOSISO 13" Laptop Sleeve MacBook / HP / Dell</div><div class="ah">Slim neoprene. Fits most 13" laptops.</div></div><div class="af"><span class="apr">$13.99</span><a href="https://www.amazon.com/dp/B01N6M1Y9N?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
     </div>
     <div class="disc"><strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.</div>
+  </div>
+</div>
+
+<!-- GIGLEDGER -->
+<div class="page" id="page-gigledger">
+  <div class="pt"><div class="chip">📒 GigLedger</div><h1>Know exactly what<br><em>you're owed.</em></h1><p>Track every gig, log every payment, and see your real income at a glance. Built for freelancers, gig workers, and anyone juggling multiple income streams.</p></div>
+  <div class="pb">
+    <div class="stg">
+      <div class="stc"><div class="stn">01</div><h3>Log Your Gigs</h3><p>Add jobs as you complete them — client, amount, date, status. Takes 10 seconds.</p></div>
+      <div class="stc"><div class="stn">02</div><h3>Track What's Owed</h3><p>See pending, paid, and overdue payments at a glance. No more chasing invoices in your head.</p></div>
+      <div class="stc"><div class="stn">03</div><h3>Know Your Numbers</h3><p>Real income totals, monthly breakdowns, and a clear picture of where your money comes from.</p></div>
+    </div>
+    <div class="sl">Why GigLedger</div>
+    <div class="grid">
+      <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">⚡</div><h3>No Spreadsheets</h3><p class="pcd">Forget messy Google Sheets. GigLedger is built specifically for gig income — fast, clean, and mobile-friendly.</p></div>
+      <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">💰</div><h3>See Real Totals</h3><p class="pcd">Know your monthly earnings, unpaid balances, and year-to-date income without doing any math.</p></div>
+      <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">📱</div><h3>Works Anywhere</h3><p class="pcd">Log a gig from your phone the second you finish the job. No login friction. No desktop required.</p></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1.5rem">
+      <a href="https://gigledger-app.netlify.app" target="_blank" class="btn btn-p" style="font-size:.95rem;padding:14px 28px">Try GigLedger Free →</a>
+    </div>
+    <div class="disc">🔗 Live at gigledger-app.netlify.app · Questions? <a href="mailto:support@dealdily.com">support@dealdily.com</a></div>
   </div>
 </div>
 
@@ -386,4 +410,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-function go(n,b){document.querySelectorAll('.page').for
+function go(n,b){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.sb-btn').forEach(x=>x.classList.remove('on'));document.getElementById('page-'+n).classList.add('active');if(b)b.classList.add('on');document.getElementById('sidebar').classList.remove('open');document.getElementById('ovl').classList.remove('show');window.scrollTo(0,0)}
+function goPage(n){var sb=document.querySelector('.sb-btn[onclick*="\''+n+'\'"]');go(n,sb||null)}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('ovl').classList.toggle('show')}
+function amzF(c,b){document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('.ac').forEach(x=>{x.style.display=(c==='all'||x.dataset.cat===c)?'':'none'})}
+</script>
+</body>
+</html>
