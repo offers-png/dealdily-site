@@ -155,12 +155,14 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <nav class="sb-nav">
     <a href="/amazon-deals/" class="sb-amz"><span class="sb-ico">🛒</span>Amazon Deals<span class="sb-amz-b">Live</span></a>
     <div class="sb-grp">Main</div>
-    <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">9</span></button>
+    <button class="sb-btn on" onclick="go('saas',this)"><span class="sb-ico">🛠</span>SaaS Tools<span class="sb-badge hot">11</span></button>
     <button class="sb-btn" onclick="go('workflows',this)"><span class="sb-ico">🔄</span>AI Workflows</button>
     <button class="sb-btn" onclick="go('automations',this)"><span class="sb-ico">⚡</span>Automations</button>
     <button class="sb-btn" onclick="go('affiliates',this)"><span class="sb-ico">💰</span>Affiliate Deals<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('amazon',this)"><span class="sb-ico">🛒</span>Amazon Picks</button>
     <div class="sb-grp">Services</div>
+    <button class="sb-btn" onclick="go('clipforge',this)"><span class="sb-ico">✂️</span>ClipForge AI<span class="sb-badge new">New</span></button>
+    <button class="sb-btn" onclick="go('tarifftrack',this)"><span class="sb-ico">📊</span>TariffTrack<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('gigledger',this)"><span class="sb-ico">📒</span>GigLedger<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('listingai',this)"><span class="sb-ico">🏡</span>ListingAI<span class="sb-badge new">New</span></button>
     <button class="sb-btn" onclick="go('sms',this)"><span class="sb-ico">📲</span>SMS Service</button>
@@ -184,6 +186,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="pc"><div class="pca" style="background:#a06b1a"></div><div class="pci">🧾</div><span class="pct t-am">Mobile App</span><h3>ReceiptVault</h3><p class="pcd">Snap a photo of any receipt. It automatically organizes it and emails it to your accountant. No more panic at tax time.</p><div class="pcf"><div class="pcp">Free<small>Then $9.99/mo</small></div><a href="https://receipts.dealdily.com" target="_blank" class="btn btn-g">Try Free →</a></div></div>
       <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📲</div><span class="pct t-gn">Automation</span><h3>SMS Reminder Bot</h3><p class="pcd">Text it like a human. "Remind me to call the doctor Friday at 3pm" — done. No app. No setup. Just smart reminders.</p><div class="pcf"><div class="pcp">$9<small>/mo · Plans available</small></div><button onclick="goPage('sms')" class="btn btn-p">Get Started →</button></div></div>
       <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">🤖</div><span class="pct t-bl">API</span><h3>AI Content Repurposer</h3><p class="pcd">Paste a YouTube link. Get captions for TikTok, Instagram, LinkedIn, Twitter, Facebook & Pinterest. One API call.</p><div class="pcf"><div class="pcp">$27<small>/mo · API access</small></div><a href="https://toolsmith721.gumroad.com/l/ai-content-repurposer" target="_blank" class="btn btn-p">Get API →</a></div></div>
+      <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">✂️</div><span class="pct t-pu">Content AI</span><h3>ClipForge AI</h3><p class="pcd">Turn long videos into short, shareable clips automatically. AI finds the best moments, cuts them, and formats them for every platform.</p><div class="pcf"><div class="pcp">Try Free<small>Plans available</small></div><a href="https://clipper-frontend.onrender.com" target="_blank" class="btn btn-p">Try It →</a></div></div>
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">📊</div><span class="pct t-gn">Business Tool</span><h3>TariffTrack</h3><p class="pcd">Track tariff changes and protect your margins. Know exactly how new trade policies affect your product costs before they hit your bottom line.</p><div class="pcf"><div class="pcp">Try Free<small>Plans available</small></div><a href="https://tarifftrack-app.netlify.app" target="_blank" class="btn btn-p">Try It →</a></div></div>
       <div class="pc"><div class="pca" style="background:#1a5caa"></div><div class="pci">📒</div><span class="pct t-bl">Freelancer Tool</span><h3>GigLedger</h3><p class="pcd">Track gigs, log income, and stay on top of what you're owed — all in one place. Built for freelancers, gig workers, and side hustlers.</p><div class="pcf"><div class="pcp">Free<small>to start</small></div><a href="https://gigledger-app.netlify.app" target="_blank" class="btn btn-p">Try It →</a></div></div>
       <div class="pc"><div class="pca" style="background:#c25c2a"></div><div class="pci">🏡</div><span class="pct t-og">Real Estate AI</span><h3>ListingAI</h3><p class="pcd">Paste your property details. Get a polished MLS description, social caption, and email blast — in 30 seconds. Built for agents.</p><div class="pcf"><div class="pcp">$19.99<small>/mo · Unlimited</small></div><a href="https://listingai-app.netlify.app" target="_blank" class="btn btn-p">Try It →</a></div></div>
       <div class="pc"><div class="pca" style="background:#e8541a"></div><div class="pci">💳</div><span class="pct t-og">API Access</span><h3>Payment Link Generator</h3><p class="pcd">Buy a time-limited API key via Stripe. Your unique key is generated instantly on payment — 24h, 7-day, 30-day, or lifetime access. No account needed.</p><div class="pcf"><div class="pcp">From $2<small>One-time · Instant key</small></div><a href="https://one-time-checkout.onrender.com" target="_blank" class="btn btn-p">Get Access →</a></div></div>
@@ -263,6 +267,50 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       <div class="ac" data-cat="laptop"><div class="ai"><img src="https://m.media-amazon.com/images/I/71Gf93EDYML._AC_SY300_SX300_QL70_FMwebp_.jpg" alt="MOSISO Sleeve"><span class="apb">$13.99</span></div><div class="ab"><div class="at">MOSISO 13" Laptop Sleeve MacBook / HP / Dell</div><div class="ah">Slim neoprene. Fits most 13" laptops.</div></div><div class="af"><span class="apr">$13.99</span><a href="https://www.amazon.com/dp/B01N6M1Y9N?tag=dealdily20-20" target="_blank" class="abtn">View →</a></div></div>
     </div>
     <div class="disc"><strong>Affiliate Disclosure:</strong> As an Amazon Associate I earn from qualifying purchases.</div>
+  </div>
+</div>
+
+<!-- CLIPFORGE -->
+<div class="page" id="page-clipforge">
+  <div class="pt"><div class="chip">✂️ ClipForge AI</div><h1>Long video in.<br><em>Viral clips out.</em></h1><p>AI finds your best moments, cuts them into short-form clips, and formats them for TikTok, Instagram Reels, YouTube Shorts, and more — automatically.</p></div>
+  <div class="pb">
+    <div class="stg">
+      <div class="stc"><div class="stn">01</div><h3>Upload Your Video</h3><p>Paste a link or upload a video. Podcasts, interviews, tutorials, streams — anything works.</p></div>
+      <div class="stc"><div class="stn">02</div><h3>AI Finds the Moments</h3><p>ClipForge scans the content and identifies the highest-impact, most shareable segments automatically.</p></div>
+      <div class="stc"><div class="stn">03</div><h3>Download & Post</h3><p>Get ready-to-post clips sized for every platform. No editing software. No timeline scrubbing.</p></div>
+    </div>
+    <div class="sl">What you get</div>
+    <div class="grid">
+      <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">🎯</div><h3>AI Moment Detection</h3><p class="pcd">Not random cuts — the AI finds the moments that actually hook people. High energy, key quotes, punchy takeaways.</p></div>
+      <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">📱</div><h3>Multi-Platform Formats</h3><p class="pcd">TikTok, Reels, Shorts — each clip is sized and formatted correctly for every platform out of the box.</p></div>
+      <div class="pc"><div class="pca" style="background:#6b3fa0"></div><div class="pci">⚡</div><h3>No Editing Required</h3><p class="pcd">Zero timeline scrubbing, zero manual cuts. Upload → wait → download. Done.</p></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1.5rem">
+      <a href="https://clipper-frontend.onrender.com" target="_blank" class="btn btn-p" style="font-size:.95rem;padding:14px 28px">Try ClipForge Free →</a>
+    </div>
+    <div class="disc">🔗 Live at clipper-frontend.onrender.com · Questions? <a href="mailto:support@dealdily.com">support@dealdily.com</a></div>
+  </div>
+</div>
+
+<!-- TARIFFTRACK -->
+<div class="page" id="page-tarifftrack">
+  <div class="pt"><div class="chip">📊 TariffTrack</div><h1>Know before it<br><em>hits your margins.</em></h1><p>Track tariff changes in real time and see exactly how new trade policies affect your product costs — before they surprise you at the register.</p></div>
+  <div class="pb">
+    <div class="stg">
+      <div class="stc"><div class="stn">01</div><h3>Add Your Products</h3><p>Enter the products you buy or sell. TariffTrack monitors the tariff codes that affect them.</p></div>
+      <div class="stc"><div class="stn">02</div><h3>We Track the Changes</h3><p>Every time a relevant tariff shifts, you get alerted. No more finding out at the invoice stage.</p></div>
+      <div class="stc"><div class="stn">03</div><h3>Protect Your Margins</h3><p>Adjust pricing, switch suppliers, or plan ahead — with actual data, not guesswork.</p></div>
+    </div>
+    <div class="sl">Why it matters</div>
+    <div class="grid">
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">🔔</div><h3>Real-Time Alerts</h3><p class="pcd">Get notified the moment a tariff change affects your products. No more reading trade news and guessing what it means for you.</p></div>
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">💰</div><h3>Margin Protection</h3><p class="pcd">See the dollar impact of every change on your cost structure. Make pricing decisions with confidence.</p></div>
+      <div class="pc"><div class="pca" style="background:#1a7a4a"></div><div class="pci">🏪</div><h3>Built for Small Business</h3><p class="pcd">Not a Fortune 500 compliance tool. Built for store owners, importers, and product-based businesses who need straight answers.</p></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1.5rem">
+      <a href="https://tarifftrack-app.netlify.app" target="_blank" class="btn btn-p" style="font-size:.95rem;padding:14px 28px">Try TariffTrack Free →</a>
+    </div>
+    <div class="disc">🔗 Live at tarifftrack-app.netlify.app · Questions? <a href="mailto:support@dealdily.com">support@dealdily.com</a></div>
   </div>
 </div>
 
